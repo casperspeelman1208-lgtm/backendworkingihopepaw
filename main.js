@@ -124,8 +124,8 @@ const PAGES_MAP = {
   'bad-borstel':'sp-bad-borstel','knipbeurt-styling':'sp-knipbeurt-styling',
   'nagels-poten':'sp-nagels-poten','spa-deluxe':'sp-spa-deluxe',
   'prijslijst':'sp-prijslijst','over-ons':'sp-over-ons','ons-team':'sp-ons-team',
-  'blog':'sp-blog','vacatures':'sp-vacatures','contact':'sp-contact',
-  'faq-page':'sp-faq-page','privacybeleid':'sp-privacybeleid',
+  'blog':'sp-blog','blog-detail':'sp-blog-detail','vacatures':'sp-vacatures',
+  'contact':'sp-contact','faq-page':'sp-faq-page','privacybeleid':'sp-privacybeleid',
   'algemene-voorwaarden':'sp-algemene-voorwaarden','cadeaubon':'sp-cadeaubon',
   'abonnement':'sp-abonnement'
 };
@@ -151,6 +151,7 @@ function navigateTo(page){
   history.pushState({page},'','#'+page);
   // Inject team images on team page
   if(page==='ons-team') injectTeamImgs();
+  if(page==='blog') laadBlogPosts();
 }
 
 function injectTeamImgs(){
@@ -255,20 +256,27 @@ async function laadBlogPosts() {
 }
 
 async function laadBlogDetail(slug) {
-  // Navigate to detail page first
-  navigateTo('blog-detail');
+  // Show the detail page
+  document.getElementById('main-page').style.display = 'none';
+  const overlay = document.getElementById('subpage-overlay');
+  overlay.style.display = 'block';
+  document.querySelectorAll('.sp').forEach(s => s.classList.remove('active'));
+  const detailPage = document.getElementById('sp-blog-detail');
+  if (detailPage) detailPage.classList.add('active');
+  window.scrollTo({top: 0, behavior: 'instant'});
 
   const inner = document.getElementById('blogDetailInner');
-  inner.innerHTML = '<div style="text-align:center;padding:4rem;color:var(--brown-mid)">Laden...</div>';
+  if (!inner) { console.error('blogDetailInner niet gevonden'); return; }
+  inner.innerHTML = '<div style="text-align:center;padding:4rem;color:var(--brown-mid)"><div style="font-size:2rem;margin-bottom:1rem">⏳</div>Post laden...</div>';
 
   try {
-    const res  = await fetch('/api/blog/' + slug);
-    if (!res.ok) throw new Error('Post niet gevonden');
+    const res = await fetch('/api/blog/' + encodeURIComponent(slug));
+    if (!res.ok) throw new Error('Post niet gevonden (status ' + res.status + ')');
     const post = await res.json();
 
     inner.innerHTML = `
       ${post.cover_image
-        ? `<img src="${post.cover_image}" class="blog-detail-cover" alt="${post.title}">`
+        ? `<img src="${post.cover_image}" class="blog-detail-cover" alt="${post.title}" onerror="this.style.display='none'">`
         : ''}
       <div class="blog-detail-cat">${post.category || 'Algemeen'}</div>
       <h1 class="blog-detail-title">${post.title}</h1>
@@ -283,11 +291,14 @@ async function laadBlogDetail(slug) {
       </div>`;
 
   } catch (err) {
+    console.error('Blog detail fout:', err);
     inner.innerHTML = `
       <div style="text-align:center;padding:4rem;color:var(--brown-mid)">
         <div style="font-size:3rem;margin-bottom:1rem">😔</div>
-        <p>Post kon niet worden geladen.</p>
-        <button onclick="navigateTo('blog')" style="margin-top:1rem;cursor:pointer;background:var(--coral);color:#fff;border:none;border-radius:50px;padding:.7rem 1.5rem;font-family:'Nunito',sans-serif;font-weight:800;font-size:.9rem">Terug naar blog</button>
+        <p style="margin-bottom:1rem">Post kon niet worden geladen.</p>
+        <button onclick="navigateTo('blog')" style="cursor:pointer;background:var(--coral);color:#fff;border:none;border-radius:50px;padding:.7rem 1.5rem;font-family:'Nunito',sans-serif;font-weight:800;font-size:.9rem">
+          Terug naar blog
+        </button>
       </div>`;
   }
 }
@@ -297,9 +308,4 @@ function formatBlogDate(d) {
   return new Date(d).toLocaleDateString('nl-NL', {day:'numeric', month:'long', year:'numeric'});
 }
 
-// Laad blog posts wanneer de blog-pagina wordt geopend
-const _origNavigateTo = navigateTo;
-navigateTo = function(page) {
-  _origNavigateTo(page);
-  if (page === 'blog') laadBlogPosts();
-};
+// Blog wordt geladen via navigateTo() direct
