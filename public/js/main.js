@@ -207,3 +207,99 @@ document.addEventListener('click', e=>{
   if(!e.target.closest('.has-drop'))
     document.querySelectorAll('.has-drop').forEach(d=>d.classList.remove('open'));
 });
+
+/* ══════════════════════════════════════════════════════
+   BLOG — dynamisch laden vanuit de backend
+   ══════════════════════════════════════════════════════ */
+
+async function laadBlogPosts() {
+  const grid = document.getElementById('blogGrid');
+  if (!grid) return;
+
+  try {
+    const res  = await fetch('/api/blog');
+    const posts = await res.json();
+
+    if (!Array.isArray(posts) || posts.length === 0) {
+      grid.innerHTML = `
+        <div style="grid-column:1/-1;text-align:center;padding:3rem 1rem;color:var(--brown-mid)">
+          <div style="font-size:3rem;margin-bottom:1rem">📝</div>
+          <h3 style="font-family:'Fredoka One',cursive;font-size:1.3rem;color:var(--brown);margin-bottom:.5rem">Nog geen blogposts</h3>
+          <p>De eerste posts zijn onderweg!</p>
+        </div>`;
+      return;
+    }
+
+    grid.innerHTML = posts.map(post => `
+      <div class="blog-card blog-card-link" onclick="laadBlogDetail('${post.slug}')">
+        <div class="blog-img" style="${post.cover_image
+          ? `background:url('${post.cover_image}') center/cover no-repeat`
+          : 'background:linear-gradient(135deg,var(--yellow-light),var(--coral-light));display:flex;align-items:center;justify-content:center;font-size:3.5rem'}">
+          ${post.cover_image ? '' : '📝'}
+        </div>
+        <div class="blog-content">
+          <div class="blog-meta">${post.category || 'Algemeen'} · ${formatBlogDate(post.published_at)}</div>
+          <h3 class="blog-card-title">${post.title}</h3>
+          <p>${post.excerpt || ''}</p>
+          <span class="blog-link">Lees meer →</span>
+        </div>
+      </div>`).join('');
+
+  } catch (err) {
+    console.error('Blog laden mislukt:', err);
+    grid.innerHTML = `
+      <div style="grid-column:1/-1;text-align:center;padding:3rem;color:var(--brown-mid)">
+        <p>Posts konden niet worden geladen. Probeer het later opnieuw.</p>
+      </div>`;
+  }
+}
+
+async function laadBlogDetail(slug) {
+  // Navigate to detail page first
+  navigateTo('blog-detail');
+
+  const inner = document.getElementById('blogDetailInner');
+  inner.innerHTML = '<div style="text-align:center;padding:4rem;color:var(--brown-mid)">Laden...</div>';
+
+  try {
+    const res  = await fetch('/api/blog/' + slug);
+    if (!res.ok) throw new Error('Post niet gevonden');
+    const post = await res.json();
+
+    inner.innerHTML = `
+      ${post.cover_image
+        ? `<img src="${post.cover_image}" class="blog-detail-cover" alt="${post.title}">`
+        : ''}
+      <div class="blog-detail-cat">${post.category || 'Algemeen'}</div>
+      <h1 class="blog-detail-title">${post.title}</h1>
+      <div class="blog-detail-meta">
+        Gepubliceerd op ${formatBlogDate(post.published_at)}
+      </div>
+      <div class="blog-detail-body">${post.content}</div>
+      <div style="margin-top:3rem;padding-top:2rem;border-top:2px solid var(--yellow-light);text-align:center">
+        <button class="btn-p" style="border:none;cursor:pointer" onclick="navigateTo('blog')">
+          ← Terug naar alle posts
+        </button>
+      </div>`;
+
+  } catch (err) {
+    inner.innerHTML = `
+      <div style="text-align:center;padding:4rem;color:var(--brown-mid)">
+        <div style="font-size:3rem;margin-bottom:1rem">😔</div>
+        <p>Post kon niet worden geladen.</p>
+        <button onclick="navigateTo('blog')" style="margin-top:1rem;cursor:pointer;background:var(--coral);color:#fff;border:none;border-radius:50px;padding:.7rem 1.5rem;font-family:'Nunito',sans-serif;font-weight:800;font-size:.9rem">Terug naar blog</button>
+      </div>`;
+  }
+}
+
+function formatBlogDate(d) {
+  if (!d) return '';
+  return new Date(d).toLocaleDateString('nl-NL', {day:'numeric', month:'long', year:'numeric'});
+}
+
+// Laad blog posts wanneer de blog-pagina wordt geopend
+const _origNavigateTo = navigateTo;
+navigateTo = function(page) {
+  _origNavigateTo(page);
+  if (page === 'blog') laadBlogPosts();
+};
