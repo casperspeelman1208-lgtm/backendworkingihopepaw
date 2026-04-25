@@ -608,66 +608,15 @@
     </div>
   </div>
   <div class="sp-body">
-    <div class="blog-grid">
-      <div class="blog-card">
-        <div class="blog-img" style="background:linear-gradient(135deg,var(--yellow-light),var(--coral-light));font-size:3.5rem;display:flex;align-items:center;justify-content:center">🛁</div>
-        <div class="blog-content">
-          <div class="blog-meta">Grooming tips · 5 min lezen</div>
-          <h3>Hoe vaak moet je hond naar de groomer?</h3>
-          <p>De frequentie hangt sterk af van het ras, de vachtlengte en de leefstijl van je hond. In dit artikel leggen we per rastype uit wat de ideale grooming-cyclus is.</p>
-          <a href="#" class="blog-link">Lees meer →</a>
-        </div>
-      </div>
-      <div class="blog-card">
-        <div class="blog-img" style="background:linear-gradient(135deg,var(--mint-light),var(--sky-light));font-size:3.5rem;display:flex;align-items:center;justify-content:center">😺</div>
-        <div class="blog-content">
-          <div class="blog-meta">Katten · 4 min lezen</div>
-          <h3>Katten en grooming: zo maak je het stressvrij</h3>
-          <p>Veel katten vinden verzorging spannend. Met deze praktische tips maak je elke grooming-sessie een stuk aangenamer — voor jou én voor je kat.</p>
-          <a href="#" class="blog-link">Lees meer →</a>
-        </div>
-      </div>
-      <div class="blog-card">
-        <div class="blog-img" style="background:linear-gradient(135deg,var(--coral-light),var(--yellow-light));font-size:3.5rem;display:flex;align-items:center;justify-content:center">💅</div>
-        <div class="blog-content">
-          <div class="blog-meta">Verzorging · 3 min lezen</div>
-          <h3>Nagels knippen: wanneer is het nodig?</h3>
-          <p>Te lange nagels kunnen pijnlijk zijn en zelfs tot gezondheidsproblemen leiden. Leer hoe je zelf kunt controleren of het tijd is voor een nagelbeurt.</p>
-          <a href="#" class="blog-link">Lees meer →</a>
-        </div>
-      </div>
-      <div class="blog-card">
-        <div class="blog-img" style="background:linear-gradient(135deg,var(--sky-light),var(--coral-light));font-size:3.5rem;display:flex;align-items:center;justify-content:center">🌿</div>
-        <div class="blog-content">
-          <div class="blog-meta">Producten · 6 min lezen</div>
-          <h3>Waarom wij alleen natuurlijke producten gebruiken</h3>
-          <p>We leggen uit waarom we bewust kozen voor 100% hypoallergene en diervriendelijke producten, en wat dat concreet betekent voor jouw huisdier.</p>
-          <a href="#" class="blog-link">Lees meer →</a>
-        </div>
-      </div>
-      <div class="blog-card">
-        <div class="blog-img" style="background:linear-gradient(135deg,var(--mint-light),var(--yellow-light));font-size:3.5rem;display:flex;align-items:center;justify-content:center">🐰</div>
-        <div class="blog-content">
-          <div class="blog-meta">Konijnen · 4 min lezen</div>
-          <h3>Konijnen verzorgen: wat je moet weten</h3>
-          <p>Konijnen hebben andere verzorgingsbehoeften dan honden of katten. Sophie, onze konijnenspecialist, deelt haar beste tips.</p>
-          <a href="#" class="blog-link">Lees meer →</a>
-        </div>
-      </div>
-      <div class="blog-card">
-        <div class="blog-img" style="background:linear-gradient(135deg,var(--coral-light),var(--mint-light));font-size:3.5rem;display:flex;align-items:center;justify-content:center">🏆</div>
-        <div class="blog-content">
-          <div class="blog-meta">Pawfect nieuws · 2 min lezen</div>
-          <h3>Pawfect wint beste groomer van Zoetermeer 2024!</h3>
-          <p>We zijn ontzettend trots om te mogen delen dat Pawfect Grooming is uitgeroepen tot beste dierenverzorgingssalon van Zoetermeer door het vakblad PetCare NL.</p>
-          <a href="#" class="blog-link">Lees meer →</a>
-        </div>
+    <div class="blog-grid" id="blogGrid">
+      <div style="grid-column:1/-1;text-align:center;padding:3rem;color:var(--brown-mid)">
+        <div style="font-size:2.5rem;margin-bottom:.8rem">📝</div>
+        <p>Posts worden geladen...</p>
       </div>
     </div>
   </div>
 </div>
 
-<!-- ── VACATURES ────────────────────────────────────────────────────────── -->
 <div class="sp" id="sp-vacatures">
   <div class="sp-hero" style="background:linear-gradient(135deg,var(--coral-light),var(--yellow-light))">
     <div class="sp-hero-inner">
@@ -1177,6 +1126,18 @@
   </div>
 </div>
 
+
+<!-- ── BLOG DETAIL ──────────────────────────────────────────────────────────── -->
+<div class="sp" id="sp-blog-detail">
+  <div id="blogDetailContent" style="max-width:800px;margin:0 auto;padding:calc(var(--nav-h) + 2rem) 2rem 5rem">
+    <button onclick="navigateTo('blog')" style="display:inline-flex;align-items:center;gap:.5rem;background:transparent;border:2px solid var(--yellow);border-radius:50px;padding:.5rem 1.2rem;font-family:'Nunito',sans-serif;font-weight:800;font-size:.88rem;color:var(--brown);cursor:pointer;margin-bottom:2rem;transition:all .2s" onmouseover="this.style.background='var(--yellow)'" onmouseout="this.style.background='transparent'">
+      ← Terug naar blog
+    </button>
+    <div id="blogDetailInner">
+      <div style="text-align:center;padding:4rem;color:var(--brown-mid)">Laden...</div>
+    </div>
+  </div>
+</div>
 </div><!-- end subpage-overlay -->
 
 <footer>
@@ -1226,4 +1187,24 @@
   </div>
 </footer>
 </body>
-</html>
+</html
+/* ── BLOG DYNAMIC & DETAIL ── */
+.blog-detail-cover{width:100%;max-height:400px;object-fit:cover;border-radius:20px;margin-bottom:2rem}
+.blog-detail-cat{font-size:.78rem;font-weight:800;color:var(--coral);text-transform:uppercase;letter-spacing:.06em;margin-bottom:.6rem}
+.blog-detail-title{font-family:'Fredoka One',cursive;font-size:clamp(1.8rem,4vw,2.8rem);color:var(--brown);line-height:1.15;margin-bottom:.8rem}
+.blog-detail-meta{color:var(--brown-mid);font-size:.9rem;margin-bottom:2rem;padding-bottom:1.5rem;border-bottom:2px solid var(--yellow-light)}
+.blog-detail-body{font-size:1.05rem;line-height:1.85;color:var(--brown-mid)}
+.blog-detail-body h1,.blog-detail-body h2,.blog-detail-body h3{font-family:'Fredoka One',cursive;color:var(--brown);margin:2rem 0 .8rem}
+.blog-detail-body h2{font-size:1.6rem}
+.blog-detail-body h3{font-size:1.3rem}
+.blog-detail-body p{margin-bottom:1.2rem}
+.blog-detail-body ul,.blog-detail-body ol{margin:1rem 0 1.2rem 1.5rem}
+.blog-detail-body li{margin-bottom:.4rem}
+.blog-detail-body blockquote{border-left:4px solid var(--coral);padding:1rem 1.5rem;background:var(--coral-light);border-radius:0 12px 12px 0;margin:1.5rem 0;font-style:italic;color:var(--brown)}
+.blog-detail-body img{max-width:100%;border-radius:12px;margin:1rem 0}
+.blog-detail-body iframe{width:100%;aspect-ratio:16/9;border-radius:12px;margin:1rem 0;border:none}
+.blog-detail-body a{color:var(--coral);font-weight:700}
+.blog-detail-body code{background:var(--yellow-light);padding:.15rem .4rem;border-radius:4px;font-size:.88rem}
+.blog-card-link{cursor:pointer}
+.blog-card-link:hover .blog-card-title{color:var(--coral)}
+>
