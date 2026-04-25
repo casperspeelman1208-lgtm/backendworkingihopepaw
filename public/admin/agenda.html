@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Agenda — Pawfect Admin</title>
+<link href="https://fonts.googleapis.com/css2?family=Fredoka+One&family=Nunito:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/css/admin.css">
+<style>
+.cal-nav{display:flex;align-items:center;gap:1rem;margin-bottom:1.5rem}
+.cal-title{font-family:'Fredoka One',cursive;font-size:1.5rem;color:var(--brown);flex:1;text-align:center}
+.cal-grid{display:grid;grid-template-columns:repeat(7,1fr);gap:4px;background:var(--white);border-radius:16px;border:2px solid var(--yellow);padding:1rem;overflow:hidden}
+.cal-day-name{text-align:center;font-size:.75rem;font-weight:900;color:var(--brown-mid);text-transform:uppercase;letter-spacing:.05em;padding:.5rem 0}
+.cal-day{min-height:90px;border-radius:10px;padding:.5rem;background:var(--cream);border:1.5px solid transparent;cursor:pointer;transition:all .2s;position:relative}
+.cal-day:hover{border-color:var(--yellow);background:var(--yellow-light)}
+.cal-day.today{border-color:var(--coral);background:var(--coral-light)}
+.cal-day.other-month{opacity:.35}
+.cal-day-num{font-weight:900;font-size:.9rem;color:var(--brown);margin-bottom:.3rem}
+.cal-event{background:var(--coral);color:#fff;border-radius:6px;padding:.15rem .4rem;font-size:.72rem;font-weight:700;margin-bottom:2px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.cal-event.bevestigd{background:var(--mint)}
+.cal-event.voltooid{background:#aaa}
+.day-detail{background:var(--white);border-radius:16px;border:2px solid var(--yellow);padding:1.5rem;margin-top:1.5rem}
+.day-detail h3{font-family:'Fredoka One',cursive;font-size:1.2rem;color:var(--brown);margin-bottom:1rem}
+.booking-item{background:var(--yellow-light);border-radius:12px;padding:1rem;margin-bottom:.7rem;border:2px solid var(--yellow);display:flex;justify-content:space-between;align-items:center;gap:1rem}
+.booking-item.bevestigd{border-color:var(--mint);background:var(--mint-light)}
+</style>
+</head>
+<body>
+<aside class="sidebar">
+  <div class="sb-logo"><svg viewBox="0 0 64 64" fill="#FFD166"><ellipse cx="12" cy="14" rx="7" ry="9"/><ellipse cx="32" cy="8" rx="7" ry="9"/><ellipse cx="52" cy="14" rx="7" ry="9"/><ellipse cx="22" cy="28" rx="6" ry="8"/><ellipse cx="42" cy="28" rx="6" ry="8"/><path d="M32 24c-14 0-20 10-18 22 2 8 8 12 18 12s16-4 18-12c2-12-4-22-18-22z"/></svg><span>Pawfect</span></div>
+  <nav class="sb-nav">
+    <a href="/admin/dashboard.html" class="sb-link"><span class="ico">🏠</span> Dashboard</a>
+    <a href="/admin/bookings.html"  class="sb-link"><span class="ico">📅</span> Boekingen</a>
+    <a href="/admin/agenda.html"    class="sb-link active"><span class="ico">🗓️</span> Agenda</a>
+    <a href="/admin/clients.html"   class="sb-link"><span class="ico">🐾</span> Klanten</a>
+    <a href="/admin/blog.html"      class="sb-link"><span class="ico">📝</span> Blog</a>
+    <a href="/" class="sb-link" target="_blank"><span class="ico">🌐</span> Website</a>
+  </nav>
+  <div class="sb-user"><p id="admin-email"></p><button class="sb-logout" onclick="logout()">↩ Uitloggen</button></div>
+</aside>
+
+<main class="main">
+  <div class="page-header">
+    <div><div class="page-title">Agenda 🗓️</div><div class="page-sub">Bekijk alle afspraken per dag</div></div>
+  </div>
+
+  <div class="cal-nav">
+    <button class="btn btn-outline btn-sm" onclick="changeMonth(-1)">← Vorige</button>
+    <div class="cal-title" id="calTitle"></div>
+    <button class="btn btn-outline btn-sm" onclick="changeMonth(1)">Volgende →</button>
+  </div>
+
+  <div class="cal-grid" id="calGrid"></div>
+
+  <div class="day-detail" id="dayDetail" style="display:none">
+    <h3 id="dayTitle"></h3>
+    <div id="dayBookings"></div>
+  </div>
+</main>
+
+<script src="/js/admin.js"></script>
+<script>
+const DAYS = ['Ma','Di','Wo','Do','Vr','Za','Zo'];
+const MONTHS = ['Januari','Februari','Maart','April','Mei','Juni','Juli','Augustus','September','Oktober','November','December'];
+
+let currentYear  = new Date().getFullYear();
+let currentMonth = new Date().getMonth();
+let allBookings  = [];
+
+async function init() {
+  await requireAuth();
+  allBookings = await api('/bookings');
+  renderCal();
+}
+
+function changeMonth(d) {
+  currentMonth += d;
+  if (currentMonth > 11) { currentMonth = 0; currentYear++; }
+  if (currentMonth < 0)  { currentMonth = 11; currentYear--; }
+  renderCal();
+  document.getElementById('dayDetail').style.display = 'none';
+}
+
+function renderCal() {
+  document.getElementById('calTitle').textContent = `${MONTHS[currentMonth]} ${currentYear}`;
+  const grid = document.getElementById('calGrid');
+  const today = new Date().toISOString().split('T')[0];
+
+  // Day names
+  let html = DAYS.map(d => `<div class="cal-day-name">${d}</div>`).join('');
+
+  const firstDay = new Date(currentYear, currentMonth, 1);
+  // Monday-based: 0=Mon ... 6=Sun
+  let startOffset = (firstDay.getDay() + 6) % 7;
+  const daysInMonth = new Date(currentYear, currentMonth + 1, 0).getDate();
+  const daysInPrev  = new Date(currentYear, currentMonth, 0).getDate();
+
+  // Prev month filler
+  for (let i = startOffset - 1; i >= 0; i--) {
+    html += `<div class="cal-day other-month"><div class="cal-day-num">${daysInPrev - i}</div></div>`;
+  }
+
+  // Current month
+  for (let d = 1; d <= daysInMonth; d++) {
+    const dateStr = `${currentYear}-${String(currentMonth+1).padStart(2,'0')}-${String(d).padStart(2,'0')}`;
+    const dayBookings = allBookings.filter(b => b.datum === dateStr);
+    const isToday = dateStr === today;
+
+    html += `<div class="cal-day ${isToday ? 'today' : ''}" onclick="showDay('${dateStr}')">
+      <div class="cal-day-num">${d}</div>
+      ${dayBookings.slice(0,3).map(b => `<div class="cal-event ${b.status}">${b.naam_huisdier}</div>`).join('')}
+      ${dayBookings.length > 3 ? `<div style="font-size:.7rem;color:var(--brown-mid)">+${dayBookings.length-3} meer</div>` : ''}
+    </div>`;
+  }
+
+  // Next month filler
+  const totalCells = startOffset + daysInMonth;
+  const remaining  = (7 - (totalCells % 7)) % 7;
+  for (let d = 1; d <= remaining; d++) {
+    html += `<div class="cal-day other-month"><div class="cal-day-num">${d}</div></div>`;
+  }
+
+  grid.innerHTML = html;
+}
+
+function showDay(dateStr) {
+  const detail   = document.getElementById('dayDetail');
+  const dayBookings = allBookings.filter(b => b.datum === dateStr);
+  const formatted = new Date(dateStr + 'T12:00:00').toLocaleDateString('nl-NL', {weekday:'long',day:'numeric',month:'long',year:'numeric'});
+
+  document.getElementById('dayTitle').textContent = `📅 ${formatted}`;
+  document.getElementById('dayBookings').innerHTML = dayBookings.length
+    ? dayBookings.map(b => `
+      <div class="booking-item ${b.status}">
+        <div>
+          <strong>${b.naam_baasje}</strong> — ${b.naam_huisdier} (${b.soort_dier || '?'})<br>
+          <span style="font-size:.85rem;color:var(--brown-mid)">${b.dienst}</span>
+          ${b.telefoon ? `· <a href="tel:${b.telefoon}" style="color:var(--coral)">${b.telefoon}</a>` : ''}
+        </div>
+        <div style="display:flex;align-items:center;gap:.6rem">
+          ${badgeHtml(b.status)}
+        </div>
+      </div>`).join('')
+    : '<p style="color:var(--brown-mid);text-align:center;padding:1.5rem">Geen afspraken op deze dag 🐾</p>';
+
+  detail.style.display = 'block';
+  detail.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+}
+
+init();
+</script>
+</body>
+</html>

@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Klanten — Pawfect Admin</title>
+<link href="https://fonts.googleapis.com/css2?family=Fredoka+One&family=Nunito:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/css/admin.css">
+</head>
+<body>
+<aside class="sidebar">
+  <div class="sb-logo"><svg viewBox="0 0 64 64" fill="#FFD166"><ellipse cx="12" cy="14" rx="7" ry="9"/><ellipse cx="32" cy="8" rx="7" ry="9"/><ellipse cx="52" cy="14" rx="7" ry="9"/><ellipse cx="22" cy="28" rx="6" ry="8"/><ellipse cx="42" cy="28" rx="6" ry="8"/><path d="M32 24c-14 0-20 10-18 22 2 8 8 12 18 12s16-4 18-12c2-12-4-22-18-22z"/></svg><span>Pawfect</span></div>
+  <nav class="sb-nav">
+    <a href="/admin/dashboard.html" class="sb-link"><span class="ico">🏠</span> Dashboard</a>
+    <a href="/admin/bookings.html"  class="sb-link"><span class="ico">📅</span> Boekingen</a>
+    <a href="/admin/agenda.html"    class="sb-link"><span class="ico">🗓️</span> Agenda</a>
+    <a href="/admin/clients.html"   class="sb-link active"><span class="ico">🐾</span> Klanten</a>
+    <a href="/admin/blog.html"      class="sb-link"><span class="ico">📝</span> Blog</a>
+    <a href="/" class="sb-link" target="_blank"><span class="ico">🌐</span> Website</a>
+  </nav>
+  <div class="sb-user"><p id="admin-email"></p><button class="sb-logout" onclick="logout()">↩ Uitloggen</button></div>
+</aside>
+
+<main class="main">
+  <div class="page-header">
+    <div><div class="page-title">Klanten 🐾</div><div class="page-sub">Alle klantgegevens op een rij</div></div>
+    <button class="btn btn-coral" onclick="openModal('addModal')">+ Klant toevoegen</button>
+  </div>
+
+  <div id="alertBox" class="alert" style="display:none"></div>
+
+  <div style="display:flex;gap:1rem;margin-bottom:1.5rem">
+    <input type="search" id="zoek" placeholder="🔍 Zoek op naam of huisdier..." oninput="zoekKlanten()" style="padding:.65rem 1.1rem;border-radius:50px;border:2px solid var(--yellow);font-family:'Nunito',sans-serif;font-weight:700;font-size:.9rem;color:var(--brown);background:var(--yellow-light);outline:none;flex:1;max-width:360px">
+  </div>
+
+  <div class="table-wrap">
+    <table>
+      <thead><tr><th>Naam</th><th>Huisdier</th><th>Telefoon</th><th>E-mail</th><th>Klant sinds</th><th>Boekingen</th><th></th></tr></thead>
+      <tbody id="tabel"></tbody>
+    </table>
+  </div>
+</main>
+
+<!-- ADD MODAL -->
+<div class="modal-bg" id="addModal">
+  <div class="modal">
+    <div class="modal-header"><div class="modal-title">Klant toevoegen</div><button class="modal-close" onclick="closeModal('addModal')">✕</button></div>
+    <form id="addForm">
+      <div class="form-grid">
+        <div class="fg"><label>Naam baasje *</label><input type="text" id="add-naam" required></div>
+        <div class="fg"><label>Telefoon</label><input type="tel" id="add-tel"></div>
+        <div class="fg"><label>E-mail</label><input type="email" id="add-email"></div>
+        <div class="fg"><label>Naam huisdier</label><input type="text" id="add-huisdier"></div>
+        <div class="fg"><label>Soort dier</label><select id="add-soort" style="padding:.75rem 1rem;border-radius:10px;border:2px solid var(--yellow);font-family:'Nunito',sans-serif;font-weight:700;font-size:.9rem;color:var(--brown);background:var(--yellow-light)"><option value="">Kies...</option><option>Hond</option><option>Kat</option><option>Konijn</option><option>Anders</option></select></div>
+        <div class="fg"><label>Ras</label><input type="text" id="add-ras" placeholder="bijv. Golden Retriever"></div>
+        <div class="fg form-full"><label>Opmerkingen</label><textarea id="add-opmerking" placeholder="Bijzonderheden, allergieën, etc."></textarea></div>
+      </div>
+      <button type="submit" class="btn btn-coral" style="margin-top:1rem;width:100%">Klant opslaan</button>
+    </form>
+  </div>
+</div>
+
+<!-- DETAIL MODAL -->
+<div class="modal-bg" id="detailModal">
+  <div class="modal">
+    <div class="modal-header"><div class="modal-title" id="detailTitle">Klantprofiel</div><button class="modal-close" onclick="closeModal('detailModal')">✕</button></div>
+    <div id="detailContent"></div>
+  </div>
+</div>
+
+<script src="/js/admin.js"></script>
+<script>
+let alleKlanten = [];
+let activeKlant = null;
+
+async function laadKlanten(search = '') {
+  const params = search ? `?search=${encodeURIComponent(search)}` : '';
+  alleKlanten = await api('/clients' + params);
+  renderTabel(alleKlanten);
+}
+
+function renderTabel(klanten) {
+  const tabel = document.getElementById('tabel');
+  if (!klanten.length) {
+    tabel.innerHTML = '<tr><td colspan="7" style="text-align:center;padding:2.5rem;color:var(--brown-mid)"><div style="font-size:2.5rem">🐾</div>Geen klanten gevonden</td></tr>';
+    return;
+  }
+  tabel.innerHTML = klanten.map(k => `
+    <tr>
+      <td><strong>${k.naam}</strong></td>
+      <td>${k.huisdier_naam || '—'}<br><small style="color:var(--brown-mid)">${k.huisdier_soort || ''} ${k.ras ? '· '+k.ras : ''}</small></td>
+      <td>${k.telefoon ? `<a href="tel:${k.telefoon}" style="color:var(--coral);font-weight:700">${k.telefoon}</a>` : '—'}</td>
+      <td>${k.email ? `<a href="mailto:${k.email}" style="color:var(--coral);font-weight:700">${k.email}</a>` : '—'}</td>
+      <td>${formatDate(k.created_at)}</td>
+      <td><span class="badge badge-bevestigd">${(k.bookings || []).length}x</span></td>
+      <td><button class="btn btn-sm btn-outline" onclick='toonDetail(${JSON.stringify(k).replace(/"/g,"&quot;")})'>Bekijk</button></td>
+    </tr>`).join('');
+}
+
+function toonDetail(k) {
+  activeKlant = k;
+  document.getElementById('detailTitle').textContent = k.naam;
+  const boekingen = k.bookings || [];
+  document.getElementById('detailContent').innerHTML = `
+    <div style="background:var(--yellow-light);border-radius:12px;padding:1.2rem;border:2px solid var(--yellow);margin-bottom:1rem">
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:.6rem;font-size:.9rem">
+        <div><span style="color:var(--brown-mid);font-weight:700">Telefoon</span><br>${k.telefoon ? `<a href="tel:${k.telefoon}" style="color:var(--coral)">${k.telefoon}</a>` : '—'}</div>
+        <div><span style="color:var(--brown-mid);font-weight:700">E-mail</span><br>${k.email ? `<a href="mailto:${k.email}" style="color:var(--coral)">${k.email}</a>` : '—'}</div>
+        <div><span style="color:var(--brown-mid);font-weight:700">Huisdier</span><br>${k.huisdier_naam || '—'}</div>
+        <div><span style="color:var(--brown-mid);font-weight:700">Ras</span><br>${k.ras || '—'}</div>
+        ${k.opmerkingen ? `<div style="grid-column:span 2"><span style="color:var(--brown-mid);font-weight:700">Notities</span><br>${k.opmerkingen}</div>` : ''}
+      </div>
+    </div>
+    <h4 style="font-family:'Fredoka One',cursive;color:var(--brown);margin-bottom:.7rem">Boekingshistorie (${boekingen.length})</h4>
+    ${boekingen.length ? boekingen.map(b => `
+      <div style="background:var(--cream);border-radius:10px;padding:.8rem 1rem;margin-bottom:.5rem;display:flex;justify-content:space-between;font-size:.88rem">
+        <span>${b.dienst}</span>
+        <span style="color:var(--brown-mid)">${formatDate(b.datum)}</span>
+        ${badgeHtml(b.status)}
+      </div>`).join('') : '<p style="color:var(--brown-mid);font-size:.9rem">Nog geen boekingen</p>'}
+    <button class="btn btn-danger" style="margin-top:1.2rem;width:100%" onclick="verwijderKlant()">🗑️ Klant verwijderen</button>`;
+  openModal('detailModal');
+}
+
+function zoekKlanten() {
+  const q = document.getElementById('zoek').value;
+  clearTimeout(zoekKlanten._t);
+  zoekKlanten._t = setTimeout(() => laadKlanten(q), 300);
+}
+
+document.getElementById('addForm').addEventListener('submit', async e => {
+  e.preventDefault();
+  try {
+    await api('/clients', { method: 'POST', body: {
+      naam: document.getElementById('add-naam').value,
+      telefoon: document.getElementById('add-tel').value,
+      email: document.getElementById('add-email').value,
+      huisdier_naam: document.getElementById('add-huisdier').value,
+      huisdier_soort: document.getElementById('add-soort').value,
+      ras: document.getElementById('add-ras').value,
+      opmerkingen: document.getElementById('add-opmerking').value,
+    }});
+    closeModal('addModal');
+    showAlert('✅ Klant toegevoegd!');
+    e.target.reset();
+    laadKlanten();
+  } catch(err) { showAlert(err.message, 'error'); }
+});
+
+async function verwijderKlant() {
+  if (!confirm(`Klant ${activeKlant.naam} verwijderen?`)) return;
+  try {
+    await api('/clients/' + activeKlant.id, { method: 'DELETE' });
+    closeModal('detailModal');
+    showAlert('🗑️ Klant verwijderd');
+    laadKlanten();
+  } catch(err) { showAlert(err.message, 'error'); }
+}
+
+(async () => { await requireAuth(); laadKlanten(); })();
+</script>
+</body>
+</html>

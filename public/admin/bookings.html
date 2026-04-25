@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Boekingen — Pawfect Admin</title>
+<link href="https://fonts.googleapis.com/css2?family=Fredoka+One&family=Nunito:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/css/admin.css">
+</head>
+<body>
+<aside class="sidebar">
+  <div class="sb-logo"><svg viewBox="0 0 64 64" fill="#FFD166"><ellipse cx="12" cy="14" rx="7" ry="9"/><ellipse cx="32" cy="8" rx="7" ry="9"/><ellipse cx="52" cy="14" rx="7" ry="9"/><ellipse cx="22" cy="28" rx="6" ry="8"/><ellipse cx="42" cy="28" rx="6" ry="8"/><path d="M32 24c-14 0-20 10-18 22 2 8 8 12 18 12s16-4 18-12c2-12-4-22-18-22z"/></svg><span>Pawfect</span></div>
+  <nav class="sb-nav">
+    <a href="/admin/dashboard.html" class="sb-link"><span class="ico">🏠</span> Dashboard</a>
+    <a href="/admin/bookings.html"  class="sb-link active"><span class="ico">📅</span> Boekingen</a>
+    <a href="/admin/agenda.html"    class="sb-link"><span class="ico">🗓️</span> Agenda</a>
+    <a href="/admin/clients.html"   class="sb-link"><span class="ico">🐾</span> Klanten</a>
+    <a href="/admin/blog.html"      class="sb-link"><span class="ico">📝</span> Blog</a>
+    <a href="/" class="sb-link" target="_blank"><span class="ico">🌐</span> Website</a>
+  </nav>
+  <div class="sb-user"><p id="admin-email"></p><button class="sb-logout" onclick="logout()">↩ Uitloggen</button></div>
+</aside>
+
+<main class="main">
+  <div class="page-header">
+    <div><div class="page-title">Boekingen 📅</div><div class="page-sub">Beheer alle boekingsaanvragen</div></div>
+  </div>
+
+  <div id="alertBox" class="alert" style="display:none"></div>
+
+  <!-- FILTERS -->
+  <div style="display:flex;gap:1rem;flex-wrap:wrap;margin-bottom:1.5rem;align-items:center">
+    <select id="filterStatus" onchange="laadBoekingen()" style="padding:.6rem 1rem;border-radius:10px;border:2px solid var(--yellow);font-family:'Nunito',sans-serif;font-weight:700;font-size:.9rem;color:var(--brown);background:var(--yellow-light);cursor:pointer">
+      <option value="">Alle statussen</option>
+      <option value="nieuw">Nieuw</option>
+      <option value="bevestigd">Bevestigd</option>
+      <option value="voltooid">Voltooid</option>
+      <option value="geannuleerd">Geannuleerd</option>
+    </select>
+    <input type="date" id="filterDatum" onchange="laadBoekingen()" style="padding:.6rem 1rem;border-radius:10px;border:2px solid var(--yellow);font-family:'Nunito',sans-serif;font-weight:700;font-size:.9rem;color:var(--brown);background:var(--yellow-light)">
+    <button onclick="document.getElementById('filterStatus').value='';document.getElementById('filterDatum').value='';laadBoekingen()" class="btn btn-outline btn-sm">Reset</button>
+  </div>
+
+  <div class="table-wrap">
+    <table>
+      <thead><tr><th>Baasje</th><th>Huisdier</th><th>Dienst</th><th>Datum</th><th>Telefoon</th><th>Status</th><th>Acties</th></tr></thead>
+      <tbody id="tabel"></tbody>
+    </table>
+  </div>
+</main>
+
+<!-- DETAIL MODAL -->
+<div class="modal-bg" id="detailModal">
+  <div class="modal">
+    <div class="modal-header">
+      <div class="modal-title">Boeking details</div>
+      <button class="modal-close" onclick="closeModal('detailModal')">✕</button>
+    </div>
+    <div id="detailContent"></div>
+    <div style="margin-top:1.5rem">
+      <div class="fg"><label>Status wijzigen</label>
+        <select id="statusSelect" style="padding:.75rem 1rem;border-radius:10px;border:2px solid var(--yellow);font-family:'Nunito',sans-serif;font-weight:700;font-size:.9rem;color:var(--brown);background:var(--yellow-light)">
+          <option value="nieuw">Nieuw</option>
+          <option value="bevestigd">Bevestigd</option>
+          <option value="voltooid">Voltooid</option>
+          <option value="geannuleerd">Geannuleerd</option>
+        </select>
+      </div>
+      <div class="fg"><label>Notitie</label><textarea id="notitieInput" placeholder="Interne notitie..." style="padding:.75rem 1rem;border-radius:10px;border:2px solid var(--yellow);font-family:'Nunito',sans-serif;font-size:.9rem;color:var(--brown);background:var(--yellow-light);resize:vertical;min-height:80px;width:100%"></textarea></div>
+      <div style="display:flex;gap:.8rem;margin-top:1rem">
+        <button class="btn btn-coral" onclick="slaStatusOp()" id="saveBtn">Opslaan</button>
+        <button class="btn btn-danger" onclick="verwijderBoeking()" id="deleteBtn">Verwijder</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script src="/js/admin.js"></script>
+<script>
+let activeBoeking = null;
+
+async function laadBoekingen() {
+  const status = document.getElementById('filterStatus').value;
+  const datum  = document.getElementById('filterDatum').value;
+  const params = new URLSearchParams();
+  if (status) params.set('status', status);
+  if (datum)  params.set('datum', datum);
+
+  const bookings = await api('/bookings?' + params.toString());
+  const tabel = document.getElementById('tabel');
+
+  if (!bookings.length) {
+    tabel.innerHTML = '<tr><td colspan="7" style="text-align:center;padding:2rem;color:var(--brown-mid)"><div style="font-size:2rem">📭</div>Geen boekingen gevonden</td></tr>';
+    return;
+  }
+
+  tabel.innerHTML = bookings.map(b => `
+    <tr>
+      <td><strong>${b.naam_baasje}</strong></td>
+      <td>${b.naam_huisdier}<br><small style="color:var(--brown-mid)">${b.soort_dier || ''}</small></td>
+      <td>${b.dienst}</td>
+      <td>${formatDate(b.datum)}</td>
+      <td>${b.telefoon || '—'}</td>
+      <td>${badgeHtml(b.status)}</td>
+      <td><button class="btn btn-sm btn-outline" onclick="openDetail(${JSON.stringify(b).replace(/"/g,'&quot;')})">Beheer</button></td>
+    </tr>`).join('');
+}
+
+function openDetail(b) {
+  activeBoeking = b;
+  document.getElementById('detailContent').innerHTML = `
+    <div style="background:var(--yellow-light);border-radius:12px;padding:1.2rem;border:2px solid var(--yellow)">
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:.6rem;font-size:.9rem">
+        <div><span style="color:var(--brown-mid);font-weight:700">Baasje</span><br><strong>${b.naam_baasje}</strong></div>
+        <div><span style="color:var(--brown-mid);font-weight:700">Telefoon</span><br>${b.telefoon || '—'}</div>
+        <div><span style="color:var(--brown-mid);font-weight:700">E-mail</span><br>${b.email || '—'}</div>
+        <div><span style="color:var(--brown-mid);font-weight:700">Huisdier</span><br>${b.naam_huisdier} (${b.soort_dier || '—'})</div>
+        <div><span style="color:var(--brown-mid);font-weight:700">Dienst</span><br>${b.dienst}</div>
+        <div><span style="color:var(--brown-mid);font-weight:700">Datum</span><br>${formatDate(b.datum)}</div>
+        ${b.opmerkingen ? `<div style="grid-column:span 2"><span style="color:var(--brown-mid);font-weight:700">Opmerkingen</span><br>${b.opmerkingen}</div>` : ''}
+      </div>
+    </div>`;
+  document.getElementById('statusSelect').value = b.status;
+  document.getElementById('notitieInput').value = b.notitie || '';
+  openModal('detailModal');
+}
+
+async function slaStatusOp() {
+  const btn = document.getElementById('saveBtn');
+  btn.textContent = 'Bezig...';
+  try {
+    await api('/bookings/' + activeBoeking.id, {
+      method: 'PATCH',
+      body: { status: document.getElementById('statusSelect').value, notitie: document.getElementById('notitieInput').value }
+    });
+    closeModal('detailModal');
+    showAlert('✅ Boeking bijgewerkt!');
+    laadBoekingen();
+  } catch(e) {
+    showAlert(e.message, 'error');
+  }
+  btn.textContent = 'Opslaan';
+}
+
+async function verwijderBoeking() {
+  if (!confirm(`Weet je zeker dat je de boeking van ${activeBoeking.naam_baasje} wilt verwijderen?`)) return;
+  try {
+    await api('/bookings/' + activeBoeking.id, { method: 'DELETE' });
+    closeModal('detailModal');
+    showAlert('🗑️ Boeking verwijderd');
+    laadBoekingen();
+  } catch(e) {
+    showAlert(e.message, 'error');
+  }
+}
+
+(async () => { await requireAuth(); laadBoekingen(); })();
+</script>
+</body>
+</html>

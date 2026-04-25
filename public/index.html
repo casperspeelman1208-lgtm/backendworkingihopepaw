@@ -1,0 +1,1229 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Pawfect Grooming — Where Every Pet Shines</title>
+<link href="https://fonts.googleapis.com/css2?family=Fredoka+One&family=Nunito:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+<div id="cursor">
+  <svg viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg" fill="#FF6B6B">
+    <ellipse cx="12" cy="14" rx="7" ry="9"/><ellipse cx="32" cy="8" rx="7" ry="9"/>
+    <ellipse cx="52" cy="14" rx="7" ry="9"/><ellipse cx="22" cy="28" rx="6" ry="8"/>
+    <ellipse cx="42" cy="28" rx="6" ry="8"/>
+    <path d="M32 24c-14 0-20 10-18 22 2 8 8 12 18 12s16-4 18-12c2-12-4-22-18-22z"/>
+  </svg>
+</div>
+<div id="progress"></div>
+
+<!-- NAV -->
+<nav id="nav">
+  <a href="#" class="logo" id="logo-link">
+    <svg viewBox="0 0 64 64" width="28" height="28" fill="#FF6B6B"><ellipse cx="12" cy="14" rx="7" ry="9"/><ellipse cx="32" cy="8" rx="7" ry="9"/><ellipse cx="52" cy="14" rx="7" ry="9"/><ellipse cx="22" cy="28" rx="6" ry="8"/><ellipse cx="42" cy="28" rx="6" ry="8"/><path d="M32 24c-14 0-20 10-18 22 2 8 8 12 18 12s16-4 18-12c2-12-4-22-18-22z"/></svg>
+    Pawfect
+  </a>
+  <ul class="nav-links">
+    <li class="has-drop">
+      <a href="#services">Diensten <span class="drop-arrow">▾</span></a>
+      <ul class="dropdown">
+        <li><a href="#" onclick="navigateTo('bad-borstel');return false">🛁 Bad &amp; Borstel</a></li>
+        <li><a href="#" onclick="navigateTo('knipbeurt-styling');return false">✂️ Knipbeurt &amp; Styling</a></li>
+        <li><a href="#" onclick="navigateTo('nagels-poten');return false">💅 Nagels &amp; Poten</a></li>
+        <li><a href="#" onclick="navigateTo('spa-deluxe');return false">🌟 Spa Deluxe</a></li>
+        <li class="drop-divider"></li>
+        <li><a href="#" onclick="navigateTo('prijslijst');return false">💰 Volledige prijslijst</a></li>
+      </ul>
+    </li>
+    <li class="has-drop">
+      <a href="#" onclick="return false">Over ons <span class="drop-arrow">▾</span></a>
+      <ul class="dropdown">
+        <li><a href="#" onclick="navigateTo('over-ons');return false">🏠 Over Pawfect</a></li>
+        <li><a href="#" onclick="navigateTo('ons-team');return false">👥 Ons team</a></li>
+        <li><a href="#" onclick="navigateTo('blog');return false">📝 Blog</a></li>
+        <li><a href="#" onclick="navigateTo('vacatures');return false">💼 Vacatures</a></li>
+      </ul>
+    </li>
+    <li><a href="#" onclick="navigateTo('contact');return false">Contact</a></li>
+    <li class="has-drop">
+      <a href="#" onclick="return false">Info <span class="drop-arrow">▾</span></a>
+      <ul class="dropdown">
+        <li><a href="#" onclick="navigateTo('faq-page');return false">❓ Veelgestelde vragen</a></li>
+        <li><a href="#" onclick="navigateTo('cadeaubon');return false">🎁 Cadeaubon</a></li>
+        <li><a href="#" onclick="navigateTo('abonnement');return false">🔄 Abonnement</a></li>
+        <li class="drop-divider"></li>
+        <li><a href="#" onclick="navigateTo('privacybeleid');return false">Privacybeleid</a></li>
+        <li><a href="#" onclick="navigateTo('algemene-voorwaarden');return false">Algemene voorwaarden</a></li>
+      </ul>
+    </li>
+    <li><a href="#reviews">Reviews</a></li>
+  </ul>
+  <button class="nav-cta" onclick="navigateTo('home');setTimeout(()=>document.getElementById('booking').scrollIntoView({behavior:'smooth'}),300)">Boek nu 🐾</button>
+  <div class="burger" id="burger" onclick="toggleMenu()"><span></span><span></span><span></span></div>
+</nav>
+<div class="mob-menu" id="mobMenu">
+  <div class="mob-section"><strong>Diensten</strong>
+    <a href="#" onclick="navigateTo('bad-borstel');toggleMenu();return false">🛁 Bad &amp; Borstel</a>
+    <a href="#" onclick="navigateTo('knipbeurt-styling');toggleMenu();return false">✂️ Knipbeurt &amp; Styling</a>
+    <a href="#" onclick="navigateTo('nagels-poten');toggleMenu();return false">💅 Nagels &amp; Poten</a>
+    <a href="#" onclick="navigateTo('spa-deluxe');toggleMenu();return false">🌟 Spa Deluxe</a>
+    <a href="#" onclick="navigateTo('prijslijst');toggleMenu();return false">💰 Prijslijst</a>
+  </div>
+  <div class="mob-section"><strong>Over ons</strong>
+    <a href="#" onclick="navigateTo('over-ons');toggleMenu();return false">🏠 Over Pawfect</a>
+    <a href="#" onclick="navigateTo('ons-team');toggleMenu();return false">👥 Ons team</a>
+    <a href="#" onclick="navigateTo('blog');toggleMenu();return false">📝 Blog</a>
+    <a href="#" onclick="navigateTo('vacatures');toggleMenu();return false">💼 Vacatures</a>
+  </div>
+  <div class="mob-section"><strong>Info</strong>
+    <a href="#" onclick="navigateTo('faq-page');toggleMenu();return false">❓ FAQ</a>
+    <a href="#" onclick="navigateTo('cadeaubon');toggleMenu();return false">🎁 Cadeaubon</a>
+    <a href="#" onclick="navigateTo('abonnement');toggleMenu();return false">🔄 Abonnement</a>
+  </div>
+  <a href="#" onclick="navigateTo('contact');toggleMenu();return false" style="color:var(--coral);font-weight:900;padding:.8rem 0;display:block">📬 Contact</a>
+  <a href="#" onclick="navigateTo('home');setTimeout(()=>document.getElementById('booking').scrollIntoView({behavior:'smooth'}),300);toggleMenu();return false" style="color:var(--coral);margin-top:.5rem">Boek een afspraak →</a>
+</div>
+<div id="main-page">
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-decor">
+    <div class="hblob a"></div><div class="hblob b"></div><div class="hblob c"></div>
+    <div class="fpaws" id="fpaws"></div>
+  </div>
+  <div class="hero-inner">
+    <div class="hero-text">
+      <div class="badge">✦ Al 9 jaar de beste verzorging in de regio</div>
+      <h1>Jouw huisdier verdient het om te <span class="acc">stralen</span></h1>
+      <p>Professionele verzorging die stressvrij is én vol kwispelende staartjes. Wij behandelen elk dier als een eigen harig familielid.</p>
+      <div class="hero-btns">
+        <a href="#booking" class="btn-p">Boek een beurt 🐾</a>
+        <a href="#services" class="btn-s">Bekijk diensten →</a>
+      </div>
+      <div class="pet-pills">
+        <span class="pet-pill">🐶 Honden</span>
+        <span class="pet-pill">🐱 Katten</span>
+        <span class="pet-pill">🐰 Konijnen</span>
+        <span class="pet-pill">🐾 En meer</span>
+      </div>
+    </div>
+    <div class="hero-vis">
+      <div class="h-card">
+        <div class="h-card-img" style="padding:0;overflow:hidden"><img src="img/labrador.jpg" alt="Labrador" style="width:100%;height:100%;object-fit:cover;border-radius:18px;display:block"/></div>
+        <h3>Buddy – Golden Retriever</h3>
+        <p>Spa-pakket + stijlvolle bandana</p>
+        <div class="hcb-row">
+          <span class="hcb">✓ Gewassen</span>
+          <span class="hcb">✓ Geknipt</span>
+          <span class="hcb">✓ Nagels</span>
+        </div>
+        <div class="ftag ft1">⭐ 4.9 beoordeling</div>
+        <div class="ftag ft2">🌿 100% Natuurlijk</div>
+        <div class="ftag ft3">📅 Vandaag beschikbaar</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- TRUST BAR -->
+<div class="trust-bar">
+  <div class="ti"><div class="tdot"></div>2.000+ tevreden huisdieren</div>
+  <div class="ti"><div class="tdot"></div>Gecertificeerde verzorgers</div>
+  <div class="ti"><div class="tdot"></div>Geen verborgen kosten</div>
+  <div class="ti"><div class="tdot"></div>Foto-updates tijdens beurt</div>
+  <div class="ti"><div class="tdot"></div>Flexibele tijden</div>
+</div>
+
+<svg class="wave" viewBox="0 0 1440 60" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none" style="background:#3D2314"><path d="M0,0 C480,60 960,0 1440,60L1440,60L0,60Z" fill="#ffffff"/></svg>
+
+<!-- HOW IT WORKS -->
+<section class="how" id="how">
+  <div class="sh sa">
+    <div class="lbl">Zo werkt het</div>
+    <h2>In 3 stappen pico bello</h2>
+    <p>Van afspraak tot een stralend, vrolijk huisdier — makkelijker kan het niet</p>
+  </div>
+  <div class="how-grid">
+    <div class="how-line"></div>
+    <div class="how-step sa" data-d="1">
+      <div class="step-num">📅</div>
+      <h3>Boek online</h3>
+      <p>Kies je dienst, datum en tijdstip. Je krijgt direct een bevestiging en herinneringsmail.</p>
+    </div>
+    <div class="how-step sa" data-d="2">
+      <div class="step-num">🛁</div>
+      <h3>Wij verzorgen</h3>
+      <p>Jij doet je ding, wij doen het onze. Foto-updates via WhatsApp terwijl je dier in goede handen is.</p>
+    </div>
+    <div class="how-step sa" data-d="3">
+      <div class="step-num">✨</div>
+      <h3>Ophalen & stralen</h3>
+      <p>Jouw viervoeter komt er fris, verzorgd en blij uit. Gegarandeerd een geweldig resultaat.</p>
+    </div>
+  </div>
+</section>
+
+<svg class="wave" viewBox="0 0 1440 60" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none" style="background:#fff"><path d="M0,60 C480,0 960,60 1440,0L1440,60L0,60Z" fill="#FFFBF0"/></svg>
+
+<!-- SERVICES -->
+<section class="services" id="services">
+  <div class="sh sa">
+    <div class="lbl">Onze diensten</div>
+    <h2>Wat we voor jullie doen 🐾</h2>
+    <p>Elke behandeling is ontworpen met het welzijn en comfort van jouw dier voorop</p>
+  </div>
+  <div class="svc-grid">
+    <div class="svc s1 sa" data-d="1">
+      <div style="width:100%;height:160px;border-radius:16px;overflow:hidden;margin-bottom:1.3rem"><img src="img/dog_bath.jpg" alt="Hond wordt gewassen" style="width:100%;height:100%;object-fit:cover"src="img/dog_bath.jpg" style="width:100%;height:100%;object-fit:cover"/></div>
+      <h3>Bad & Borstel</h3>
+      <p>Een grondige wasbeurt met hoogwaardige shampoo, föhnbeurt en uitgebreide borstelsessie.</p>
+      <ul>
+        <li>Hypoallergene shampoo</li><li>Professioneel drogen & föhnen</li>
+        <li>Uitborstelen & polijsten</li><li>Geurige vacht-spray</li>
+      </ul>
+      <div class="svc-foot"><button class="svc-meer" onclick="navigateTo('bad-borstel');return false">Meer informatie →</button>
+        <div class="svc-foot-row"><span class="svc-price">Vanaf €35</span>
+        <button class="svc-btn" onclick="document.getElementById('booking').scrollIntoView({behavior:'smooth'})">Boek →</button></div>
+      </div>
+    </div>
+    <div class="svc s2 sa" data-d="2">
+      <span class="pop-tag">Populair</span>
+      <div style="width:100%;height:160px;border-radius:16px;overflow:hidden;margin-bottom:1.3rem"><img src="img/labrador.jpg" alt="Hond na knipbeurt" style="width:100%;height:100%;object-fit:cover"src="img/labrador.jpg" style="width:100%;height:100%;object-fit:cover"/></div>
+      <h3>Knipbeurt & Styling</h3>
+      <p>Rasspecifieke knipper of een custom stijl — jouw hond of kat ziet er absoluut geweldig uit.</p>
+      <ul>
+        <li>Consultatie + stijladvies</li><li>Rasspecifiek knippen</li>
+        <li>Oren controleren & reinigen</li><li>Bandana of strikje</li>
+      </ul>
+      <div class="svc-foot"><button class="svc-meer" onclick="navigateTo('knipbeurt-styling');return false">Meer informatie →</button>
+        <div class="svc-foot-row"><span class="svc-price">Vanaf €45</span>
+        <button class="svc-btn" onclick="document.getElementById('booking').scrollIntoView({behavior:'smooth'})">Boek →</button></div>
+      </div>
+    </div>
+    <div class="svc s3 sa" data-d="3">
+      <div style="width:100%;height:160px;border-radius:16px;overflow:hidden;margin-bottom:1.3rem"><img src="img/cat_bath.jpg" alt="Kat wordt verzorgd" style="width:100%;height:100%;object-fit:cover"src="img/cat_bath.jpg" style="width:100%;height:100%;object-fit:cover"/></div>
+      <h3>Nagels & Poten</h3>
+      <p>Veilig nagels knippen en vijlen plus beschermende potencrème voor gelukkige pootjes.</p>
+      <ul>
+        <li>Nagels knippen & vijlen</li><li>Poten uitgebreid verzorgen</li>
+        <li>Beschermende crème aanbrengen</li><li>Vacht tussen nagels trimmen</li>
+      </ul>
+      <div class="svc-foot"><button class="svc-meer" onclick="navigateTo('nagels-poten');return false">Meer informatie →</button>
+        <div class="svc-foot-row"><span class="svc-price">Vanaf €15</span>
+        <button class="svc-btn" onclick="document.getElementById('booking').scrollIntoView({behavior:'smooth'})">Boek →</button></div>
+      </div>
+    </div>
+    <div class="svc s4 sa" data-d="4">
+      <div style="width:100%;height:160px;border-radius:16px;overflow:hidden;margin-bottom:1.3rem"><img src="img/dog_bath.jpg" alt="Spa behandeling" style="width:100%;height:100%;object-fit:cover"src="img/dog_bath.jpg" style="width:100%;height:100%;object-fit:cover"/></div>
+      <h3>Spa Deluxe</h3>
+      <p>Het ultieme verwenpakket — bad, knipbeurt, nagels, tanden, oorreinigen én een sjaaltje.</p>
+      <ul>
+        <li>Alles van bovenstaande diensten</li><li>Tanden poetsen</li>
+        <li>Ontspannende massagebehandeling</li><li>Professioneel foto-verslag thuis</li>
+      </ul>
+      <div class="svc-foot"><button class="svc-meer" onclick="navigateTo('spa-deluxe');return false">Meer informatie →</button>
+        <div class="svc-foot-row"><span class="svc-price">Vanaf €75</span>
+        <button class="svc-btn" onclick="document.getElementById('booking').scrollIntoView({behavior:'smooth'})">Boek →</button></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<svg class="wave" viewBox="0 0 1440 60" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none" style="background:#FFFBF0"><path d="M0,0 C480,60 960,0 1440,60L1440,60L0,60Z" fill="#3D2314"/></svg>
+
+<!-- BEFORE / AFTER -->
+<section class="ba-sec">
+  <div class="sh sa">
+    <div class="lbl" style="background:rgba(255,209,102,.15);color:var(--yellow)">Resultaten</div>
+    <h2 style="color:var(--yellow)">Voor & Na</h2>
+    <p style="color:#c4906e">Het verschil dat een professionele beurt maakt</p>
+  </div>
+  <div class="ba-grid">
+    <div class="ba-card sal" data-d="1">
+      <div class="ba-imgs">
+        <div class="ba-b" style="background-image:url(img/golden_combo.jpg);background-size:200% 100%;background-position:left center;background-repeat:no-repeat;"><span class="ba-lbl">Voor</span></div>
+        <div class="ba-arr">→</div>
+        <div class="ba-a" style="background-image:url(img/golden_combo.jpg);background-size:200% 100%;background-position:right center;background-repeat:no-repeat;"><span class="ba-lbl">Na</span></div>
+      </div>
+      <div class="ba-info"><strong>Max – Golden Retriever</strong><span>Bad & Borstel + Knipbeurt</span></div>
+    </div>
+    <div class="ba-card sa" data-d="2">
+      <div class="ba-imgs">
+        <div class="ba-b" style="background-image:url(img/cat_combo.jpg);background-size:100% 200%;background-position:center top;background-repeat:no-repeat;"><span class="ba-lbl">Voor</span></div>
+        <div class="ba-arr">→</div>
+        <div class="ba-a" style="background-image:url(img/cat_combo.jpg);background-size:100% 200%;background-position:center bottom;background-repeat:no-repeat;"><span class="ba-lbl">Na</span></div>
+      </div>
+      <div class="ba-info"><strong>Luna – Maine Coon</strong><span>Volledige grooming beurt</span></div>
+    </div>
+    <div class="ba-card sar" data-d="1">
+      <div class="ba-imgs">
+        <div class="ba-b" style="background-image:url(img/poodle_combo.jpg);background-size:200% 100%;background-position:left center;background-repeat:no-repeat;"><span class="ba-lbl">Voor</span></div>
+        <div class="ba-arr">→</div>
+        <div class="ba-a" style="background-image:url(img/poodle_combo.jpg);background-size:200% 100%;background-position:right center;background-repeat:no-repeat;"><span class="ba-lbl">Na</span></div>
+      </div>
+      <div class="ba-info"><strong>Coco – Poedel</strong><span>Rasspecifieke knipbeurt & styling</span></div>
+    </div>
+  </div>
+</section>
+
+<svg class="wave" viewBox="0 0 1440 60" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none" style="background:#3D2314"><path d="M0,60 C480,0 960,60 1440,0L1440,60L0,60Z" fill="#FFD166"/></svg>
+
+<!-- STATS -->
+<section class="stats">
+  <div class="stats-grid">
+    <div class="stat sa"><div><span class="num" data-target="2000">0</span><span class="unit">+</span></div><p>Tevreden huisdieren</p></div>
+    <div class="stat sa" data-d="1"><div><span class="num" data-target="9">0</span><span class="unit"> jr</span></div><p>Jaar ervaring</p></div>
+    <div class="stat sa" data-d="2"><div><span class="num" data-target="100">0</span><span class="unit">%</span></div><p>Natuurlijke producten</p></div>
+    <div class="stat sa" data-d="3"><div><span class="num" data-target="4.9" data-dec="1">4</span><span class="unit">★</span></div><p>Gemiddelde beoordeling</p></div>
+  </div>
+</section>
+
+<svg class="wave" viewBox="0 0 1440 60" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none" style="background:#FFD166"><path d="M0,0 C480,60 960,0 1440,60L1440,60L0,60Z" fill="#ffffff"/></svg>
+
+<!-- TEAM -->
+<section class="team" id="team">
+  <div class="sh sa">
+    <div class="lbl">Ons team</div>
+    <h2>Meet onze dierenliefhebbers 💛</h2>
+    <p>Gecertificeerde professionals die huisdieren net zo lief vinden als jij</p>
+  </div>
+  <div class="team-grid">
+    <div class="team-card sas" data-d="1">
+      <div class="t-ava" style="overflow:hidden;padding:0"><img src="img/team_lisa.jpg" alt="Lisa" style="width:100%;height:100%;object-fit:cover;object-position:center top"/></div>
+      <h3>Lisa van den Berg</h3>
+      <div class="t-role">Hoofd verzorger</div>
+      <p>Met 12 jaar ervaring en een opleiding bij de PGF is Lisa de stille kracht achter elk perfect resultaat.</p>
+      <div class="t-tags"><span class="t-tag">Honden</span><span class="t-tag">Katten</span><span class="t-tag">PGF-cert.</span></div>
+    </div>
+    <div class="team-card sas" data-d="2">
+      <div class="t-ava" style="overflow:hidden;padding:0"><img src="img/team_daan.jpg" alt="Daan" style="width:100%;height:100%;object-fit:cover;object-position:center top"/></div>
+      <h3>Daan Rooijmans</h3>
+      <div class="t-role">Senior stylist</div>
+      <p>Daan is specialist in rasspecifieke styling en heeft een talent voor het geruststellen van nerveuze dieren.</p>
+      <div class="t-tags"><span class="t-tag">Styling</span><span class="t-tag">Angstige dieren</span></div>
+    </div>
+    <div class="team-card sas" data-d="3">
+      <div class="t-ava" style="overflow:hidden;padding:0"><img src="img/team_sophie.jpg" alt="Sophie" style="width:100%;height:100%;object-fit:cover;object-position:center top"/></div>
+      <h3>Sophie Kruijer</h3>
+      <div class="t-role">Wellness specialist</div>
+      <p>Sophie is expert in massages en spa-behandelingen. Haar kalme aanpak doet elk huisdier ontspannen.</p>
+      <div class="t-tags"><span class="t-tag">Spa</span><span class="t-tag">Massage</span><span class="t-tag">Konijnen</span></div>
+    </div>
+    <div class="team-card sas" data-d="4">
+      <div class="t-ava" style="overflow:hidden;padding:0"><img src="img/team_tom.jpg" alt="Tom" style="width:100%;height:100%;object-fit:cover;object-position:center top"/></div>
+      <h3>Tom de Vries</h3>
+      <div class="t-role">Receptie & planning</div>
+      <p>Tom zorgt ervoor dat elke afspraak vlekkeloos verloopt en dat iedereen zich welkom voelt.</p>
+      <div class="t-tags"><span class="t-tag">Planning</span><span class="t-tag">Klantenservice</span></div>
+    </div>
+  </div>
+
+<div style="text-align:center;margin-top:3rem">
+  <button class="btn-p" style="border:none;cursor:none" onclick="navigateTo('ons-team')">
+    Ontmoet ons volledige team →
+  </button>
+</div>
+</section>
+
+<svg class="wave" viewBox="0 0 1440 60" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none" style="background:#fff"><path d="M0,60 C480,0 960,60 1440,0L1440,60L0,60Z" fill="#FFFBF0"/></svg>
+
+<!-- TESTIMONIALS -->
+<section class="testi" id="reviews">
+  <div class="sh sa">
+    <div class="lbl">Reviews</div>
+    <h2>Wat baasjes over ons zeggen 💬</h2>
+    <p>Meer dan 500 vijfsterrenbeoordelingen — lees wat andere baasjes ervaren</p>
+  </div>
+  <div class="test-grid">
+    <div class="tc feat sal" data-d="1">
+      <div class="tq">"</div>
+      <p>Mijn golden retriever Max haatte vroeger de schoonheidsspecialist — nu raakt hij opgewonden als we bij Pawfect aankomen. Het team heeft zoveel geduld en liefde voor dieren. Absoluut een aanrader!</p>
+      <div class="tm"><div class="tav" style="background:#FF6B6B">SJ</div><div><div class="tn">Sarah Jansen</div><div class="tp">Baasje van Max 🐾</div></div><div class="stars">★★★★★</div></div>
+    </div>
+    <div class="tc sa" data-d="2">
+      <div class="tq">"</div>
+      <p>Het spa-pakket is elke cent waard. Luna kwam terug met een ongelooflijke geur, vlekkeloos schoon, en met het schattigste sjaaltje. Absoluut het volledige pakket boeken!</p>
+      <div class="tm"><div class="tav" style="background:#06D6A0">TK</div><div><div class="tn">Tim Koenders</div><div class="tp">Baasje van Luna 🐱</div></div><div class="stars">★★★★★</div></div>
+    </div>
+    <div class="tc sar" data-d="1">
+      <div class="tq">"</div>
+      <p>Ik heb een erg angstige reddingshond. De verzorgers hier zijn zo rustig en zachtaardig — ze stuurden me foto-updates. Het geeft zo'n fijn gevoel om je huisdier hier achter te laten.</p>
+      <div class="tm"><div class="tav" style="background:#74C0FC">ML</div><div><div class="tn">Mia Laan</div><div class="tp">Baasje van Biscuit 🐶</div></div><div class="stars">★★★★★</div></div>
+    </div>
+    <div class="tc sal" data-d="2">
+      <div class="tq">"</div>
+      <p>Onze Perzische kat wordt altijd gestrest door vervoer, maar zodra ze er eenmaal is ontspant ze helemaal. Het team weet precies hoe ze met eigenzinnige katten om moeten gaan.</p>
+      <div class="tm"><div class="tav" style="background:#FFD166;color:#3D2314">RB</div><div><div class="tn">Roos Bakker</div><div class="tp">Baasje van Mochi 🐱</div></div><div class="stars">★★★★★</div></div>
+    </div>
+    <div class="tc sa" data-d="3">
+      <div class="tq">"</div>
+      <p>Fantastische service. Ze zijn zo zorgvuldig. Mijn hond Boef ziet er altijd prachtig uit en de prijs-kwaliteitverhouding is gewoon top. Al 3 jaar vaste klant!</p>
+      <div class="tm"><div class="tav" style="background:#FF6B6B">PV</div><div><div class="tn">Pieter Vermeer</div><div class="tp">Baasje van Boef 🐶</div></div><div class="stars">★★★★★</div></div>
+    </div>
+    <div class="tc sar" data-d="2">
+      <div class="tq">"</div>
+      <p>Super blij met de foto-updates tijdens de beurt. Je ziet gewoon hoe gelukkig je dier is. Het geeft zo'n fijn gevoel om je huisdier hier achter te laten!</p>
+      <div class="tm"><div class="tav" style="background:#06D6A0">AH</div><div><div class="tn">Anna Hoekstra</div><div class="tp">Baasje van Pixel 🐰</div></div><div class="stars">★★★★★</div></div>
+    </div>
+  </div>
+</section>
+
+<svg class="wave" viewBox="0 0 1440 60" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none" style="background:#FFFBF0"><path d="M0,0 C480,60 960,0 1440,60L1440,60L0,60Z" fill="#ffffff"/></svg>
+
+<!-- PRICING -->
+<section class="pricing" id="pricing">
+  <div class="sh sa">
+    <div class="lbl">Onze tarieven</div>
+    <h2>Eerlijke prijzen, topkwaliteit ✨</h2>
+    <p>Geen verborgen kosten — je weet altijd precies waar je aan toe bent</p>
+  </div>
+  <div class="price-grid">
+    <div class="pc sal" data-d="1">
+      <span class="p-ico">🚿</span>
+      <h3>Basis</h3>
+      <div class="p-desc">Voor de essentiële verzorging</div>
+      <div class="p-val"><span class="p-from">vanaf</span> €35</div>
+      <ul class="p-feats">
+        <li><span class="chk">✓</span>Bad & föhnen</li>
+        <li><span class="chk">✓</span>Uitborstelen</li>
+        <li><span class="chk">✓</span>Oren controleren</li>
+        <li><span class="crs">✕</span>Knipbeurt</li>
+        <li><span class="crs">✕</span>Tanden poetsen</li>
+        <li><span class="crs">✕</span>Massagebehandeling</li>
+      </ul>
+      <button class="btn-pc" onclick="document.getElementById('booking').scrollIntoView({behavior:'smooth'})">Kies Basis</button>
+    </div>
+    <div class="pc pop sa" data-d="2">
+      <span class="pop-b">⭐ Meest gekozen</span>
+      <span class="p-ico">✂️</span>
+      <h3>Compleet</h3>
+      <div class="p-desc">De complete verzorgingsbeurt</div>
+      <div class="p-val"><span class="p-from">vanaf</span> €55</div>
+      <ul class="p-feats">
+        <li><span class="chk">✓</span>Bad & föhnen</li>
+        <li><span class="chk">✓</span>Uitborstelen</li>
+        <li><span class="chk">✓</span>Oren reinigen</li>
+        <li><span class="chk">✓</span>Knipbeurt & styling</li>
+        <li><span class="chk">✓</span>Nagels knippen</li>
+        <li><span class="crs">✕</span>Massagebehandeling</li>
+      </ul>
+      <button class="btn-pc" onclick="document.getElementById('booking').scrollIntoView({behavior:'smooth'})">Kies Compleet</button>
+    </div>
+    <div class="pc sar" data-d="1">
+      <span class="p-ico">🌟</span>
+      <h3>Spa Deluxe</h3>
+      <div class="p-desc">Het ultieme verwenpakket</div>
+      <div class="p-val"><span class="p-from">vanaf</span> €75</div>
+      <ul class="p-feats">
+        <li><span class="chk">✓</span>Alles van Compleet</li>
+        <li><span class="chk">✓</span>Tanden poetsen</li>
+        <li><span class="chk">✓</span>Massagebehandeling</li>
+        <li><span class="chk">✓</span>Potencrème & behandeling</li>
+        <li><span class="chk">✓</span>Foto-verslag mee naar huis</li>
+        <li><span class="chk">✓</span>Gratis bandana/sjaaltje</li>
+      </ul>
+      <button class="btn-pc" onclick="document.getElementById('booking').scrollIntoView({behavior:'smooth'})">Kies Spa Deluxe</button>
+    </div>
+  </div>
+  <p style="text-align:center;margin-top:2rem;color:var(--brown-mid);font-size:.9rem">Prijzen variëren per ras en vachttype. Neem contact op voor een exacte offerte.</p>
+</section>
+
+<svg class="wave" viewBox="0 0 1440 60" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none" style="background:#fff"><path d="M0,60 C480,0 960,60 1440,0L1440,60L0,60Z" fill="#FFFBF0"/></svg>
+
+<!-- FAQ -->
+<section class="faq">
+  <div class="sh sa">
+    <div class="lbl">Vragen?</div>
+    <h2>Veel gestelde vragen</h2>
+    <p>Alles wat je wilt weten over onze verzorging</p>
+  </div>
+  <div class="faq-wrap">
+    <div class="fi sa"><div class="fq" onclick="toggleFaq(this)">Hoe lang duurt een verzorgingsbeurt?<div class="fi-ico">+</div></div><div class="fa"><p>Afhankelijk van het ras en de gekozen dienst duurt een beurt tussen de 1 en 3 uur. Een basisbad duurt gemiddeld 60–90 minuten, het spa-pakket kan tot 3 uur duren. We geven altijd een schatting bij het boeken.</p></div></div>
+    <div class="fi sa" data-d="1"><div class="fq" onclick="toggleFaq(this)">Kan mijn angstige hond ook gegroomd worden?<div class="fi-ico">+</div></div><div class="fa"><p>Absoluut! Wij zijn gespecialiseerd in het werken met nerveuze en angstige dieren. Ons team neemt alle tijd om je huisdier rustig te maken en werkt altijd op het eigen tempo van het dier. Vertel ons van tevoren over eventuele angsten.</p></div></div>
+    <div class="fi sa" data-d="2"><div class="fq" onclick="toggleFaq(this)">Welke producten gebruiken jullie?<div class="fi-ico">+</div></div><div class="fa"><p>We werken uitsluitend met 100% dierveilige, hypoallergene shampoos en conditioners. Al onze producten zijn vrij van harde chemicaliën en getest op gevoelige huiden. We hebben ook speciale formules voor dieren met huidaandoeningen.</p></div></div>
+    <div class="fi sa" data-d="3"><div class="fq" onclick="toggleFaq(this)">Ontvang ik updates tijdens de beurt?<div class="fi-ico">+</div></div><div class="fa"><p>Ja! We sturen je een bericht als de beurt begint en sturen foto's via WhatsApp tijdens de sessie. Zo zie je precies hoe gelukkig je huisdier is en weet je wanneer je kunt ophalen.</p></div></div>
+    <div class="fi sa"><div class="fq" onclick="toggleFaq(this)">Hoe ver van tevoren moet ik boeken?<div class="fi-ico">+</div></div><div class="fa"><p>We adviseren minimaal 3–5 dagen van tevoren te boeken. Maar we hebben ook vaak last-minute plekjes — check het online boekingsformulier voor de actuele beschikbaarheid.</p></div></div>
+    <div class="fi sa" data-d="1"><div class="fq" onclick="toggleFaq(this)">Verzorgen jullie ook katten en konijnen?<div class="fi-ico">+</div></div><div class="fa"><p>Zeker! Naast honden zijn we ook gespecialiseerd in katten, konijnen en kleine dieren. Katten hebben een speciale aanpak nodig — daarvoor hebben we een aparte, rustige ruimte.</p></div></div>
+  </div>
+</section>
+
+<svg class="wave" viewBox="0 0 1440 60" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none" style="background:#FFFBF0"><path d="M0,0 C480,60 960,0 1440,60L1440,60L0,60Z" fill="#FF6B6B"/></svg>
+
+<!-- BOOKING -->
+<section class="booking" id="booking">
+  <div class="bk-blobs"><div class="bb bb1"></div><div class="bb bb2"></div></div>
+  <div class="bk-inner">
+    <div class="sh sa">
+      <h2>Klaar voor de glow-up? 🐾</h2>
+    </div>
+    <p class="bk-sub sa">Kies een moment dat jou uitkomt — wij zorgen voor de rest met een kwispelende staart!</p>
+    <div class="bk-form-wrap sa">
+      <form id="bkForm" onsubmit="handleBook(event)">
+        <div class="form-row">
+          <div class="fg"><label>Naam baasje</label><input type="text" placeholder="Jouw naam" required></div>
+          <div class="fg"><label>Telefoonnummer</label><input type="tel" placeholder="+31 6 xxxxxxxx"></div>
+        </div>
+        <div class="form-row">
+          <div class="fg"><label>Naam huisdier</label><input type="text" placeholder="Naam van je dier" required></div>
+          <div class="fg"><label>Soort dier</label><select><option value="">Kies soort…</option><option>Hond</option><option>Kat</option><option>Konijn</option><option>Anders</option></select></div>
+        </div>
+        <div class="form-row">
+          <div class="fg"><label>Gewenste dienst</label><select required><option value="">Kies dienst…</option><option>Basis – Bad & Borstel (v.a. €35)</option><option>Knipbeurt & Styling (v.a. €45)</option><option>Nagels & Poten (v.a. €15)</option><option>Compleet pakket (v.a. €55)</option><option>Spa Deluxe (v.a. €75)</option></select></div>
+          <div class="fg"><label>Gewenste datum</label><input type="date" required></div>
+        </div>
+        <div class="form-row">
+          <div class="fg form-full"><label>Opmerkingen (optioneel)</label><textarea placeholder="Bijv. allergieën, angstig voor lawaai, speciaal ras…"></textarea></div>
+        </div>
+        <button type="submit" class="btn-sub">Bevestig mijn afspraak 🐾</button>
+        <p class="form-note">Je ontvangt binnen 2 uur een bevestiging via telefoon of e-mail</p>
+      </form>
+      <div class="success-msg" id="successMsg">🎉 Gelukt! We nemen snel contact op.<br><span style="font-family:'Nunito',sans-serif;font-size:1rem;color:var(--brown-mid);font-weight:600">Check je telefoon of e-mail!</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT STRIP -->
+<div class="cstrip">
+  <div class="ci sa"><div class="ci-ico">📍</div><div><strong>Adres</strong><span>Wagnerstraat 12, Zoetermeer</span></div></div>
+  <div class="ci sa" data-d="1"><div class="ci-ico">📞</div><div><strong>Telefoon</strong><span>+31 79 123 4567</span></div></div>
+  <div class="ci sa" data-d="2"><div class="ci-ico">⏰</div><div><strong>Openingstijden</strong><span>Ma–Za 9:00 – 18:00</span></div></div>
+  <div class="ci sa" data-d="3"><div class="ci-ico">✉️</div><div><strong>E-mail</strong><span>hallo@pawfect.nl</span></div></div>
+</div>
+
+<!-- FOOTER -->
+</div><!-- end main-page -->
+
+<script src="js/main.js"></script>
+
+<!-- ═══════════════════════════════════════════════════════════════════════ -->
+<!-- SUBPAGES (hidden by default, shown via JS router)                      -->
+<!-- ═══════════════════════════════════════════════════════════════════════ -->
+</div><!-- end main-page -->
+<div id="subpage-overlay" style="display:none;min-height:calc(100vh - var(--nav-h));background:var(--cream);padding-top:var(--nav-h)">
+
+<!-- ── OVER ONS ─────────────────────────────────────────────────────────── -->
+<div class="sp" id="sp-over-ons">
+  <div class="sp-hero" style="background:linear-gradient(135deg,var(--yellow-light),var(--coral-light))">
+    <div class="sp-hero-inner">
+      <div class="sh" style="margin-bottom:0">
+        <div class="lbl">Ons verhaal</div>
+        <h1 style="font-family:'Fredoka One',cursive;font-size:clamp(2.2rem,5vw,3.5rem);color:var(--brown);margin-bottom:.6rem">Over Pawfect Grooming</h1>
+        <p>Negen jaar lang de beste verzorging voor jouw trouwe vriend</p>
+      </div>
+    </div>
+  </div>
+  <div class="sp-body">
+    <div class="sp-2col">
+      <div>
+        <h2>Hoe het begon</h2>
+        <p>Pawfect Grooming begon in 2015 vanuit een simpele overtuiging: elk huisdier verdient professionele verzorging in een omgeving die rust en vertrouwen uitstraalt. Oprichter Lisa van den Berg zag dat veel honden en katten gestrest raakten bij reguliere groomers — en besloot het anders te doen.</p>
+        <p style="margin-top:1rem">Vanuit een kleine ruimte in Zoetermeer groeide Pawfect uit tot een gespecialiseerde salon met vier gecertificeerde verzorgers, honderden vaste klanten en meer dan 2.000 blije huisdieren per jaar.</p>
+        <h2 style="margin-top:2rem">Onze filosofie</h2>
+        <p>Wij geloven dat een goede grooming-sessie begint bij een relaxed dier. Dat betekent: geen haast, zachte handen, en altijd werken op het tempo van het dier. Alle producten die we gebruiken zijn 100% natuurlijk, hypoallergeen en diervriendelijk getest.</p>
+      </div>
+      <div>
+        <div class="sp-stat-box">
+          <div class="sp-stat"><span class="sp-num">2015</span><span>Opgericht</span></div>
+          <div class="sp-stat"><span class="sp-num">4</span><span>Gecertificeerde verzorgers</span></div>
+          <div class="sp-stat"><span class="sp-num">2.000+</span><span>Huisdieren per jaar</span></div>
+          <div class="sp-stat"><span class="sp-num">4.9★</span><span>Gemiddelde beoordeling</span></div>
+        </div>
+        <div class="sp-callout" style="margin-top:1.5rem">
+          <p>"Wij behandelen elk dier zoals we ons eigen huisdier zouden willen behandelen — met geduld, liefde en de allerbeste producten."</p>
+          <strong>— Lisa van den Berg, oprichter</strong>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ── ONS TEAM (uitgebreide versie) ───────────────────────────────────── -->
+<div class="sp" id="sp-ons-team">
+  <div class="sp-hero" style="background:linear-gradient(135deg,var(--mint-light),var(--yellow-light))">
+    <div class="sp-hero-inner">
+      <div class="sh" style="margin-bottom:0">
+        <div class="lbl">De mensen achter Pawfect</div>
+        <h1 style="font-family:'Fredoka One',cursive;font-size:clamp(2.2rem,5vw,3.5rem);color:var(--brown);margin-bottom:.6rem">Ons team 💛</h1>
+        <p>Gecertificeerde professionals die huisdieren net zo lief vinden als jij</p>
+      </div>
+    </div>
+  </div>
+  <div class="sp-body">
+    <div class="sp-team-grid">
+      <div class="sp-team-card">
+        <div class="sp-team-img" id="sp-team-lisa"></div>
+        <div class="sp-team-info">
+          <h3>Lisa van den Berg</h3>
+          <div class="t-role">Oprichter & Hoofd verzorger</div>
+          <p>Met 12 jaar ervaring en een PGF-certificering is Lisa de drijvende kracht achter Pawfect. Ze is gespecialiseerd in alle rassen en heeft een bijzonder talent voor het werken met angstige dieren.</p>
+          <div class="t-tags" style="margin-top:.8rem"><span class="t-tag">PGF Gecertificeerd</span><span class="t-tag">Honden</span><span class="t-tag">Katten</span><span class="t-tag">Angstige dieren</span></div>
+        </div>
+      </div>
+      <div class="sp-team-card">
+        <div class="sp-team-img" id="sp-team-daan"></div>
+        <div class="sp-team-info">
+          <h3>Daan Rooijmans</h3>
+          <div class="t-role">Senior stylist</div>
+          <p>Daan is de specialist als het gaat om rasspecifieke styling. Hij heeft een rustige, zelfverzekerde aanpak die zelfs de nerveuze honden binnen no-time op hun gemak stelt. Daan werkt al 7 jaar bij Pawfect.</p>
+          <div class="t-tags" style="margin-top:.8rem"><span class="t-tag">Rasspecifiek knippen</span><span class="t-tag">Grote rassen</span><span class="t-tag">Nerveuze dieren</span></div>
+        </div>
+      </div>
+      <div class="sp-team-card">
+        <div class="sp-team-img" id="sp-team-sophie"></div>
+        <div class="sp-team-info">
+          <h3>Sophie Kruijer</h3>
+          <div class="t-role">Wellness & Spa specialist</div>
+          <p>Sophie is onze expert in massages en spa-behandelingen. Haar zachte, intuïtieve aanpak zorgt ervoor dat elk dier de behandeling als een ontspannende ervaring beleeft. Ook gespecialiseerd in konijnen en kleine dieren.</p>
+          <div class="t-tags" style="margin-top:.8rem"><span class="t-tag">Spa behandelingen</span><span class="t-tag">Massages</span><span class="t-tag">Konijnen</span><span class="t-tag">Kleine dieren</span></div>
+        </div>
+      </div>
+      <div class="sp-team-card">
+        <div class="sp-team-img" id="sp-team-tom"></div>
+        <div class="sp-team-info">
+          <h3>Tom de Vries</h3>
+          <div class="t-role">Receptie & Planning</div>
+          <p>Tom is het eerste gezicht dat je ziet als je binnenkomt. Hij zorgt voor een soepele planning, beantwoordt al je vragen en zorgt ervoor dat jij en je huisdier zich altijd welkom voelen bij Pawfect.</p>
+          <div class="t-tags" style="margin-top:.8rem"><span class="t-tag">Planning</span><span class="t-tag">Klantenservice</span><span class="t-tag">Advies op maat</span></div>
+        </div>
+      </div>
+    </div>
+    <div class="sp-callout" style="margin-top:3rem;text-align:center">
+      <p>Wil jij ook deel uitmaken van ons team? Bekijk onze openstaande vacatures!</p>
+      <button class="btn-p" style="margin-top:1rem;border:none;cursor:none" onclick="navigateTo('vacatures')">Bekijk vacatures →</button>
+    </div>
+  </div>
+</div>
+
+<!-- ── BLOG ────────────────────────────────────────────────────────────── -->
+<div class="sp" id="sp-blog">
+  <div class="sp-hero" style="background:linear-gradient(135deg,var(--sky-light),var(--mint-light))">
+    <div class="sp-hero-inner">
+      <div class="sh" style="margin-bottom:0">
+        <div class="lbl">Tips & inspiratie</div>
+        <h1 style="font-family:'Fredoka One',cursive;font-size:clamp(2.2rem,5vw,3.5rem);color:var(--brown);margin-bottom:.6rem">Ons blog 📝</h1>
+        <p>Handige tips, nieuwtjes en verhalen uit de salon</p>
+      </div>
+    </div>
+  </div>
+  <div class="sp-body">
+    <div class="blog-grid">
+      <div class="blog-card">
+        <div class="blog-img" style="background:linear-gradient(135deg,var(--yellow-light),var(--coral-light));font-size:3.5rem;display:flex;align-items:center;justify-content:center">🛁</div>
+        <div class="blog-content">
+          <div class="blog-meta">Grooming tips · 5 min lezen</div>
+          <h3>Hoe vaak moet je hond naar de groomer?</h3>
+          <p>De frequentie hangt sterk af van het ras, de vachtlengte en de leefstijl van je hond. In dit artikel leggen we per rastype uit wat de ideale grooming-cyclus is.</p>
+          <a href="#" class="blog-link">Lees meer →</a>
+        </div>
+      </div>
+      <div class="blog-card">
+        <div class="blog-img" style="background:linear-gradient(135deg,var(--mint-light),var(--sky-light));font-size:3.5rem;display:flex;align-items:center;justify-content:center">😺</div>
+        <div class="blog-content">
+          <div class="blog-meta">Katten · 4 min lezen</div>
+          <h3>Katten en grooming: zo maak je het stressvrij</h3>
+          <p>Veel katten vinden verzorging spannend. Met deze praktische tips maak je elke grooming-sessie een stuk aangenamer — voor jou én voor je kat.</p>
+          <a href="#" class="blog-link">Lees meer →</a>
+        </div>
+      </div>
+      <div class="blog-card">
+        <div class="blog-img" style="background:linear-gradient(135deg,var(--coral-light),var(--yellow-light));font-size:3.5rem;display:flex;align-items:center;justify-content:center">💅</div>
+        <div class="blog-content">
+          <div class="blog-meta">Verzorging · 3 min lezen</div>
+          <h3>Nagels knippen: wanneer is het nodig?</h3>
+          <p>Te lange nagels kunnen pijnlijk zijn en zelfs tot gezondheidsproblemen leiden. Leer hoe je zelf kunt controleren of het tijd is voor een nagelbeurt.</p>
+          <a href="#" class="blog-link">Lees meer →</a>
+        </div>
+      </div>
+      <div class="blog-card">
+        <div class="blog-img" style="background:linear-gradient(135deg,var(--sky-light),var(--coral-light));font-size:3.5rem;display:flex;align-items:center;justify-content:center">🌿</div>
+        <div class="blog-content">
+          <div class="blog-meta">Producten · 6 min lezen</div>
+          <h3>Waarom wij alleen natuurlijke producten gebruiken</h3>
+          <p>We leggen uit waarom we bewust kozen voor 100% hypoallergene en diervriendelijke producten, en wat dat concreet betekent voor jouw huisdier.</p>
+          <a href="#" class="blog-link">Lees meer →</a>
+        </div>
+      </div>
+      <div class="blog-card">
+        <div class="blog-img" style="background:linear-gradient(135deg,var(--mint-light),var(--yellow-light));font-size:3.5rem;display:flex;align-items:center;justify-content:center">🐰</div>
+        <div class="blog-content">
+          <div class="blog-meta">Konijnen · 4 min lezen</div>
+          <h3>Konijnen verzorgen: wat je moet weten</h3>
+          <p>Konijnen hebben andere verzorgingsbehoeften dan honden of katten. Sophie, onze konijnenspecialist, deelt haar beste tips.</p>
+          <a href="#" class="blog-link">Lees meer →</a>
+        </div>
+      </div>
+      <div class="blog-card">
+        <div class="blog-img" style="background:linear-gradient(135deg,var(--coral-light),var(--mint-light));font-size:3.5rem;display:flex;align-items:center;justify-content:center">🏆</div>
+        <div class="blog-content">
+          <div class="blog-meta">Pawfect nieuws · 2 min lezen</div>
+          <h3>Pawfect wint beste groomer van Zoetermeer 2024!</h3>
+          <p>We zijn ontzettend trots om te mogen delen dat Pawfect Grooming is uitgeroepen tot beste dierenverzorgingssalon van Zoetermeer door het vakblad PetCare NL.</p>
+          <a href="#" class="blog-link">Lees meer →</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ── VACATURES ────────────────────────────────────────────────────────── -->
+<div class="sp" id="sp-vacatures">
+  <div class="sp-hero" style="background:linear-gradient(135deg,var(--coral-light),var(--yellow-light))">
+    <div class="sp-hero-inner">
+      <div class="sh" style="margin-bottom:0">
+        <div class="lbl">Kom bij ons team</div>
+        <h1 style="font-family:'Fredoka One',cursive;font-size:clamp(2.2rem,5vw,3.5rem);color:var(--brown);margin-bottom:.6rem">Vacatures 🐾</h1>
+        <p>Ben jij ook gek op dieren? We zoeken enthousiaste collega's!</p>
+      </div>
+    </div>
+  </div>
+  <div class="sp-body">
+    <div class="vac-card">
+      <div class="vac-header">
+        <div>
+          <h3>Junior Hondenverzorger</h3>
+          <div class="vac-meta"><span class="vac-tag">Parttime</span><span class="vac-tag">Zoetermeer</span><span class="vac-tag">MBO werk- en denkniveau</span></div>
+        </div>
+        <button class="btn-p" style="border:none;cursor:none;white-space:nowrap" onclick="navigateTo('contact')">Solliciteer →</button>
+      </div>
+      <p>We zoeken een enthousiaste junior verzorger die wil leren van ons ervaren team. Je hebt een passie voor dieren, bent geduldig van aard en bent bereid je PGF-certificering te behalen (wij vergoeden de opleiding).</p>
+      <ul class="vac-list">
+        <li>16–24 uur per week, flexibele tijden</li>
+        <li>Opleiding volledig vergoed door Pawfect</li>
+        <li>Fijn en hecht team in een groeiend bedrijf</li>
+        <li>Marktconform salaris + reiskostenvergoeding</li>
+      </ul>
+    </div>
+    <div class="vac-card">
+      <div class="vac-header">
+        <div>
+          <h3>Receptie & Klantenservice medewerker</h3>
+          <div class="vac-meta"><span class="vac-tag">Parttime</span><span class="vac-tag">Zoetermeer</span><span class="vac-tag">MBO+</span></div>
+        </div>
+        <button class="btn-p" style="border:none;cursor:none;white-space:nowrap" onclick="navigateTo('contact')">Solliciteer →</button>
+      </div>
+      <p>Voor onze groeiende salon zoeken we een vrolijk aanspreekpunt voor onze klanten. Je beheert de agenda, beantwoordt vragen en zorgt voor een warme ontvangst. Ervaring in een soortgelijke rol is een pré.</p>
+      <ul class="vac-list">
+        <li>20–28 uur per week</li>
+        <li>Dinsdag t/m zaterdag beschikbaar</li>
+        <li>Kennis van boekingssystemen is een pré</li>
+        <li>Je houdt van dieren (geen hondenvangst, wel geknuffel)</li>
+      </ul>
+    </div>
+    <div class="sp-callout" style="text-align:center;margin-top:2rem">
+      <p>Geen passende vacature? Stuur ons een open sollicitatie — we horen graag van je!</p>
+      <button class="btn-s" style="border:2.5px solid var(--brown);margin-top:1rem;cursor:none" onclick="navigateTo('contact')">Neem contact op →</button>
+    </div>
+  </div>
+</div>
+
+<!-- ── CONTACT ───────────────────────────────────────────────────────────── -->
+<div class="sp" id="sp-contact">
+  <div class="sp-hero" style="background:linear-gradient(135deg,var(--mint-light),var(--sky-light))">
+    <div class="sp-hero-inner">
+      <div class="sh" style="margin-bottom:0">
+        <div class="lbl">We horen graag van je</div>
+        <h1 style="font-family:'Fredoka One',cursive;font-size:clamp(2.2rem,5vw,3.5rem);color:var(--brown);margin-bottom:.6rem">Contact 📬</h1>
+        <p>Vragen, opmerkingen of wil je gewoon even hallo zeggen?</p>
+      </div>
+    </div>
+  </div>
+  <div class="sp-body">
+    <div class="sp-2col">
+      <div>
+        <h2>Stuur ons een bericht</h2>
+        <form onsubmit="handleContactForm(event)" style="margin-top:1.5rem;display:flex;flex-direction:column;gap:1rem">
+          <div class="fg"><label>Naam</label><input type="text" placeholder="Jouw naam" required></div>
+          <div class="fg"><label>E-mailadres</label><input type="email" placeholder="jouw@email.nl" required></div>
+          <div class="fg"><label>Onderwerp</label>
+            <select><option>Vraag over diensten</option><option>Afspraak maken</option><option>Klacht of opmerking</option><option>Samenwerking</option><option>Open sollicitatie</option><option>Overig</option></select>
+          </div>
+          <div class="fg"><label>Bericht</label><textarea placeholder="Typ hier je bericht…" required style="min-height:130px"></textarea></div>
+          <button type="submit" class="btn-sub" style="cursor:none">Verstuur bericht 📨</button>
+        </form>
+        <div id="contact-success" style="display:none;background:var(--mint-light);border:2px solid var(--mint);border-radius:16px;padding:1.5rem;text-align:center;margin-top:1rem">
+          <div style="font-family:'Fredoka One',cursive;font-size:1.4rem;color:var(--brown)">✅ Bericht verzonden!</div>
+          <p style="color:var(--brown-mid);margin-top:.4rem">We reageren binnen 1 werkdag.</p>
+        </div>
+      </div>
+      <div>
+        <h2>Bezoekadres</h2>
+        <div class="contact-info-block">
+          <div class="ci-row"><span class="ci-ico-sm">📍</span><div><strong>Adres</strong><p>Wagnerstraat 12<br>2719 EK Zoetermeer</p></div></div>
+          <div class="ci-row"><span class="ci-ico-sm">📞</span><div><strong>Telefoon</strong><p>+31 79 123 4567</p></div></div>
+          <div class="ci-row"><span class="ci-ico-sm">✉️</span><div><strong>E-mail</strong><p>hallo@pawfect.nl</p></div></div>
+          <div class="ci-row"><span class="ci-ico-sm">⏰</span><div><strong>Openingstijden</strong><p>Maandag: gesloten<br>Dinsdag t/m vrijdag: 9:00 – 18:00<br>Zaterdag: 9:00 – 17:00<br>Zondag: gesloten</p></div></div>
+        </div>
+        <div class="sp-callout" style="margin-top:1.5rem">
+          <p>💡 <strong>Tip:</strong> voor het snelste antwoord, bel ons direct of boek je afspraak via het online boekingsformulier.</p>
+          <button class="btn-p" style="border:none;cursor:none;margin-top:1rem;font-size:.9rem" onclick="navigateTo('home');setTimeout(()=>document.getElementById('booking').scrollIntoView({behavior:'smooth'}),300)">Direct boeken →</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ── PRIJSLIJST ────────────────────────────────────────────────────────── -->
+<div class="sp" id="sp-prijslijst">
+  <div class="sp-hero" style="background:linear-gradient(135deg,var(--yellow-light),var(--mint-light))">
+    <div class="sp-hero-inner">
+      <div class="sh" style="margin-bottom:0">
+        <div class="lbl">Eerlijke tarieven</div>
+        <h1 style="font-family:'Fredoka One',cursive;font-size:clamp(2.2rem,5vw,3.5rem);color:var(--brown);margin-bottom:.6rem">Volledige Prijslijst 💰</h1>
+        <p>Transparante prijzen zonder verrassingen — altijd</p>
+      </div>
+    </div>
+  </div>
+  <div class="sp-body">
+    <p style="color:var(--brown-mid);margin-bottom:2rem;font-size:.95rem">Prijzen zijn richtprijzen en kunnen variëren op basis van ras, vachtconditie en vachtlengte. Neem contact op voor een exacte offerte.</p>
+    <div class="price-table-wrap">
+      <table class="price-table">
+        <thead><tr><th>Dienst</th><th>Klein ras</th><th>Middel ras</th><th>Groot ras</th></tr></thead>
+        <tbody>
+          <tr class="pt-section"><td colspan="4">🛁 Bad & Borstel</td></tr>
+          <tr><td>Bad & föhnen</td><td>€25</td><td>€35</td><td>€45</td></tr>
+          <tr><td>Bad, föhnen & uitborstelen</td><td>€35</td><td>€45</td><td>€60</td></tr>
+          <tr class="pt-section"><td colspan="4">✂️ Knipbeurt & Styling</td></tr>
+          <tr><td>Volledige knipbeurt</td><td>€40</td><td>€55</td><td>€70</td></tr>
+          <tr><td>Bad + knipbeurt compleet</td><td>€55</td><td>€75</td><td>€100</td></tr>
+          <tr class="pt-section"><td colspan="4">💅 Losse behandelingen</td></tr>
+          <tr><td>Nagels knippen</td><td>€12</td><td>€15</td><td>€18</td></tr>
+          <tr><td>Oren reinigen</td><td>€10</td><td>€10</td><td>€12</td></tr>
+          <tr><td>Tanden poetsen</td><td>€12</td><td>€15</td><td>€15</td></tr>
+          <tr><td>Poten & potencrème</td><td>€10</td><td>€12</td><td>€15</td></tr>
+          <tr class="pt-section"><td colspan="4">🌟 Spa Deluxe pakket</td></tr>
+          <tr><td>Compleet spa-pakket</td><td>€70</td><td>€90</td><td>€120</td></tr>
+          <tr class="pt-section"><td colspan="4">🐱 Katten</td></tr>
+          <tr><td>Bad & föhnen</td><td colspan="3" style="text-align:center">€45</td></tr>
+          <tr><td>Volledig knippen</td><td colspan="3" style="text-align:center">€65</td></tr>
+          <tr><td>Spa-pakket kat</td><td colspan="3" style="text-align:center">€85</td></tr>
+          <tr class="pt-section"><td colspan="4">🐰 Konijnen & kleine dieren</td></tr>
+          <tr><td>Nagels & vacht</td><td colspan="3" style="text-align:center">€25</td></tr>
+          <tr><td>Volledig pakket</td><td colspan="3" style="text-align:center">€40</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="sp-callout" style="margin-top:2rem;text-align:center">
+      <p>Klaar om te boeken? Maak direct een afspraak!</p>
+      <button class="btn-p" style="border:none;cursor:none;margin-top:1rem" onclick="navigateTo('home');setTimeout(()=>document.getElementById('booking').scrollIntoView({behavior:'smooth'}),300)">Boek een afspraak 🐾</button>
+    </div>
+  </div>
+</div>
+
+<!-- ── DIENST: BAD & BORSTEL ─────────────────────────────────────────────── -->
+<div class="sp" id="sp-bad-borstel">
+  <div class="sp-hero" style="background:linear-gradient(135deg,var(--yellow-light),var(--sky-light))">
+    <div class="sp-hero-inner">
+      <div class="sh" style="margin-bottom:0">
+        <div class="lbl">Onze diensten</div>
+        <h1 style="font-family:'Fredoka One',cursive;font-size:clamp(2.2rem,5vw,3.5rem);color:var(--brown);margin-bottom:.6rem">Bad & Borstel 🛁</h1>
+        <p>Fris, zacht en stralend — de basis van een goede verzorging</p>
+      </div>
+    </div>
+  </div>
+  <div class="sp-body">
+    <div class="sp-2col">
+      <div>
+        <h2>Wat houdt het in?</h2>
+        <p>Een grondige wasbeurt begint met een warme douche en een hypoallergene shampoo die past bij het vachttype van jouw dier. Daarna wordt de vacht professioneel geföhnd en uitgekamd. We sluiten af met een lichte conditioner en een geurige spray die de vacht lang fris houdt.</p>
+        <h2 style="margin-top:1.5rem">Wat is inbegrepen?</h2>
+        <ul class="sp-list">
+          <li>Warm bad met rasspecifieke shampoo</li>
+          <li>Professioneel drogen & föhnen</li>
+          <li>Uitgebreide borstelsessie</li>
+          <li>Lichte conditioner voor zachte vacht</li>
+          <li>Geurige vacht-spray</li>
+          <li>Controle oren & ogen</li>
+          <li>Foto-update via WhatsApp</li>
+        </ul>
+        <div class="sp-price-banner">
+          <span>Vanaf <strong>€25</strong> (klein ras) · <strong>€35</strong> (middel) · <strong>€45</strong> (groot)</span>
+        </div>
+      </div>
+      <div>
+        <div class="sp-callout">
+          <p>⏱ <strong>Duur:</strong> 60–90 minuten afhankelijk van ras en vachtlengte.</p>
+        </div>
+        <div class="sp-callout" style="margin-top:1rem">
+          <p>🌿 <strong>Producten:</strong> Wij werken uitsluitend met 100% dierveilige, hypoallergene shampoos — ook voor gevoelige huid.</p>
+        </div>
+        <div class="sp-callout" style="margin-top:1rem">
+          <p>🐾 <strong>Tip:</strong> Combineer het bad met een knipbeurt voor extra voordeel!</p>
+        </div>
+        <button class="btn-p" style="border:none;cursor:none;width:100%;justify-content:center;margin-top:1.5rem" onclick="navigateTo('home');setTimeout(()=>document.getElementById('booking').scrollIntoView({behavior:'smooth'}),300)">Boek Bad & Borstel →</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ── DIENST: KNIPBEURT & STYLING ─────────────────────────────────────── -->
+<div class="sp" id="sp-knipbeurt-styling">
+  <div class="sp-hero" style="background:linear-gradient(135deg,var(--coral-light),var(--yellow-light))">
+    <div class="sp-hero-inner">
+      <div class="sh" style="margin-bottom:0">
+        <div class="lbl">Onze diensten</div>
+        <h1 style="font-family:'Fredoka One',cursive;font-size:clamp(2.2rem,5vw,3.5rem);color:var(--brown);margin-bottom:.6rem">Knipbeurt & Styling ✂️</h1>
+        <p>Rasspecifiek knippen of een eigen stijl — wij maken het mogelijk</p>
+      </div>
+    </div>
+  </div>
+  <div class="sp-body">
+    <div class="sp-2col">
+      <div>
+        <h2>Maatwerk per ras</h2>
+        <p>Elke knipbeurt begint met een korte consultatie: wat voor stijl wil je, hoe lang is het haar, zijn er gevoelige plekjes? Op basis daarvan knippen we op de traditionele manier voor het ras of passen we een gewenste stijl toe.</p>
+        <h2 style="margin-top:1.5rem">Wat is inbegrepen?</h2>
+        <ul class="sp-list">
+          <li>Consultatie & stijladvies vooraf</li>
+          <li>Bad & föhnen als voorbereiding</li>
+          <li>Rasspecifiek of custom knippen</li>
+          <li>Oren reinigen & controleren</li>
+          <li>Vacht rondom poten bijwerken</li>
+          <li>Bandana of strikje naar keuze</li>
+          <li>Foto-update & eindresultaat foto</li>
+        </ul>
+        <div class="sp-price-banner">
+          <span>Knipbeurt: vanaf <strong>€40</strong> · Bad + knipbeurt: vanaf <strong>€55</strong></span>
+        </div>
+      </div>
+      <div>
+        <div class="sp-callout"><p>⏱ <strong>Duur:</strong> 90 minuten tot 2,5 uur afhankelijk van ras en gewenste stijl.</p></div>
+        <div class="sp-callout" style="margin-top:1rem"><p>✂️ <strong>Rassenlijst:</strong> Van poedel tot golden retriever, van yorkshire terrier tot bouvier — we knippen alle rassen.</p></div>
+        <button class="btn-p" style="border:none;cursor:none;width:100%;justify-content:center;margin-top:1.5rem" onclick="navigateTo('home');setTimeout(()=>document.getElementById('booking').scrollIntoView({behavior:'smooth'}),300)">Boek Knipbeurt →</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ── DIENST: NAGELS & POTEN ──────────────────────────────────────────── -->
+<div class="sp" id="sp-nagels-poten">
+  <div class="sp-hero" style="background:linear-gradient(135deg,var(--mint-light),var(--yellow-light))">
+    <div class="sp-hero-inner">
+      <div class="sh" style="margin-bottom:0">
+        <div class="lbl">Onze diensten</div>
+        <h1 style="font-family:'Fredoka One',cursive;font-size:clamp(2.2rem,5vw,3.5rem);color:var(--brown);margin-bottom:.6rem">Nagels & Poten 💅</h1>
+        <p>Gezonde pootjes, gelukkig dier</p>
+      </div>
+    </div>
+  </div>
+  <div class="sp-body">
+    <div class="sp-2col">
+      <div>
+        <h2>Waarom nagels knippen?</h2>
+        <p>Te lange nagels kunnen pijn veroorzaken bij het lopen en leiden in ernstige gevallen tot gewrichtsproblemen. Bovendien kunnen ze krullen en in de poot groeien. Regelmatig knippen (elke 4–8 weken) is dus essentieel voor de gezondheid van je dier.</p>
+        <h2 style="margin-top:1.5rem">Wat is inbegrepen?</h2>
+        <ul class="sp-list">
+          <li>Nagels knippen op de juiste lengte</li>
+          <li>Nagels vijlen voor een glad resultaat</li>
+          <li>Vacht tussen de nagels trimmen</li>
+          <li>Poten grondig reinigen</li>
+          <li>Beschermende potencrème aanbrengen</li>
+          <li>Controle op irritaties of kloven</li>
+        </ul>
+        <div class="sp-price-banner">
+          <span>Vanaf <strong>€12</strong> (klein) · <strong>€15</strong> (middel) · <strong>€18</strong> (groot)</span>
+        </div>
+      </div>
+      <div>
+        <div class="sp-callout"><p>⏱ <strong>Duur:</strong> 15–30 minuten. Ook te combineren met een bad of knipbeurt.</p></div>
+        <div class="sp-callout" style="margin-top:1rem"><p>💡 <strong>Wist je dat?</strong> We gebruiken een speciale methode om nagels te vijlen na het knippen, zodat er geen scherpe randjes achterblijven.</p></div>
+        <button class="btn-p" style="border:none;cursor:none;width:100%;justify-content:center;margin-top:1.5rem" onclick="navigateTo('home');setTimeout(()=>document.getElementById('booking').scrollIntoView({behavior:'smooth'}),300)">Boek Nagelbeurt →</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ── DIENST: SPA DELUXE ────────────────────────────────────────────────── -->
+<div class="sp" id="sp-spa-deluxe">
+  <div class="sp-hero" style="background:linear-gradient(135deg,var(--sky-light),var(--mint-light))">
+    <div class="sp-hero-inner">
+      <div class="sh" style="margin-bottom:0">
+        <div class="lbl">Onze diensten</div>
+        <h1 style="font-family:'Fredoka One',cursive;font-size:clamp(2.2rem,5vw,3.5rem);color:var(--brown);margin-bottom:.6rem">Spa Deluxe 🌟</h1>
+        <p>Het ultieme verwenpakket — voor een écht bijzondere behandeling</p>
+      </div>
+    </div>
+  </div>
+  <div class="sp-body">
+    <div class="sp-2col">
+      <div>
+        <h2>De volledige verwenervaring</h2>
+        <p>Het Spa Deluxe pakket is onze meest uitgebreide behandeling. Van bad tot nagels, van tanden tot massagebehandeling — je dier wordt van kop tot teen in de watten gelegd. Inclusief een professioneel foto-verslag dat je mee naar huis neemt.</p>
+        <h2 style="margin-top:1.5rem">Alles inbegrepen</h2>
+        <ul class="sp-list">
+          <li>Volledig bad met premium shampoo & conditioner</li>
+          <li>Professioneel föhnen & uitborstelen</li>
+          <li>Rasspecifieke knipbeurt & styling</li>
+          <li>Nagels knippen, vijlen & potencrème</li>
+          <li>Tanden poetsen met enzymatische tandpasta</li>
+          <li>Oren grondig reinigen & controleren</li>
+          <li>Ontspannende massagebehandeling (10 min)</li>
+          <li>Professioneel foto-verslag (5+ foto's)</li>
+          <li>Gratis bandana of sjaaltje naar keuze</li>
+        </ul>
+        <div class="sp-price-banner">
+          <span>Vanaf <strong>€70</strong> (klein) · <strong>€90</strong> (middel) · <strong>€120</strong> (groot)</span>
+        </div>
+      </div>
+      <div>
+        <div class="sp-callout"><p>⏱ <strong>Duur:</strong> 2,5 tot 3,5 uur. Wij raden aan om minimaal een halve dag vrij te plannen.</p></div>
+        <div class="sp-callout" style="margin-top:1rem"><p>🎁 <strong>Perfect cadeau!</strong> Geef het Spa Deluxe pakket als cadeau — vraag naar onze cadeaubonnen.</p></div>
+        <div class="sp-callout" style="margin-top:1rem"><p>📸 <strong>Foto-verslag:</strong> Je ontvangt na afloop een mooi overzicht van de behandeling met foto's van het eindresultaat.</p></div>
+        <button class="btn-p" style="border:none;cursor:none;width:100%;justify-content:center;margin-top:1.5rem" onclick="navigateTo('home');setTimeout(()=>document.getElementById('booking').scrollIntoView({behavior:'smooth'}),300)">Boek Spa Deluxe →</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ── FAQ PAGE ────────────────────────────────────────────────────────── -->
+<div class="sp" id="sp-faq-page">
+  <div class="sp-hero" style="background:linear-gradient(135deg,var(--yellow-light),var(--coral-light))">
+    <div class="sp-hero-inner">
+      <div class="sh" style="margin-bottom:0">
+        <div class="lbl">Alles wat je wilt weten</div>
+        <h1 style="font-family:'Fredoka One',cursive;font-size:clamp(2.2rem,5vw,3.5rem);color:var(--brown);margin-bottom:.6rem">Veelgestelde vragen ❓</h1>
+        <p>Staat je vraag er niet bij? Neem gerust contact op!</p>
+      </div>
+    </div>
+  </div>
+  <div class="sp-body">
+    <div class="faq-wrap" style="max-width:800px;margin:0 auto">
+      <div class="fi"><div class="fq" onclick="toggleFaq(this)">Hoe lang duurt een verzorgingsbeurt?<div class="fi-ico">+</div></div><div class="fa"><p>Afhankelijk van het ras en de gekozen dienst duurt een beurt tussen de 1 en 3 uur. Een basisbad duurt gemiddeld 60–90 minuten, het spa-pakket kan tot 3 uur duren.</p></div></div>
+      <div class="fi"><div class="fq" onclick="toggleFaq(this)">Kan mijn angstige hond ook gegroomd worden?<div class="fi-ico">+</div></div><div class="fa"><p>Absoluut! Wij zijn gespecialiseerd in het werken met nerveuze en angstige dieren. Vertel ons van tevoren over eventuele angsten — we passen onze aanpak altijd aan.</p></div></div>
+      <div class="fi"><div class="fq" onclick="toggleFaq(this)">Welke producten gebruiken jullie?<div class="fi-ico">+</div></div><div class="fa"><p>We werken uitsluitend met 100% dierveilige, hypoallergene shampoos en conditioners. Vrij van harde chemicaliën, getest op gevoelige huiden.</p></div></div>
+      <div class="fi"><div class="fq" onclick="toggleFaq(this)">Ontvang ik updates tijdens de beurt?<div class="fi-ico">+</div></div><div class="fa"><p>Ja! We sturen foto-updates via WhatsApp zodat je precies kunt zien hoe het gaat en weet wanneer je kunt ophalen.</p></div></div>
+      <div class="fi"><div class="fq" onclick="toggleFaq(this)">Hoe ver van tevoren moet ik boeken?<div class="fi-ico">+</div></div><div class="fa"><p>We adviseren minimaal 3–5 dagen van tevoren. Last-minute plekjes zijn soms ook beschikbaar — check het online boekingsformulier.</p></div></div>
+      <div class="fi"><div class="fq" onclick="toggleFaq(this)">Verzorgen jullie ook katten en konijnen?<div class="fi-ico">+</div></div><div class="fa"><p>Zeker! Naast honden zijn we ook gespecialiseerd in katten, konijnen en kleine dieren. Katten hebben een aparte rustige ruimte.</p></div></div>
+      <div class="fi"><div class="fq" onclick="toggleFaq(this)">Wat als mijn hond ziek is op de dag van de afspraak?<div class="fi-ico">+</div></div><div class="fa"><p>Bel ons dan zo snel mogelijk. We begrijpen het volledig en verplaatsen de afspraak kosteloos, mits je minimaal 24 uur van tevoren afbelt.</p></div></div>
+      <div class="fi"><div class="fq" onclick="toggleFaq(this)">Kan ik meekijken tijdens de behandeling?<div class="fi-ico">+</div></div><div class="fa"><p>In principe vragen we je om te wachten in de wachtruimte of terug te komen bij ophalen. Dieren zijn vaak rustiger als hun baasje niet in de buurt is. Je ontvangt wel foto-updates tussendoor.</p></div></div>
+      <div class="fi"><div class="fq" onclick="toggleFaq(this)">Hebben jullie ook cadeaubonnen?<div class="fi-ico">+</div></div><div class="fa"><p>Ja! Cadeaubonnen zijn beschikbaar voor elk bedrag of een specifiek pakket. Vraag ernaar aan de balie of stuur ons een e-mail.</p></div></div>
+    </div>
+  </div>
+</div>
+
+<!-- ── PRIVACYBELEID ─────────────────────────────────────────────────────── -->
+<div class="sp" id="sp-privacybeleid">
+  <div class="sp-hero" style="background:var(--yellow-light)">
+    <div class="sp-hero-inner">
+      <div class="sh" style="margin-bottom:0">
+        <h1 style="font-family:'Fredoka One',cursive;font-size:2.5rem;color:var(--brown);margin-bottom:.4rem">Privacybeleid</h1>
+        <p>Laatst bijgewerkt: januari 2025</p>
+      </div>
+    </div>
+  </div>
+  <div class="sp-body">
+    <div class="legal-content">
+      <h2>1. Wie zijn wij?</h2>
+      <p>Pawfect Grooming is een dierenverzorgingssalon gevestigd aan Wagnerstraat 12, 2719 EK Zoetermeer. Wij zijn verantwoordelijk voor de verwerking van persoonsgegevens zoals beschreven in dit privacybeleid.</p>
+      <h2>2. Welke gegevens verzamelen wij?</h2>
+      <p>Wij verzamelen de volgende persoonsgegevens: naam, telefoonnummer, e-mailadres en informatie over uw huisdier (naam, ras, bijzonderheden). Deze gegevens worden uitsluitend gebruikt voor het uitvoeren van de dienstverlening en het versturen van afspraakbevestigingen.</p>
+      <h2>3. Hoe gebruiken wij uw gegevens?</h2>
+      <p>Uw gegevens worden gebruikt voor: het plannen en bevestigen van afspraken, het sturen van afspraakherinneringen, het verbeteren van onze dienstverlening en het naleven van wettelijke verplichtingen. Wij verkopen uw gegevens nooit aan derden.</p>
+      <h2>4. Hoe lang bewaren wij uw gegevens?</h2>
+      <p>Wij bewaren uw persoonsgegevens niet langer dan noodzakelijk. Klantgegevens worden maximaal 2 jaar na de laatste afspraak bewaard, tenzij er een wettelijke bewaarplicht geldt.</p>
+      <h2>5. Uw rechten</h2>
+      <p>U heeft het recht om uw gegevens in te zien, te corrigeren of te laten verwijderen. Neem hiervoor contact op via hallo@pawfect.nl. Wij reageren binnen 30 dagen.</p>
+      <h2>6. Contact</h2>
+      <p>Voor vragen over dit privacybeleid kunt u contact opnemen via hallo@pawfect.nl of +31 79 123 4567.</p>
+    </div>
+  </div>
+</div>
+
+<!-- ── ALGEMENE VOORWAARDEN ──────────────────────────────────────────────── -->
+<div class="sp" id="sp-algemene-voorwaarden">
+  <div class="sp-hero" style="background:var(--yellow-light)">
+    <div class="sp-hero-inner">
+      <div class="sh" style="margin-bottom:0">
+        <h1 style="font-family:'Fredoka One',cursive;font-size:2.5rem;color:var(--brown);margin-bottom:.4rem">Algemene Voorwaarden</h1>
+        <p>Pawfect Grooming · Versie januari 2025</p>
+      </div>
+    </div>
+  </div>
+  <div class="sp-body">
+    <div class="legal-content">
+      <h2>Artikel 1 – Toepasselijkheid</h2>
+      <p>Deze algemene voorwaarden zijn van toepassing op alle diensten van Pawfect Grooming (gevestigd Wagnerstraat 12, Zoetermeer). Door een afspraak te maken, accepteert u deze voorwaarden.</p>
+      <h2>Artikel 2 – Afspraken</h2>
+      <p>Afspraken kunnen worden gemaakt via het online boekingsformulier, telefonisch of per e-mail. Een afspraak is definitief na bevestiging per e-mail of telefoon door Pawfect Grooming.</p>
+      <h2>Artikel 3 – Annulering</h2>
+      <p>Annulering is kosteloos mogelijk tot 24 uur voor de afspraak. Bij annulering binnen 24 uur of no-show berekenen wij 50% van de dienst als annuleringskosten.</p>
+      <h2>Artikel 4 – Gezondheid van het dier</h2>
+      <p>Breng geen ziek dier naar de salon. Wij behouden ons het recht voor een behandeling te weigeren als het dier ziek lijkt of als de veiligheid in het geding is. Informeer ons altijd van tevoren over bijzonderheden.</p>
+      <h2>Artikel 5 – Aansprakelijkheid</h2>
+      <p>Pawfect Grooming is niet aansprakelijk voor ongevallen of schade die redelijkerwijs niet te voorzien waren. Wij gaan altijd zorgvuldig te werk en nemen alle nodige veiligheidsmaatregelen.</p>
+      <h2>Artikel 6 – Betaling</h2>
+      <p>Betaling geschiedt direct na de behandeling, contant of per pin. Wij accepteren geen betalingen achteraf.</p>
+    </div>
+  </div>
+</div>
+
+<!-- ── CADEAUBON ─────────────────────────────────────────────────────────── -->
+<div class="sp" id="sp-cadeaubon">
+  <div class="sp-hero" style="background:linear-gradient(135deg,var(--coral-light),var(--yellow-light))">
+    <div class="sp-hero-inner">
+      <div class="sh" style="margin-bottom:0">
+        <div class="lbl">Het perfecte cadeau</div>
+        <h1 style="font-family:'Fredoka One',cursive;font-size:clamp(2.2rem,5vw,3.5rem);color:var(--brown);margin-bottom:.6rem">Cadeaubon 🎁</h1>
+        <p>Geef het cadeau van een stralend, verwend huisdier</p>
+      </div>
+    </div>
+  </div>
+  <div class="sp-body">
+    <div class="sp-2col">
+      <div>
+        <h2>Voor elk budget</h2>
+        <p>Onze cadeaubonnen zijn beschikbaar voor elk bedrag of voor een specifiek pakket. Ze zijn geldig voor 12 maanden na aankoopdatum en in te wisselen voor alle diensten bij Pawfect Grooming.</p>
+        <div class="gift-cards">
+          <div class="gift-card" style="background:var(--yellow-light);border-color:var(--yellow)">
+            <div style="font-size:2.5rem">🛁</div>
+            <h3>Bad & Borstel bon</h3>
+            <p>Geldig voor een volledige bad & borstel behandeling naar keuze</p>
+            <div class="gift-price">Vanaf €35</div>
+          </div>
+          <div class="gift-card" style="background:var(--coral-light);border-color:var(--coral)">
+            <div style="font-size:2.5rem">🌟</div>
+            <h3>Spa Deluxe bon</h3>
+            <p>De ultieme verwenervaring — het meest gekozen cadeau!</p>
+            <div class="gift-price">Vanaf €70</div>
+          </div>
+          <div class="gift-card" style="background:var(--mint-light);border-color:var(--mint)">
+            <div style="font-size:2.5rem">💰</div>
+            <h3>Tegoed bon</h3>
+            <p>Vrij te besteden aan alle diensten bij Pawfect Grooming</p>
+            <div class="gift-price">Eigen bedrag</div>
+          </div>
+        </div>
+      </div>
+      <div>
+        <h2>Hoe bestel je?</h2>
+        <ul class="sp-list">
+          <li>Stuur een e-mail naar hallo@pawfect.nl</li>
+          <li>Bel ons op +31 79 123 4567</li>
+          <li>Of kom langs in onze salon</li>
+        </ul>
+        <div class="sp-callout" style="margin-top:1.5rem">
+          <p>🎀 De bon ontvang je als mooi gedrukte kaart, klaar om te geven. Digitale versie ook mogelijk op verzoek.</p>
+        </div>
+        <div class="sp-callout" style="margin-top:1rem">
+          <p>📅 Cadeaubonnen zijn 12 maanden geldig na aankoopdatum en niet inwisselbaar voor contant geld.</p>
+        </div>
+        <button class="btn-p" style="border:none;cursor:none;width:100%;justify-content:center;margin-top:1.5rem" onclick="navigateTo('contact')">Bestel een cadeaubon →</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ── ABONNEMENT ─────────────────────────────────────────────────────────── -->
+<div class="sp" id="sp-abonnement">
+  <div class="sp-hero" style="background:linear-gradient(135deg,var(--mint-light),var(--sky-light))">
+    <div class="sp-hero-inner">
+      <div class="sh" style="margin-bottom:0">
+        <div class="lbl">Altijd verzorgd, altijd voordelig</div>
+        <h1 style="font-family:'Fredoka One',cursive;font-size:clamp(2.2rem,5vw,3.5rem);color:var(--brown);margin-bottom:.6rem">Abonnement 🔄</h1>
+        <p>Regelmatig laten verzorgen? Dan is een abonnement ideaal</p>
+      </div>
+    </div>
+  </div>
+  <div class="sp-body">
+    <div class="price-grid" style="max-width:900px;margin:0 auto 3rem">
+      <div class="pc">
+        <span class="p-ico">🌙</span>
+        <h3>Maandelijks</h3>
+        <div class="p-desc">Één behandeling per maand</div>
+        <div class="p-val"><span class="p-from">v.a.</span> €30<span style="font-size:1rem;font-family:'Nunito',sans-serif;font-weight:700;color:var(--brown-mid)">/mnd</span></div>
+        <ul class="p-feats">
+          <li><span class="chk">✓</span>1x Bad & Borstel per maand</li>
+          <li><span class="chk">✓</span>10% korting op losse behandelingen</li>
+          <li><span class="chk">✓</span>Vaste plek in de agenda</li>
+          <li><span class="chk">✓</span>Maandelijks opzegbaar</li>
+        </ul>
+        <button class="btn-pc" style="cursor:none" onclick="navigateTo('contact')">Start abonnement</button>
+      </div>
+      <div class="pc pop">
+        <span class="pop-b">⭐ Meest gekozen</span>
+        <span class="p-ico">⭐</span>
+        <h3>Kwartaal</h3>
+        <div class="p-desc">Eén behandeling per 6 weken</div>
+        <div class="p-val"><span class="p-from">v.a.</span> €52<span style="font-size:1rem;font-family:'Nunito',sans-serif;font-weight:700;color:var(--brown-mid)">/6wk</span></div>
+        <ul class="p-feats">
+          <li><span class="chk">✓</span>1x Bad + Knipbeurt per 6 weken</li>
+          <li><span class="chk">✓</span>15% korting op losse behandelingen</li>
+          <li><span class="chk">✓</span>Prioriteit bij boeken</li>
+          <li><span class="chk">✓</span>Gratis nagelknip elke 2e beurt</li>
+          <li><span class="chk">✓</span>Per kwartaal opzegbaar</li>
+        </ul>
+        <button class="btn-pc" style="cursor:none" onclick="navigateTo('contact')">Start abonnement</button>
+      </div>
+      <div class="pc">
+        <span class="p-ico">💎</span>
+        <h3>Jaarlijks</h3>
+        <div class="p-desc">Volledige ontzorging het hele jaar</div>
+        <div class="p-val"><span class="p-from">v.a.</span> €65<span style="font-size:1rem;font-family:'Nunito',sans-serif;font-weight:700;color:var(--brown-mid)">/mnd</span></div>
+        <ul class="p-feats">
+          <li><span class="chk">✓</span>Onbeperkt Bad & Borstel</li>
+          <li><span class="chk">✓</span>4x Knipbeurt per jaar inbegrepen</li>
+          <li><span class="chk">✓</span>20% korting op alle losse diensten</li>
+          <li><span class="chk">✓</span>Altijd eerste keuze in agenda</li>
+          <li><span class="chk">✓</span>1x Gratis Spa Deluxe per jaar</li>
+        </ul>
+        <button class="btn-pc" style="cursor:none" onclick="navigateTo('contact')">Start abonnement</button>
+      </div>
+    </div>
+    <div class="sp-callout" style="text-align:center;max-width:600px;margin:0 auto">
+      <p>Vragen over een abonnement op maat? Neem contact op en we denken graag mee!</p>
+      <button class="btn-s" style="border:2.5px solid var(--brown);margin-top:1rem;cursor:none" onclick="navigateTo('contact')">Neem contact op →</button>
+    </div>
+  </div>
+</div>
+
+</div><!-- end subpage-overlay -->
+
+<footer>
+  <div class="footer-grid">
+    <div class="fb">
+      <div class="logo">
+        <svg viewBox="0 0 64 64" width="26" height="26" fill="#FFD166"><ellipse cx="12" cy="14" rx="7" ry="9"/><ellipse cx="32" cy="8" rx="7" ry="9"/><ellipse cx="52" cy="14" rx="7" ry="9"/><ellipse cx="22" cy="28" rx="6" ry="8"/><ellipse cx="42" cy="28" rx="6" ry="8"/><path d="M32 24c-14 0-20 10-18 22 2 8 8 12 18 12s16-4 18-12c2-12-4-22-18-22z"/></svg>
+        Pawfect Grooming
+      </div>
+      <p>Professionele dierenverzorging in Zoetermeer met liefde, geduld en de beste producten voor jouw trouwe vriend.</p>
+      <div class="f-social">
+        <a href="#" class="fsoc">📸</a><a href="#" class="fsoc">👍</a><a href="#" class="fsoc">💬</a>
+      </div>
+    </div>
+    <div class="fc">
+      <h4>Diensten</h4>
+      <ul>
+        <li><a href="#" onclick="navigateTo('bad-borstel');return false">Bad & Borstel</a></li><li><a href="#" onclick="navigateTo('knipbeurt-styling');return false">Knipbeurt & Styling</a></li>
+        <li><a href="#" onclick="navigateTo('nagels-poten');return false">Nagels & Poten</a></li><li><a href="#" onclick="navigateTo('spa-deluxe');return false">Spa Deluxe</a></li>
+        <li><a href="#" onclick="navigateTo('prijslijst');return false">Prijslijst</a></li>
+      </ul>
+    </div>
+    <div class="fc">
+      <h4>Bedrijf</h4>
+      <ul>
+        <li><a href="#" onclick="navigateTo('over-ons');return false">Over ons</a></li><li><a href="#" onclick="navigateTo('ons-team');return false">Ons team</a></li>
+        <li><a href="#" onclick="navigateTo('blog');return false">Blog</a></li><li><a href="#" onclick="navigateTo('vacatures');return false">Vacatures</a></li>
+        <li><a href="#" onclick="navigateTo('contact');return false">Contact</a></li>
+      </ul>
+    </div>
+    <div class="fc">
+      <h4>Info</h4>
+      <ul>
+        <li><a href="#" onclick="navigateTo('faq-page');return false">Veelgestelde vragen</a></li><li><a href="#" onclick="navigateTo('privacybeleid');return false">Privacybeleid</a></li>
+        <li><a href="#" onclick="navigateTo('algemene-voorwaarden');return false">Algemene voorwaarden</a></li><li><a href="#" onclick="navigateTo('cadeaubon');return false">Cadeaubon</a></li>
+        <li><a href="#" onclick="navigateTo('abonnement');return false">Abonnement</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="f-bottom">
+    <p>© 2025 Pawfect Grooming — Gemaakt met ❤️ voor huisdieren overal</p>
+    <div class="fbadges">
+      <span class="fbg">PGF Gecertificeerd</span>
+      <span class="fbg">100% Diervriendelijk</span>
+      <span class="fbg">Veilig betalen</span>
+    </div>
+  </div>
+</footer>
+</body>
+</html>

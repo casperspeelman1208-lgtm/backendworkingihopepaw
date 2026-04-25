@@ -1,0 +1,100 @@
+/* ── PAWFECT ADMIN — Gedeelde stijlen ── */
+:root{
+  --cream:#FFFBF0;--white:#fff;
+  --yellow:#FFD166;--yellow-light:#FFF5CC;
+  --coral:#FF6B6B;--coral-d:#e04d4d;--coral-light:#FFE8E8;
+  --mint:#06D6A0;--mint-light:#D4F5EC;
+  --brown:#3D2314;--brown-mid:#7C4D3A;--brown-light:#C4906E;
+  --sidebar-w:240px;
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Nunito',sans-serif;background:#F5F0E8;color:var(--brown);display:flex;min-height:100vh}
+
+/* ── SIDEBAR ── */
+.sidebar{width:var(--sidebar-w);background:var(--brown);min-height:100vh;position:fixed;top:0;left:0;display:flex;flex-direction:column;padding:1.5rem 1rem;z-index:100}
+.sb-logo{display:flex;align-items:center;gap:.6rem;padding:.5rem .5rem 1.5rem;border-bottom:1px solid rgba(255,255,255,.1)}
+.sb-logo svg{width:30px;height:30px;flex-shrink:0}
+.sb-logo span{font-family:'Fredoka One',cursive;font-size:1.2rem;color:var(--yellow)}
+.sb-nav{display:flex;flex-direction:column;gap:.3rem;margin-top:1.2rem;flex:1}
+.sb-link{display:flex;align-items:center;gap:.75rem;padding:.75rem 1rem;border-radius:12px;color:#d4b08a;font-weight:700;font-size:.9rem;text-decoration:none;transition:all .2s}
+.sb-link:hover,.sb-link.active{background:rgba(255,209,102,.15);color:var(--yellow)}
+.sb-link .ico{font-size:1.1rem;width:22px;text-align:center}
+.sb-user{border-top:1px solid rgba(255,255,255,.1);padding-top:1rem;margin-top:auto}
+.sb-user p{color:#a08070;font-size:.8rem;margin-bottom:.5rem;padding:0 .5rem}
+.sb-logout{display:block;width:100%;background:rgba(255,107,107,.15);color:#FF6B6B;border:none;border-radius:10px;padding:.6rem 1rem;font-family:'Nunito',sans-serif;font-weight:800;font-size:.85rem;cursor:pointer;text-align:left;transition:background .2s}
+.sb-logout:hover{background:rgba(255,107,107,.3)}
+
+/* ── MAIN CONTENT ── */
+.main{margin-left:var(--sidebar-w);flex:1;padding:2rem;min-height:100vh}
+.page-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:2rem;flex-wrap:wrap;gap:1rem}
+.page-title{font-family:'Fredoka One',cursive;font-size:1.8rem;color:var(--brown)}
+.page-sub{color:var(--brown-mid);font-size:.9rem;margin-top:.2rem}
+
+/* ── STATS CARDS ── */
+.stats-row{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:1rem;margin-bottom:2rem}
+.stat-card{background:var(--white);border-radius:16px;padding:1.4rem;border:2px solid var(--yellow);transition:transform .2s}
+.stat-card:hover{transform:translateY(-3px)}
+.stat-num{font-family:'Fredoka One',cursive;font-size:2.2rem;color:var(--coral);line-height:1}
+.stat-label{font-size:.85rem;color:var(--brown-mid);font-weight:700;margin-top:.3rem}
+
+/* ── TABLE ── */
+.table-wrap{background:var(--white);border-radius:16px;border:2px solid var(--yellow);overflow:hidden}
+table{width:100%;border-collapse:collapse}
+th{background:var(--yellow);color:var(--brown);font-weight:900;font-size:.8rem;text-transform:uppercase;letter-spacing:.05em;padding:.9rem 1.2rem;text-align:left}
+td{padding:.85rem 1.2rem;border-bottom:1px solid var(--yellow-light);color:var(--brown-mid);font-size:.9rem;vertical-align:middle}
+tr:last-child td{border-bottom:none}
+tr:hover td{background:var(--cream)}
+
+/* ── BADGES ── */
+.badge{display:inline-block;padding:.25rem .7rem;border-radius:50px;font-size:.75rem;font-weight:800;text-transform:uppercase;letter-spacing:.05em}
+.badge-nieuw{background:#DBF0FF;color:#1a5f8a}
+.badge-bevestigd{background:var(--mint-light);color:#034d38}
+.badge-voltooid{background:#e8e8e8;color:#666}
+.badge-geannuleerd{background:var(--coral-light);color:var(--coral-d)}
+
+/* ── BUTTONS ── */
+.btn{display:inline-flex;align-items:center;gap:.5rem;padding:.6rem 1.3rem;border-radius:50px;font-family:'Nunito',sans-serif;font-weight:800;font-size:.88rem;cursor:pointer;border:none;transition:all .15s;text-decoration:none}
+.btn-coral{background:var(--coral);color:#fff;box-shadow:0 3px 0 var(--coral-d)}
+.btn-coral:hover{transform:translateY(-2px);box-shadow:0 5px 0 var(--coral-d)}
+.btn-outline{background:transparent;border:2px solid var(--brown);color:var(--brown)}
+.btn-outline:hover{background:var(--yellow);border-color:var(--yellow)}
+.btn-sm{padding:.4rem .9rem;font-size:.8rem}
+.btn-danger{background:var(--coral-light);color:var(--coral-d);border:2px solid var(--coral-light)}
+.btn-danger:hover{background:var(--coral);color:#fff}
+
+/* ── FORMS ── */
+.form-card{background:var(--white);border-radius:16px;border:2px solid var(--yellow);padding:2rem}
+.form-grid{display:grid;grid-template-columns:1fr 1fr;gap:1rem}
+.form-full{grid-column:span 2}
+.fg{display:flex;flex-direction:column;gap:.4rem;margin-bottom:.2rem}
+.fg label{font-weight:800;font-size:.8rem;color:var(--brown);text-transform:uppercase;letter-spacing:.05em}
+.fg input,.fg select,.fg textarea{padding:.75rem 1rem;border-radius:10px;border:2px solid var(--yellow);font-family:'Nunito',sans-serif;font-weight:700;font-size:.9rem;color:var(--brown);background:var(--yellow-light);outline:none;transition:border-color .2s}
+.fg input:focus,.fg select:focus,.fg textarea:focus{border-color:var(--coral);background:#fff}
+.fg textarea{resize:vertical;min-height:100px}
+
+/* ── MODAL ── */
+.modal-bg{display:none;position:fixed;inset:0;background:rgba(0,0,0,.5);z-index:200;align-items:center;justify-content:center}
+.modal-bg.open{display:flex}
+.modal{background:var(--white);border-radius:20px;padding:2rem;max-width:560px;width:90%;max-height:90vh;overflow-y:auto;border:3px solid var(--yellow)}
+.modal-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:1.5rem}
+.modal-title{font-family:'Fredoka One',cursive;font-size:1.4rem;color:var(--brown)}
+.modal-close{background:none;border:none;font-size:1.5rem;cursor:pointer;color:var(--brown-mid);padding:.2rem}
+
+/* ── ALERTS ── */
+.alert{border-radius:12px;padding:.9rem 1.2rem;font-weight:700;font-size:.9rem;margin-bottom:1rem}
+.alert-success{background:var(--mint-light);color:#034d38;border:2px solid var(--mint)}
+.alert-error{background:var(--coral-light);color:var(--coral-d);border:2px solid var(--coral)}
+
+/* ── EMPTY STATE ── */
+.empty{text-align:center;padding:4rem 2rem;color:var(--brown-mid)}
+.empty-icon{font-size:3.5rem;margin-bottom:1rem}
+.empty h3{font-family:'Fredoka One',cursive;font-size:1.3rem;color:var(--brown);margin-bottom:.5rem}
+
+/* ── RESPONSIVE ── */
+@media(max-width:768px){
+  .sidebar{transform:translateX(-100%);transition:transform .3s}
+  .sidebar.open{transform:none}
+  .main{margin-left:0}
+  .form-grid{grid-template-columns:1fr}
+  .form-full{grid-column:span 1}
+}

@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Dashboard — Pawfect Admin</title>
+<link href="https://fonts.googleapis.com/css2?family=Fredoka+One&family=Nunito:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/css/admin.css">
+</head>
+<body>
+
+<!-- SIDEBAR -->
+<aside class="sidebar">
+  <div class="sb-logo">
+    <svg viewBox="0 0 64 64" fill="#FFD166"><ellipse cx="12" cy="14" rx="7" ry="9"/><ellipse cx="32" cy="8" rx="7" ry="9"/><ellipse cx="52" cy="14" rx="7" ry="9"/><ellipse cx="22" cy="28" rx="6" ry="8"/><ellipse cx="42" cy="28" rx="6" ry="8"/><path d="M32 24c-14 0-20 10-18 22 2 8 8 12 18 12s16-4 18-12c2-12-4-22-18-22z"/></svg>
+    <span>Pawfect</span>
+  </div>
+  <nav class="sb-nav">
+    <a href="/admin/dashboard.html"  class="sb-link active"><span class="ico">🏠</span> Dashboard</a>
+    <a href="/admin/bookings.html"   class="sb-link"><span class="ico">📅</span> Boekingen</a>
+    <a href="/admin/agenda.html"     class="sb-link"><span class="ico">🗓️</span> Agenda</a>
+    <a href="/admin/clients.html"    class="sb-link"><span class="ico">🐾</span> Klanten</a>
+    <a href="/admin/blog.html"       class="sb-link"><span class="ico">📝</span> Blog</a>
+    <a href="/"                      class="sb-link" target="_blank"><span class="ico">🌐</span> Website</a>
+  </nav>
+  <div class="sb-user">
+    <p id="admin-email">laden...</p>
+    <button class="sb-logout" onclick="logout()">↩ Uitloggen</button>
+  </div>
+</aside>
+
+<!-- MAIN -->
+<main class="main">
+  <div class="page-header">
+    <div>
+      <div class="page-title">Goedemorgen! 🐾</div>
+      <div class="page-sub">Hier is een overzicht van vandaag</div>
+    </div>
+    <a href="/admin/bookings.html" class="btn btn-coral">+ Nieuwe boeking</a>
+  </div>
+
+  <!-- STATS -->
+  <div class="stats-row">
+    <div class="stat-card">
+      <div class="stat-num" id="stat-nieuw">—</div>
+      <div class="stat-label">Nieuwe aanvragen</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-num" id="stat-vandaag">—</div>
+      <div class="stat-label">Afspraken vandaag</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-num" id="stat-week">—</div>
+      <div class="stat-label">Afspraken deze week</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-num" id="stat-klanten">—</div>
+      <div class="stat-label">Klanten totaal</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-num" id="stat-blogs">—</div>
+      <div class="stat-label">Gepubliceerde blogs</div>
+    </div>
+  </div>
+
+  <!-- NIEUWE AANVRAGEN -->
+  <div style="margin-bottom:2rem">
+    <h2 style="font-family:'Fredoka One',cursive;font-size:1.3rem;color:var(--brown);margin-bottom:1rem">
+      📋 Nieuwe aanvragen
+    </h2>
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr><th>Naam</th><th>Huisdier</th><th>Dienst</th><th>Datum</th><th>Status</th><th></th></tr>
+        </thead>
+        <tbody id="nieuweTabel">
+          <tr><td colspan="6" style="text-align:center;padding:2rem;color:var(--brown-mid)">Laden...</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- AGENDA VANDAAG -->
+  <div>
+    <h2 style="font-family:'Fredoka One',cursive;font-size:1.3rem;color:var(--brown);margin-bottom:1rem">
+      📅 Vandaag in de salon
+    </h2>
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr><th>Naam</th><th>Huisdier</th><th>Dienst</th><th>Status</th><th></th></tr>
+        </thead>
+        <tbody id="vandaagTabel">
+          <tr><td colspan="5" style="text-align:center;padding:2rem;color:var(--brown-mid)">Laden...</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</main>
+
+<script src="/js/admin.js"></script>
+<script>
+(async () => {
+  await requireAuth();
+
+  const today = new Date().toISOString().split('T')[0];
+  const weekEnd = new Date(Date.now() + 7*864e5).toISOString().split('T')[0];
+
+  // Load all bookings
+  const [bookings, clients, blogs] = await Promise.all([
+    api('/bookings'),
+    api('/clients'),
+    api('/blog/all'),
+  ]);
+
+  // Stats
+  const nieuw    = bookings.filter(b => b.status === 'nieuw');
+  const vandaag  = bookings.filter(b => b.datum === today);
+  const dezeWeek = bookings.filter(b => b.datum >= today && b.datum <= weekEnd);
+
+  document.getElementById('stat-nieuw').textContent    = nieuw.length;
+  document.getElementById('stat-vandaag').textContent  = vandaag.length;
+  document.getElementById('stat-week').textContent     = dezeWeek.length;
+  document.getElementById('stat-klanten').textContent  = clients.length;
+  document.getElementById('stat-blogs').textContent    = blogs.filter(b => b.published).length;
+
+  // Nieuwe aanvragen tabel
+  const nieuwTabel = document.getElementById('nieuweTabel');
+  nieuwTabel.innerHTML = nieuw.length ? nieuw.slice(0,5).map(b => `
+    <tr>
+      <td><strong>${b.naam_baasje}</strong></td>
+      <td>${b.naam_huisdier} (${b.soort_dier || '—'})</td>
+      <td>${b.dienst}</td>
+      <td>${formatDate(b.datum)}</td>
+      <td>${badgeHtml(b.status)}</td>
+      <td><a href="/admin/bookings.html" class="btn btn-sm btn-outline">Bekijk</a></td>
+    </tr>`).join('') :
+    '<tr><td colspan="6" style="text-align:center;padding:2rem;color:var(--brown-mid)">🎉 Geen openstaande aanvragen</td></tr>';
+
+  // Vandaag tabel
+  const vTabel = document.getElementById('vandaagTabel');
+  vTabel.innerHTML = vandaag.length ? vandaag.map(b => `
+    <tr>
+      <td><strong>${b.naam_baasje}</strong></td>
+      <td>${b.naam_huisdier}</td>
+      <td>${b.dienst}</td>
+      <td>${badgeHtml(b.status)}</td>
+      <td><a href="/admin/bookings.html" class="btn btn-sm btn-outline">Beheer</a></td>
+    </tr>`).join('') :
+    '<tr><td colspan="5" style="text-align:center;padding:2rem;color:var(--brown-mid)">Geen afspraken vandaag 🐾</td></tr>';
+})();
+</script>
+</body>
+</html>
