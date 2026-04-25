@@ -235,7 +235,7 @@ async function laadBlogPosts() {
       var bg = p.cover_image
         ? 'background-image:url(' + p.cover_image + ');background-size:cover;background-position:center'
         : 'background:linear-gradient(135deg,#FFF5CC,#FFE8E8);display:flex;align-items:center;justify-content:center;font-size:3.5rem';
-      var oc = "laadBlogDetail('" + s + "')";
+      var oc = "window.location.href='/blog-post.html?slug=" + s + "'";
 
       cards += '<div class="blog-card" style="cursor:pointer" onclick="' + oc + '">';
       cards += '<div class="blog-img" style="' + bg + '">' + (p.cover_image ? '' : '📝') + '</div>';
@@ -254,52 +254,8 @@ async function laadBlogPosts() {
   }
 }
 
-async function laadBlogDetail(slug) {
-  // Show the detail page
-  document.getElementById('main-page').style.display = 'none';
-  const overlay = document.getElementById('subpage-overlay');
-  overlay.style.display = 'block';
-  document.querySelectorAll('.sp').forEach(s => s.classList.remove('active'));
-  const detailPage = document.getElementById('sp-blog-detail');
-  if (detailPage) detailPage.classList.add('active');
-  window.scrollTo({top: 0, behavior: 'instant'});
-
-  const inner = document.getElementById('blogDetailInner');
-  if (!inner) { console.error('blogDetailInner niet gevonden'); return; }
-  inner.innerHTML = '<div style="text-align:center;padding:4rem;color:var(--brown-mid)"><div style="font-size:2rem;margin-bottom:1rem">⏳</div>Post laden...</div>';
-
-  try {
-    const res = await fetch('/api/blog/' + encodeURIComponent(slug));
-    if (!res.ok) throw new Error('Post niet gevonden (status ' + res.status + ')');
-    const post = await res.json();
-
-    inner.innerHTML = `
-      ${post.cover_image
-        ? `<img src="${post.cover_image}" class="blog-detail-cover" alt="${post.title}" onerror="this.style.display='none'">`
-        : ''}
-      <div class="blog-detail-cat">${post.category || 'Algemeen'}</div>
-      <h1 class="blog-detail-title">${post.title}</h1>
-      <div class="blog-detail-meta">
-        Gepubliceerd op ${formatBlogDate(post.published_at)}
-      </div>
-      <div class="blog-detail-body">${post.content}</div>
-      <div style="margin-top:3rem;padding-top:2rem;border-top:2px solid var(--yellow-light);text-align:center">
-        <button class="btn-p" style="border:none;cursor:pointer" onclick="navigateTo('blog')">
-          ← Terug naar alle posts
-        </button>
-      </div>`;
-
-  } catch (err) {
-    console.error('Blog detail fout:', err);
-    inner.innerHTML = `
-      <div style="text-align:center;padding:4rem;color:var(--brown-mid)">
-        <div style="font-size:3rem;margin-bottom:1rem">😔</div>
-        <p style="margin-bottom:1rem">Post kon niet worden geladen.</p>
-        <button onclick="navigateTo('blog')" style="cursor:pointer;background:var(--coral);color:#fff;border:none;border-radius:50px;padding:.7rem 1.5rem;font-family:'Nunito',sans-serif;font-weight:800;font-size:.9rem">
-          Terug naar blog
-        </button>
-      </div>`;
-  }
+function laadBlogDetail(slug) {
+  window.location.href = '/blog-post.html?slug=' + encodeURIComponent(slug);
 }
 
 function formatBlogDate(d) {
