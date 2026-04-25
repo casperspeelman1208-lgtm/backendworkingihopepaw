@@ -82,32 +82,48 @@ async function handleBook(e){
   btn.textContent = 'Bezig...';
   btn.disabled = true;
 
-  const form = e.target;
+  // Read form values by id (reliable)
+  const naam      = document.getElementById('bk-naam')?.value || '';
+  const telefoon  = document.getElementById('bk-tel')?.value  || '';
+  const email     = document.getElementById('bk-email')?.value || '';
+  const huisdier  = document.getElementById('bk-huisdier')?.value || '';
+  const soort     = document.getElementById('bk-soort')?.value || '';
+  const dienst    = document.getElementById('bk-dienst')?.value || '';
+  const datum     = document.getElementById('bk-datum')?.value || '';
+  const opmerking = document.getElementById('bk-opmerking')?.value || '';
+
   try {
     const res = await fetch('/api/bookings', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
-        naam_baasje:   form.querySelector('input[placeholder*="naam"]').value,
-        telefoon:      form.querySelector('input[type="tel"]').value,
-        email:         form.querySelector('input[type="email"]')?.value || '',
-        naam_huisdier: form.querySelector('input[placeholder*="dier"]').value,
-        soort_dier:    form.querySelectorAll('select')[0]?.value || '',
-        dienst:        form.querySelectorAll('select')[1]?.value || '',
-        datum:         form.querySelector('input[type="date"]').value,
-        opmerkingen:   form.querySelector('textarea').value,
+        naam_baasje:   naam,
+        telefoon:      telefoon,
+        email:         email,
+        naam_huisdier: huisdier,
+        soort_dier:    soort,
+        dienst:        dienst,
+        datum:         datum,
+        opmerkingen:   opmerking,
       })
     });
     const data = await res.json();
     if (!res.ok) throw new Error(data.error || 'Er ging iets mis');
+
+    // Show success with email address filled in
     document.getElementById('bkForm').style.display = 'none';
-    document.getElementById('successMsg').style.display = 'block';
+    const successEl = document.getElementById('successMsg');
+    successEl.style.display = 'block';
+    const emailSpan = document.getElementById('successEmail');
+    if (emailSpan && email) emailSpan.textContent = 'Bevestiging verstuurd naar: ' + email;
+
   } catch(err) {
     btn.textContent = origText;
     btn.disabled = false;
     alert('Er ging iets mis: ' + err.message + '\nProbeer het nog een keer of bel ons op +31 79 123 4567.');
   }
 }
+
 
 /* SMOOTH SCROLL */
 document.querySelectorAll('a[href^="#"]:not([data-page]):not([onclick])').forEach(a=>{
