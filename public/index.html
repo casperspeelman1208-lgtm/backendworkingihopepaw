@@ -462,24 +462,37 @@
     <div class="bk-form-wrap sa">
       <form id="bkForm" onsubmit="handleBook(event)">
         <div class="form-row">
-          <div class="fg"><label>Naam baasje</label><input type="text" placeholder="Jouw naam" required></div>
-          <div class="fg"><label>Telefoonnummer</label><input type="tel" placeholder="+31 6 xxxxxxxx"></div>
+          <div class="fg"><label>Naam baasje</label><input type="text" id="bk-naam" placeholder="Jouw naam" required></div>
+          <div class="fg"><label>Telefoonnummer</label><input type="tel" id="bk-tel" placeholder="+31 6 xxxxxxxx"></div>
         </div>
         <div class="form-row">
-          <div class="fg"><label>Naam huisdier</label><input type="text" placeholder="Naam van je dier" required></div>
-          <div class="fg"><label>Soort dier</label><select><option value="">Kies soort…</option><option>Hond</option><option>Kat</option><option>Konijn</option><option>Anders</option></select></div>
+          <div class="fg form-full"><label>E-mailadres <span style="color:var(--coral)">*</span></label><input type="email" id="bk-email" placeholder="jouw@email.nl" required></div>
         </div>
         <div class="form-row">
-          <div class="fg"><label>Gewenste dienst</label><select required><option value="">Kies dienst…</option><option>Basis – Bad & Borstel (v.a. €35)</option><option>Knipbeurt & Styling (v.a. €45)</option><option>Nagels & Poten (v.a. €15)</option><option>Compleet pakket (v.a. €55)</option><option>Spa Deluxe (v.a. €75)</option></select></div>
-          <div class="fg"><label>Gewenste datum</label><input type="date" required></div>
+          <div class="fg"><label>Naam huisdier</label><input type="text" id="bk-huisdier" placeholder="Naam van je dier" required></div>
+          <div class="fg"><label>Soort dier</label><select id="bk-soort"><option value="">Kies soort…</option><option>Hond</option><option>Kat</option><option>Konijn</option><option>Anders</option></select></div>
         </div>
         <div class="form-row">
-          <div class="fg form-full"><label>Opmerkingen (optioneel)</label><textarea placeholder="Bijv. allergieën, angstig voor lawaai, speciaal ras…"></textarea></div>
+          <div class="fg"><label>Gewenste dienst</label><select id="bk-dienst" required><option value="">Kies dienst…</option><option>Basis – Bad & Borstel (v.a. €35)</option><option>Knipbeurt & Styling (v.a. €45)</option><option>Nagels & Poten (v.a. €15)</option><option>Compleet pakket (v.a. €55)</option><option>Spa Deluxe (v.a. €75)</option></select></div>
+          <div class="fg"><label>Gewenste datum</label><input type="date" id="bk-datum" required></div>
         </div>
-        <button type="submit" class="btn-sub">Bevestig mijn afspraak 🐾</button>
-        <p class="form-note">Je ontvangt binnen 2 uur een bevestiging via telefoon of e-mail</p>
+        <div class="form-row">
+          <div class="fg form-full"><label>Opmerkingen (optioneel)</label><textarea id="bk-opmerking" placeholder="Bijv. allergieën, angstig voor lawaai, speciaal ras…"></textarea></div>
+        </div>
+        <button type="submit" class="btn-sub">Maak afspraak 🐾</button>
+        <p class="form-note">Je ontvangt direct een bevestigingsmail na het indienen</p>
       </form>
-      <div class="success-msg" id="successMsg">🎉 Gelukt! We nemen snel contact op.<br><span style="font-family:'Nunito',sans-serif;font-size:1rem;color:var(--brown-mid);font-weight:600">Check je telefoon of e-mail!</span></div>
+      <div class="success-msg" id="successMsg">
+  <div style="font-size:3rem;margin-bottom:.8rem">🎉</div>
+  <div style="font-family:'Fredoka One',cursive;font-size:1.8rem;color:var(--brown);margin-bottom:.6rem">Afspraak aangevraagd!</div>
+  <p style="font-family:'Nunito',sans-serif;font-size:1rem;color:var(--brown-mid);font-weight:600;line-height:1.6;max-width:400px;margin:0 auto">
+    We hebben je aanvraag ontvangen en sturen je zo meteen een bevestigingsmail.<br>
+    <span style="color:var(--coral);font-weight:800" id="successEmail"></span>
+  </p>
+  <p style="font-family:'Nunito',sans-serif;font-size:.88rem;color:var(--brown-mid);margin-top:1rem">
+    Staat er niks in je inbox? Check ook je spammap.
+  </p>
+</div>
     </div>
   </div>
 </section>
