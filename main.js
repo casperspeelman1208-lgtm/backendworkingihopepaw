@@ -214,44 +214,43 @@ document.addEventListener('click', e=>{
    ══════════════════════════════════════════════════════ */
 
 async function laadBlogPosts() {
-  const grid = document.getElementById('blogGrid');
+  var grid = document.getElementById('blogGrid');
   if (!grid) return;
 
+  grid.innerHTML = '<div style="grid-column:1/-1;text-align:center;padding:3rem;color:#7C4D3A"><div style="font-size:2rem;margin-bottom:.5rem">loading...</div></div>';
+
   try {
-    const res  = await fetch('/api/blog');
-    const posts = await res.json();
+    var res   = await fetch('/api/blog');
+    var posts = await res.json();
 
     if (!Array.isArray(posts) || posts.length === 0) {
-      grid.innerHTML = `
-        <div style="grid-column:1/-1;text-align:center;padding:3rem 1rem;color:var(--brown-mid)">
-          <div style="font-size:3rem;margin-bottom:1rem">📝</div>
-          <h3 style="font-family:'Fredoka One',cursive;font-size:1.3rem;color:var(--brown);margin-bottom:.5rem">Nog geen blogposts</h3>
-          <p>De eerste posts zijn onderweg!</p>
-        </div>`;
+      grid.innerHTML = '<div style="grid-column:1/-1;text-align:center;padding:3rem;color:#7C4D3A"><div style="font-size:3rem">📝</div><p style="margin-top:1rem">Nog geen blogposts gepubliceerd.</p></div>';
       return;
     }
 
-    grid.innerHTML = posts.map(post => `
-      <div class="blog-card blog-card-link" onclick="laadBlogDetail('${post.slug}')">
-        <div class="blog-img" style="${post.cover_image
-          ? `background:url('${post.cover_image}') center/cover no-repeat`
-          : 'background:linear-gradient(135deg,var(--yellow-light),var(--coral-light));display:flex;align-items:center;justify-content:center;font-size:3.5rem'}">
-          ${post.cover_image ? '' : '📝'}
-        </div>
-        <div class="blog-content">
-          <div class="blog-meta">${post.category || 'Algemeen'} · ${formatBlogDate(post.published_at)}</div>
-          <h3 class="blog-card-title">${post.title}</h3>
-          <p>${post.excerpt || ''}</p>
-          <span class="blog-link">Lees meer →</span>
-        </div>
-      </div>`).join('');
+    var cards = '';
+    for (var i = 0; i < posts.length; i++) {
+      var p = posts[i];
+      var s = p.slug;
+      var bg = p.cover_image
+        ? 'background-image:url(' + p.cover_image + ');background-size:cover;background-position:center'
+        : 'background:linear-gradient(135deg,#FFF5CC,#FFE8E8);display:flex;align-items:center;justify-content:center;font-size:3.5rem';
+      var oc = "laadBlogDetail('" + s + "')";
+
+      cards += '<div class="blog-card" style="cursor:pointer" onclick="' + oc + '">';
+      cards += '<div class="blog-img" style="' + bg + '">' + (p.cover_image ? '' : '📝') + '</div>';
+      cards += '<div class="blog-content">';
+      cards += '<div class="blog-meta">' + (p.category || 'Algemeen') + ' · ' + formatBlogDate(p.published_at) + '</div>';
+      cards += '<h3 class="blog-card-title">' + p.title + '</h3>';
+      cards += '<p>' + (p.excerpt || '') + '</p>';
+      cards += '<span class="blog-link" style="color:#FF6B6B;font-weight:800;font-size:.9rem">Lees meer →</span>';
+      cards += '</div></div>';
+    }
+    grid.innerHTML = cards;
 
   } catch (err) {
     console.error('Blog laden mislukt:', err);
-    grid.innerHTML = `
-      <div style="grid-column:1/-1;text-align:center;padding:3rem;color:var(--brown-mid)">
-        <p>Posts konden niet worden geladen. Probeer het later opnieuw.</p>
-      </div>`;
+    grid.innerHTML = '<div style="grid-column:1/-1;text-align:center;padding:3rem;color:#7C4D3A"><p>Posts konden niet worden geladen.</p></div>';
   }
 }
 
