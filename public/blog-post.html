@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Blog — Pawfect Grooming</title>
+<link href="https://fonts.googleapis.com/css2?family=Fredoka+One&family=Nunito:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/css/style.css">
+<style>
+  :root{
+    --cream:#FFFBF0;--white:#fff;
+    --yellow:#FFD166;--yellow-light:#FFF5CC;
+    --coral:#FF6B6B;--coral-d:#e04d4d;
+    --brown:#3D2314;--brown-mid:#7C4D3A;
+    --nav-h:72px;
+  }
+  *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+  body{font-family:'Nunito',sans-serif;background:var(--cream);color:var(--brown);cursor:default}
+
+  /* ── NAV ── */
+  nav{
+    position:fixed;top:0;width:100%;z-index:150;height:var(--nav-h);
+    display:flex;align-items:center;justify-content:space-between;
+    padding:0 3rem;background:rgba(255,251,240,.94);
+    backdrop-filter:blur(14px);border-bottom:2.5px solid var(--yellow);
+    box-shadow:0 4px 24px rgba(61,35,20,.08);
+  }
+  .logo{font-family:'Fredoka One',cursive;font-size:1.6rem;color:var(--coral);
+    display:flex;align-items:center;gap:.5rem;text-decoration:none}
+
+  /* ── ARTICLE ── */
+  .article-wrap{
+    max-width:760px;margin:0 auto;
+    padding:calc(var(--nav-h) + 3rem) 2rem 6rem;
+  }
+  .back-btn{
+    display:inline-flex;align-items:center;gap:.5rem;
+    background:transparent;border:2px solid var(--yellow);
+    border-radius:50px;padding:.55rem 1.2rem;
+    font-family:'Nunito',sans-serif;font-weight:800;font-size:.88rem;
+    color:var(--brown);cursor:pointer;margin-bottom:2.5rem;
+    transition:all .2s;text-decoration:none;
+  }
+  .back-btn:hover{background:var(--yellow);border-color:var(--yellow)}
+
+  .cover-img{
+    width:100%;max-height:420px;object-fit:cover;
+    border-radius:20px;margin-bottom:2rem;display:block;
+  }
+  .post-cat{
+    font-size:.78rem;font-weight:800;color:var(--coral);
+    text-transform:uppercase;letter-spacing:.07em;margin-bottom:.6rem;
+  }
+  .post-title{
+    font-family:'Fredoka One',cursive;
+    font-size:clamp(1.8rem,4vw,2.8rem);
+    color:var(--brown);line-height:1.15;margin-bottom:.8rem;
+  }
+  .post-meta{
+    color:var(--brown-mid);font-size:.9rem;
+    margin-bottom:2.5rem;padding-bottom:1.5rem;
+    border-bottom:2px solid var(--yellow-light);
+  }
+  .post-body{font-size:1.06rem;line-height:1.85;color:var(--brown-mid)}
+  .post-body h1,.post-body h2,.post-body h3{
+    font-family:'Fredoka One',cursive;color:var(--brown);margin:2rem 0 .8rem
+  }
+  .post-body h2{font-size:1.6rem}
+  .post-body h3{font-size:1.3rem}
+  .post-body p{margin-bottom:1.2rem}
+  .post-body ul,.post-body ol{margin:1rem 0 1.2rem 1.5rem}
+  .post-body li{margin-bottom:.4rem}
+  .post-body blockquote{
+    border-left:4px solid var(--coral);
+    padding:1rem 1.5rem;background:var(--coral-light);
+    border-radius:0 12px 12px 0;margin:1.5rem 0;
+    font-style:italic;color:var(--brown);
+  }
+  .post-body img{max-width:100%;border-radius:12px;margin:1rem 0;display:block}
+  .post-body iframe,.post-body video{
+    width:100%;aspect-ratio:16/9;border-radius:12px;
+    margin:1.5rem 0;border:none;display:block;
+  }
+  .post-body a{color:var(--coral);font-weight:700;text-decoration:none}
+  .post-body a:hover{text-decoration:underline}
+  .post-body code{
+    background:var(--yellow-light);padding:.15rem .4rem;
+    border-radius:4px;font-size:.88rem;
+  }
+  .post-body pre{
+    background:var(--brown);color:#fff;padding:1.2rem;
+    border-radius:12px;overflow-x:auto;font-size:.9rem;margin:1rem 0;
+  }
+  .post-footer{
+    margin-top:3.5rem;padding-top:2rem;
+    border-top:2px solid var(--yellow-light);
+    display:flex;justify-content:center;
+  }
+  .btn-back-bottom{
+    background:var(--coral);color:#fff;border:none;
+    border-radius:50px;padding:1rem 2rem;
+    font-family:'Nunito',sans-serif;font-weight:800;font-size:1rem;
+    cursor:pointer;text-decoration:none;display:inline-block;
+    box-shadow:0 5px 0 var(--coral-d);transition:transform .15s,box-shadow .15s;
+  }
+  .btn-back-bottom:hover{transform:translateY(-3px);box-shadow:0 8px 0 var(--coral-d)}
+
+  /* ── LOADING / ERROR STATES ── */
+  .state-box{
+    text-align:center;padding:5rem 2rem;
+    color:var(--brown-mid);margin-top:2rem;
+  }
+  .state-icon{font-size:3.5rem;margin-bottom:1rem}
+  .state-box h2{
+    font-family:'Fredoka One',cursive;font-size:1.5rem;
+    color:var(--brown);margin-bottom:.6rem;
+  }
+
+  /* ── FOOTER ── */
+  .mini-footer{
+    background:var(--brown);color:#a08070;
+    text-align:center;padding:1.5rem;font-size:.85rem;
+  }
+  .mini-footer a{color:var(--yellow);text-decoration:none}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a href="/" class="logo">
+    <svg viewBox="0 0 64 64" width="28" height="28" fill="#FF6B6B">
+      <ellipse cx="12" cy="14" rx="7" ry="9"/><ellipse cx="32" cy="8" rx="7" ry="9"/>
+      <ellipse cx="52" cy="14" rx="7" ry="9"/><ellipse cx="22" cy="28" rx="6" ry="8"/>
+      <ellipse cx="42" cy="28" rx="6" ry="8"/>
+      <path d="M32 24c-14 0-20 10-18 22 2 8 8 12 18 12s16-4 18-12c2-12-4-22-18-22z"/>
+    </svg>
+    Pawfect
+  </a>
+  <a href="/#blog" style="font-family:'Nunito',sans-serif;font-weight:800;font-size:.9rem;color:var(--brown);text-decoration:none">← Terug naar blog</a>
+</nav>
+
+<!-- ARTICLE -->
+<div class="article-wrap">
+  <a href="javascript:history.back()" class="back-btn">← Terug</a>
+  <div id="content">
+    <div class="state-box">
+      <div class="state-icon">⏳</div>
+      <h2>Post laden...</h2>
+      <p>Even geduld, de blogpost wordt opgehaald.</p>
+    </div>
+  </div>
+</div>
+
+<div class="mini-footer">
+  © 2025 Pawfect Grooming ·
+  <a href="/">Terug naar de website</a> ·
+  <a href="tel:+31791234567">+31 79 123 4567</a>
+</div>
+
+<script>
+(async function() {
+  var content = document.getElementById('content');
+
+  // Get slug from URL: /blog-post.html?slug=mijn-post
+  var params = new URLSearchParams(window.location.search);
+  var slug   = params.get('slug');
+
+  if (!slug) {
+    content.innerHTML = '<div class="state-box"><div class="state-icon">🔍</div><h2>Geen post gevonden</h2><p>Er is geen blogpost opgegeven in de URL.</p><a href="/" class="btn-back-bottom" style="margin-top:1.5rem">Terug naar home</a></div>';
+    return;
+  }
+
+  try {
+    var res = await fetch('/api/blog/' + encodeURIComponent(slug));
+
+    if (!res.ok) {
+      throw new Error('Status ' + res.status);
+    }
+
+    var post = await res.json();
+
+    // Update page title
+    document.title = post.title + ' — Pawfect Grooming Blog';
+
+    // Build HTML
+    var html = '';
+
+    if (post.cover_image) {
+      html += '<img src="' + post.cover_image + '" class="cover-img" alt="' + post.title + '" onerror="this.style.display=\'none\'">';
+    }
+
+    html += '<div class="post-cat">' + (post.category || 'Blog') + '</div>';
+    html += '<h1 class="post-title">' + post.title + '</h1>';
+    html += '<div class="post-meta">Gepubliceerd op ' + formatDate(post.published_at) + '</div>';
+    html += '<div class="post-body">' + post.content + '</div>';
+    html += '<div class="post-footer"><a href="/" class="btn-back-bottom">← Terug naar de website 🐾</a></div>';
+
+    content.innerHTML = html;
+
+  } catch (err) {
+    console.error('Blog post laden mislukt:', err);
+    content.innerHTML = '<div class="state-box"><div class="state-icon">😔</div><h2>Post niet gevonden</h2><p>Deze blogpost bestaat niet of is niet meer beschikbaar.</p><a href="/" class="btn-back-bottom" style="margin-top:1.5rem;display:inline-block">Terug naar home</a></div>';
+  }
+})();
+
+function formatDate(d) {
+  if (!d) return '';
+  return new Date(d).toLocaleDateString('nl-NL', {
+    day: 'numeric', month: 'long', year: 'numeric'
+  });
+}
+</script>
+</body>
+</html>
