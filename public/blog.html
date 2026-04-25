@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Blog — Pawfect Grooming</title>
+<link href="https://fonts.googleapis.com/css2?family=Fredoka+One&family=Nunito:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --cream:#FFFBF0;--white:#fff;
+  --yellow:#FFD166;--yellow-d:#e6b800;--yellow-light:#FFF5CC;
+  --coral:#FF6B6B;--coral-d:#e04d4d;--coral-light:#FFE8E8;
+  --mint:#06D6A0;--mint-light:#D4F5EC;
+  --brown:#3D2314;--brown-mid:#7C4D3A;
+  --nav-h:70px;
+}
+body{font-family:'Nunito',sans-serif;background:var(--cream);color:var(--brown)}
+
+/* NAV */
+nav{position:fixed;top:0;width:100%;z-index:100;height:var(--nav-h);
+  display:flex;align-items:center;justify-content:space-between;padding:0 2.5rem;
+  background:rgba(255,251,240,.95);backdrop-filter:blur(12px);
+  border-bottom:2.5px solid var(--yellow);box-shadow:0 2px 16px rgba(61,35,20,.08)}
+.logo{font-family:'Fredoka One',cursive;font-size:1.5rem;color:var(--coral);
+  display:flex;align-items:center;gap:.5rem;text-decoration:none}
+.nav-home{font-family:'Nunito',sans-serif;font-weight:800;font-size:.9rem;
+  color:var(--brown);text-decoration:none;transition:color .2s}
+.nav-home:hover{color:var(--coral)}
+.nav-book{background:var(--coral);color:#fff;border:none;border-radius:50px;
+  padding:.55rem 1.3rem;font-family:'Nunito',sans-serif;font-weight:800;font-size:.88rem;
+  cursor:pointer;text-decoration:none;box-shadow:0 3px 0 var(--coral-d);
+  transition:transform .15s,box-shadow .15s}
+.nav-book:hover{transform:translateY(-2px);box-shadow:0 5px 0 var(--coral-d)}
+
+/* HERO */
+.hero{background:linear-gradient(135deg,#DBF0FF,var(--mint-light));
+  padding:calc(var(--nav-h) + 3rem) 2rem 3.5rem;text-align:center}
+.hero-label{display:inline-block;background:var(--mint);color:#034d38;
+  font-weight:800;font-size:.78rem;padding:.35rem .9rem;border-radius:50px;
+  text-transform:uppercase;letter-spacing:.07em;margin-bottom:.9rem}
+.hero h1{font-family:'Fredoka One',cursive;font-size:clamp(2rem,5vw,3rem);
+  color:var(--brown);margin-bottom:.6rem}
+.hero p{color:var(--brown-mid);font-size:1.05rem;max-width:500px;margin:0 auto}
+
+/* BLOG GRID */
+.container{max-width:1100px;margin:0 auto;padding:3.5rem 2rem 5rem}
+.filter-bar{display:flex;gap:.6rem;flex-wrap:wrap;margin-bottom:2.5rem}
+.filter-btn{background:var(--white);border:2px solid var(--yellow);border-radius:50px;
+  padding:.45rem 1.1rem;font-family:'Nunito',sans-serif;font-weight:800;font-size:.85rem;
+  color:var(--brown);cursor:pointer;transition:all .2s}
+.filter-btn.active,.filter-btn:hover{background:var(--coral);border-color:var(--coral);color:#fff}
+
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(320px,1fr));gap:1.5rem}
+.card{background:var(--white);border-radius:20px;border:2px solid var(--yellow);
+  overflow:hidden;transition:transform .22s,box-shadow .22s;cursor:pointer;
+  text-decoration:none;color:inherit;display:block}
+.card:hover{transform:translateY(-5px);box-shadow:0 14px 36px rgba(61,35,20,.1)}
+.card-img{height:200px;background:linear-gradient(135deg,var(--yellow-light),var(--coral-light));
+  display:flex;align-items:center;justify-content:center;font-size:3.5rem;
+  overflow:hidden}
+.card-img img{width:100%;height:100%;object-fit:cover}
+.card-body{padding:1.4rem}
+.card-cat{font-size:.74rem;font-weight:800;color:var(--coral);
+  text-transform:uppercase;letter-spacing:.06em;margin-bottom:.4rem}
+.card-title{font-family:'Fredoka One',cursive;font-size:1.2rem;color:var(--brown);
+  line-height:1.2;margin-bottom:.5rem}
+.card-excerpt{font-size:.9rem;color:var(--brown-mid);line-height:1.6;margin-bottom:1rem}
+.card-link{font-weight:800;font-size:.88rem;color:var(--coral)}
+
+/* STATES */
+.state{text-align:center;padding:4rem 1rem;color:var(--brown-mid)}
+.state-icon{font-size:3.5rem;margin-bottom:1rem}
+.state h2{font-family:'Fredoka One',cursive;font-size:1.4rem;color:var(--brown);margin-bottom:.5rem}
+
+/* FOOTER */
+footer{background:var(--brown);color:#a08070;text-align:center;
+  padding:1.8rem 2rem;font-size:.88rem}
+footer a{color:var(--yellow);text-decoration:none}
+
+@media(max-width:600px){nav{padding:0 1.2rem}.hero{padding-top:calc(var(--nav-h) + 2rem)}}
+</style>
+</head>
+<body>
+
+<nav>
+  <a href="/" class="logo">
+    <svg viewBox="0 0 64 64" width="26" height="26" fill="#FF6B6B">
+      <ellipse cx="12" cy="14" rx="7" ry="9"/><ellipse cx="32" cy="8" rx="7" ry="9"/>
+      <ellipse cx="52" cy="14" rx="7" ry="9"/><ellipse cx="22" cy="28" rx="6" ry="8"/>
+      <ellipse cx="42" cy="28" rx="6" ry="8"/>
+      <path d="M32 24c-14 0-20 10-18 22 2 8 8 12 18 12s16-4 18-12c2-12-4-22-18-22z"/>
+    </svg>
+    Pawfect
+  </a>
+  <a href="/" class="nav-home">← Terug naar home</a>
+  <a href="/#booking" class="nav-book">Boek nu 🐾</a>
+</nav>
+
+<div class="hero">
+  <div class="hero-label">Tips & inspiratie</div>
+  <h1>Ons blog 📝</h1>
+  <p>Handige tips, nieuwtjes en verhalen uit onze grooming salon</p>
+</div>
+
+<div class="container">
+  <div class="filter-bar" id="filterBar"></div>
+  <div class="grid" id="grid">
+    <div class="state">
+      <div class="state-icon">⏳</div>
+      <h2>Posts laden...</h2>
+    </div>
+  </div>
+</div>
+
+<footer>
+  © 2025 Pawfect Grooming ·
+  <a href="/">Website</a> ·
+  <a href="tel:+31791234567">+31 79 123 4567</a> ·
+  <a href="mailto:hallo@pawfect.nl">hallo@pawfect.nl</a>
+</footer>
+
+<script>
+var allPosts    = [];
+var activeFilter = 'Alle';
+
+async function init() {
+  var grid = document.getElementById('grid');
+
+  try {
+    var res = await fetch('/api/blog');
+
+    if (!res.ok) {
+      throw new Error('Server antwoordde met status ' + res.status);
+    }
+
+    allPosts = await res.json();
+
+    if (!Array.isArray(allPosts)) {
+      throw new Error('Onverwacht antwoord van de server');
+    }
+
+    if (allPosts.length === 0) {
+      grid.innerHTML = '<div class="state"><div class="state-icon">📝</div><h2>Nog geen posts</h2><p>De eerste blogposts zijn onderweg!</p></div>';
+      return;
+    }
+
+    // Build category filters
+    buildFilters();
+    renderGrid(allPosts);
+
+  } catch (err) {
+    console.error('Blog laden mislukt:', err);
+    grid.innerHTML = '<div class="state"><div class="state-icon">😔</div><h2>Kon posts niet laden</h2><p>Fout: ' + err.message + '</p><p style="margin-top:.8rem;font-size:.85rem">Controleer of de server actief is.</p></div>';
+  }
+}
+
+function buildFilters() {
+  var cats = ['Alle'];
+  allPosts.forEach(function(p) {
+    if (p.category && cats.indexOf(p.category) === -1) cats.push(p.category);
+  });
+
+  var bar = document.getElementById('filterBar');
+  bar.innerHTML = cats.map(function(cat) {
+    return '<button class="filter-btn' + (cat === 'Alle' ? ' active' : '') + '" onclick="filterBy(\'' + cat + '\')">' + cat + '</button>';
+  }).join('');
+}
+
+function filterBy(cat) {
+  activeFilter = cat;
+  document.querySelectorAll('.filter-btn').forEach(function(b) {
+    b.classList.toggle('active', b.textContent === cat);
+  });
+  var filtered = cat === 'Alle' ? allPosts : allPosts.filter(function(p) { return p.category === cat; });
+  renderGrid(filtered);
+}
+
+function renderGrid(posts) {
+  var grid = document.getElementById('grid');
+
+  if (posts.length === 0) {
+    grid.innerHTML = '<div class="state" style="grid-column:1/-1"><div class="state-icon">🔍</div><h2>Geen posts in deze categorie</h2></div>';
+    return;
+  }
+
+  var html = '';
+  for (var i = 0; i < posts.length; i++) {
+    var p    = posts[i];
+    var url  = '/blog-post.html?slug=' + encodeURIComponent(p.slug);
+    var date = p.published_at ? new Date(p.published_at).toLocaleDateString('nl-NL', {day:'numeric',month:'long',year:'numeric'}) : '';
+
+    html += '<a class="card" href="' + url + '">';
+    html += '<div class="card-img">';
+    if (p.cover_image) {
+      html += '<img src="' + p.cover_image + '" alt="' + p.title + '" onerror="this.parentNode.innerHTML=\'📝\'">';
+    } else {
+      html += '📝';
+    }
+    html += '</div>';
+    html += '<div class="card-body">';
+    html += '<div class="card-cat">' + (p.category || 'Blog') + (date ? ' · ' + date : '') + '</div>';
+    html += '<h2 class="card-title">' + p.title + '</h2>';
+    html += '<p class="card-excerpt">' + (p.excerpt || '') + '</p>';
+    html += '<span class="card-link">Lees meer →</span>';
+    html += '</div></a>';
+  }
+  grid.innerHTML = html;
+}
+
+init();
+</script>
+</body>
+</html>
