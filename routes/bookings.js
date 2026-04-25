@@ -22,26 +22,23 @@ router.post('/', async (req, res) => {
     return res.status(500).json({ error: 'Kon boeking niet opslaan' });
   }
 
-  // Stuur e-mails
-  const mailResult = await stuurBoekingsMails(data);
+  // Stuur direct antwoord terug — email en client opslaan op achtergrond
+  res.json({ success: true, boeking: data });
 
-  // Sla klant op in clients tabel als niet bekend
+  // Email + client opslaan ASYNCHROON (blokkeert response niet)
+  stuurBoekingsMails(data).catch(err => console.error('Mail fout:', err));
+
   if (email || telefoon) {
-    const { data: existing } = await supabase
-      .from('clients')
-      .select('id')
-      .eq('naam', naam_baasje)
-      .maybeSingle();
-
-    if (!existing) {
-      await supabase.from('clients').insert([{
-        naam: naam_baasje, email, telefoon,
-        huisdier_naam: naam_huisdier, huisdier_soort: soort_dier
-      }]);
-    }
+    supabase.from('clients').select('id').eq('naam', naam_baasje).maybeSingle()
+      .then(({ data: existing }) => {
+        if (!existing) {
+          supabase.from('clients').insert([{
+            naam: naam_baasje, email, telefoon,
+            huisdier_naam: naam_huisdier, huisdier_soort: soort_dier
+          }]).catch(err => console.error('Client opslaan fout:', err));
+        }
+      }).catch(err => console.error('Client check fout:', err));
   }
-
-  res.json({ success: true, boeking: data, mails: mailResult });
 });
 
 // GET /api/bookings  — admin only
