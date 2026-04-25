@@ -119,6 +119,22 @@ document.querySelectorAll('a[href^="#"]:not([data-page]):not([onclick])').forEac
   });
 });
 
+/* REVIEWS — navigeer naar home en scroll naar reviews sectie */
+function goToReviews() {
+  // Als subpage actief is: eerst terug naar home
+  var overlay = document.getElementById('subpage-overlay');
+  if (overlay && overlay.style.display === 'block') {
+    navigateTo('home');
+    setTimeout(function() {
+      var el = document.getElementById('reviews');
+      if (el) el.scrollIntoView({behavior: 'smooth'});
+    }, 350);
+  } else {
+    var el = document.getElementById('reviews');
+    if (el) el.scrollIntoView({behavior: 'smooth'});
+  }
+}
+
 /* ── SUBPAGE ROUTER ── */
 const PAGES_MAP = {
   'bad-borstel':'sp-bad-borstel','knipbeurt-styling':'sp-knipbeurt-styling',
