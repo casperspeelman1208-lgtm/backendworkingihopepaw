@@ -82,32 +82,48 @@ async function handleBook(e){
   btn.textContent = 'Bezig...';
   btn.disabled = true;
 
-  const form = e.target;
+  // Read form values by id (reliable)
+  const naam      = document.getElementById('bk-naam')?.value || '';
+  const telefoon  = document.getElementById('bk-tel')?.value  || '';
+  const email     = document.getElementById('bk-email')?.value || '';
+  const huisdier  = document.getElementById('bk-huisdier')?.value || '';
+  const soort     = document.getElementById('bk-soort')?.value || '';
+  const dienst    = document.getElementById('bk-dienst')?.value || '';
+  const datum     = document.getElementById('bk-datum')?.value || '';
+  const opmerking = document.getElementById('bk-opmerking')?.value || '';
+
   try {
     const res = await fetch('/api/bookings', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
-        naam_baasje:   form.querySelector('input[placeholder*="naam"]').value,
-        telefoon:      form.querySelector('input[type="tel"]').value,
-        email:         form.querySelector('input[type="email"]')?.value || '',
-        naam_huisdier: form.querySelector('input[placeholder*="dier"]').value,
-        soort_dier:    form.querySelectorAll('select')[0]?.value || '',
-        dienst:        form.querySelectorAll('select')[1]?.value || '',
-        datum:         form.querySelector('input[type="date"]').value,
-        opmerkingen:   form.querySelector('textarea').value,
+        naam_baasje:   naam,
+        telefoon:      telefoon,
+        email:         email,
+        naam_huisdier: huisdier,
+        soort_dier:    soort,
+        dienst:        dienst,
+        datum:         datum,
+        opmerkingen:   opmerking,
       })
     });
     const data = await res.json();
     if (!res.ok) throw new Error(data.error || 'Er ging iets mis');
+
+    // Show success with email address filled in
     document.getElementById('bkForm').style.display = 'none';
-    document.getElementById('successMsg').style.display = 'block';
+    const successEl = document.getElementById('successMsg');
+    successEl.style.display = 'block';
+    const emailSpan = document.getElementById('successEmail');
+    if (emailSpan && email) emailSpan.textContent = 'Bevestiging verstuurd naar: ' + email;
+
   } catch(err) {
     btn.textContent = origText;
     btn.disabled = false;
     alert('Er ging iets mis: ' + err.message + '\nProbeer het nog een keer of bel ons op +31 79 123 4567.');
   }
 }
+
 
 /* SMOOTH SCROLL */
 document.querySelectorAll('a[href^="#"]:not([data-page]):not([onclick])').forEach(a=>{
@@ -119,13 +135,29 @@ document.querySelectorAll('a[href^="#"]:not([data-page]):not([onclick])').forEac
   });
 });
 
+/* REVIEWS — navigeer naar home en scroll naar reviews sectie */
+function goToReviews() {
+  // Als subpage actief is: eerst terug naar home
+  var overlay = document.getElementById('subpage-overlay');
+  if (overlay && overlay.style.display === 'block') {
+    navigateTo('home');
+    setTimeout(function() {
+      var el = document.getElementById('reviews');
+      if (el) el.scrollIntoView({behavior: 'smooth'});
+    }, 350);
+  } else {
+    var el = document.getElementById('reviews');
+    if (el) el.scrollIntoView({behavior: 'smooth'});
+  }
+}
+
 /* ── SUBPAGE ROUTER ── */
 const PAGES_MAP = {
   'bad-borstel':'sp-bad-borstel','knipbeurt-styling':'sp-knipbeurt-styling',
   'nagels-poten':'sp-nagels-poten','spa-deluxe':'sp-spa-deluxe',
   'prijslijst':'sp-prijslijst','over-ons':'sp-over-ons','ons-team':'sp-ons-team',
-  'blog':'sp-blog','vacatures':'sp-vacatures','contact':'sp-contact',
-  'faq-page':'sp-faq-page','privacybeleid':'sp-privacybeleid',
+  'blog':'sp-blog','blog-detail':'sp-blog-detail','vacatures':'sp-vacatures',
+  'contact':'sp-contact','faq-page':'sp-faq-page','privacybeleid':'sp-privacybeleid',
   'algemene-voorwaarden':'sp-algemene-voorwaarden','cadeaubon':'sp-cadeaubon',
   'abonnement':'sp-abonnement'
 };
@@ -151,6 +183,7 @@ function navigateTo(page){
   history.pushState({page},'','#'+page);
   // Inject team images on team page
   if(page==='ons-team') injectTeamImgs();
+  if(page==='blog') laadBlogPosts();
 }
 
 function injectTeamImgs(){
@@ -213,83 +246,48 @@ document.addEventListener('click', e=>{
    ══════════════════════════════════════════════════════ */
 
 async function laadBlogPosts() {
-  const grid = document.getElementById('blogGrid');
+  var grid = document.getElementById('blogGrid');
   if (!grid) return;
 
+  grid.innerHTML = '<div style="grid-column:1/-1;text-align:center;padding:3rem;color:#7C4D3A"><div style="font-size:2rem;margin-bottom:.5rem">loading...</div></div>';
+
   try {
-    const res  = await fetch('/api/blog');
-    const posts = await res.json();
+    var res   = await fetch('/api/blog');
+    var posts = await res.json();
 
     if (!Array.isArray(posts) || posts.length === 0) {
-      grid.innerHTML = `
-        <div style="grid-column:1/-1;text-align:center;padding:3rem 1rem;color:var(--brown-mid)">
-          <div style="font-size:3rem;margin-bottom:1rem">📝</div>
-          <h3 style="font-family:'Fredoka One',cursive;font-size:1.3rem;color:var(--brown);margin-bottom:.5rem">Nog geen blogposts</h3>
-          <p>De eerste posts zijn onderweg!</p>
-        </div>`;
+      grid.innerHTML = '<div style="grid-column:1/-1;text-align:center;padding:3rem;color:#7C4D3A"><div style="font-size:3rem">📝</div><p style="margin-top:1rem">Nog geen blogposts gepubliceerd.</p></div>';
       return;
     }
 
-    grid.innerHTML = posts.map(post => `
-      <div class="blog-card blog-card-link" onclick="laadBlogDetail('${post.slug}')">
-        <div class="blog-img" style="${post.cover_image
-          ? `background:url('${post.cover_image}') center/cover no-repeat`
-          : 'background:linear-gradient(135deg,var(--yellow-light),var(--coral-light));display:flex;align-items:center;justify-content:center;font-size:3.5rem'}">
-          ${post.cover_image ? '' : '📝'}
-        </div>
-        <div class="blog-content">
-          <div class="blog-meta">${post.category || 'Algemeen'} · ${formatBlogDate(post.published_at)}</div>
-          <h3 class="blog-card-title">${post.title}</h3>
-          <p>${post.excerpt || ''}</p>
-          <span class="blog-link">Lees meer →</span>
-        </div>
-      </div>`).join('');
+    var cards = '';
+    for (var i = 0; i < posts.length; i++) {
+      var p = posts[i];
+      var s = p.slug;
+      var bg = p.cover_image
+        ? 'background-image:url(' + p.cover_image + ');background-size:cover;background-position:center'
+        : 'background:linear-gradient(135deg,#FFF5CC,#FFE8E8);display:flex;align-items:center;justify-content:center;font-size:3.5rem';
+      var oc = "window.location.href='/blog-post.html?slug=" + s + "'";
+
+      cards += '<div class="blog-card" style="cursor:pointer" onclick="' + oc + '">';
+      cards += '<div class="blog-img" style="' + bg + '">' + (p.cover_image ? '' : '📝') + '</div>';
+      cards += '<div class="blog-content">';
+      cards += '<div class="blog-meta">' + (p.category || 'Algemeen') + ' · ' + formatBlogDate(p.published_at) + '</div>';
+      cards += '<h3 class="blog-card-title">' + p.title + '</h3>';
+      cards += '<p>' + (p.excerpt || '') + '</p>';
+      cards += '<span class="blog-link" style="color:#FF6B6B;font-weight:800;font-size:.9rem">Lees meer →</span>';
+      cards += '</div></div>';
+    }
+    grid.innerHTML = cards;
 
   } catch (err) {
     console.error('Blog laden mislukt:', err);
-    grid.innerHTML = `
-      <div style="grid-column:1/-1;text-align:center;padding:3rem;color:var(--brown-mid)">
-        <p>Posts konden niet worden geladen. Probeer het later opnieuw.</p>
-      </div>`;
+    grid.innerHTML = '<div style="grid-column:1/-1;text-align:center;padding:3rem;color:#7C4D3A"><p>Posts konden niet worden geladen.</p></div>';
   }
 }
 
-async function laadBlogDetail(slug) {
-  // Navigate to detail page first
-  navigateTo('blog-detail');
-
-  const inner = document.getElementById('blogDetailInner');
-  inner.innerHTML = '<div style="text-align:center;padding:4rem;color:var(--brown-mid)">Laden...</div>';
-
-  try {
-    const res  = await fetch('/api/blog/' + slug);
-    if (!res.ok) throw new Error('Post niet gevonden');
-    const post = await res.json();
-
-    inner.innerHTML = `
-      ${post.cover_image
-        ? `<img src="${post.cover_image}" class="blog-detail-cover" alt="${post.title}">`
-        : ''}
-      <div class="blog-detail-cat">${post.category || 'Algemeen'}</div>
-      <h1 class="blog-detail-title">${post.title}</h1>
-      <div class="blog-detail-meta">
-        Gepubliceerd op ${formatBlogDate(post.published_at)}
-      </div>
-      <div class="blog-detail-body">${post.content}</div>
-      <div style="margin-top:3rem;padding-top:2rem;border-top:2px solid var(--yellow-light);text-align:center">
-        <button class="btn-p" style="border:none;cursor:pointer" onclick="navigateTo('blog')">
-          ← Terug naar alle posts
-        </button>
-      </div>`;
-
-  } catch (err) {
-    inner.innerHTML = `
-      <div style="text-align:center;padding:4rem;color:var(--brown-mid)">
-        <div style="font-size:3rem;margin-bottom:1rem">😔</div>
-        <p>Post kon niet worden geladen.</p>
-        <button onclick="navigateTo('blog')" style="margin-top:1rem;cursor:pointer;background:var(--coral);color:#fff;border:none;border-radius:50px;padding:.7rem 1.5rem;font-family:'Nunito',sans-serif;font-weight:800;font-size:.9rem">Terug naar blog</button>
-      </div>`;
-  }
+function laadBlogDetail(slug) {
+  window.location.href = '/blog-post.html?slug=' + encodeURIComponent(slug);
 }
 
 function formatBlogDate(d) {
@@ -297,9 +295,4 @@ function formatBlogDate(d) {
   return new Date(d).toLocaleDateString('nl-NL', {day:'numeric', month:'long', year:'numeric'});
 }
 
-// Laad blog posts wanneer de blog-pagina wordt geopend
-const _origNavigateTo = navigateTo;
-navigateTo = function(page) {
-  _origNavigateTo(page);
-  if (page === 'blog') laadBlogPosts();
-};
+// Blog wordt geladen via navigateTo() direct
