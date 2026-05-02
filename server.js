@@ -26,6 +26,45 @@ app.use('/api/blog',     blogRoutes);
 app.use('/api/clients',  clientRoutes);
 app.use('/api/email',    emailRoutes);
 
+
+// ── DYNAMISCHE SITEMAP (inclusief blogposts) ─────────────────────────────────
+app.get('/sitemap.xml', async (req, res) => {
+  const supabase = require('./supabase');
+  let blogUrls = '';
+
+  try {
+    const { data } = await supabase
+      .from('blog_posts')
+      .select('slug, updated_at')
+      .eq('published', true);
+
+    if (data) {
+      blogUrls = data.map(p =>
+        `  <url>\n    <loc>https://pawfect.nl/blog-post.html?slug=${p.slug}</loc>\n    <lastmod>${(p.updated_at || '').split('T')[0]}</lastmod>\n    <changefreq>monthly</changefreq>\n    <priority>0.7</priority>\n  </url>`
+      ).join('\n');
+    }
+  } catch (e) {
+    console.error('Sitemap blog fout:', e.message);
+  }
+
+  const baseUrl = process.env.SITE_URL || 'https://pawfect.nl';
+  const xml = `<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+  <url><loc>${baseUrl}/</loc><changefreq>weekly</changefreq><priority>1.0</priority></url>
+  <url><loc>${baseUrl}/blog.html</loc><changefreq>weekly</changefreq><priority>0.8</priority></url>
+  <url><loc>${baseUrl}/#bad-borstel</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>${baseUrl}/#knipbeurt-styling</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>${baseUrl}/#spa-deluxe</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>${baseUrl}/#prijslijst</loc><changefreq>monthly</changefreq><priority>0.7</priority></url>
+  <url><loc>${baseUrl}/#contact</loc><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  <url><loc>${baseUrl}/#faq-page</loc><changefreq>monthly</changefreq><priority>0.6</priority></url>
+${blogUrls}
+</urlset>`;
+
+  res.header('Content-Type', 'application/xml');
+  res.send(xml);
+});
+
 // ── CATCH-ALL: stuur frontend mee ───────────────────────────────────────────
 app.get('*', (req, res) => {
   res.sendFile(path.join(__dirname, 'public', 'index.html'));
