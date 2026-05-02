@@ -8,4 +8,4 @@ Disallow: /admin/
 Disallow: /api/
 
 # Sitemap locatie
-Sitemap: https://pawfect.nl/sitemap.xml
+Sitemap: https://backendworkingihopepaw-production.up.railway.app/sitemap.xml

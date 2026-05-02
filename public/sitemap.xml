@@ -4,16 +4,16 @@
 
   <!-- Hoofdpagina -->
   <url>
-    <loc>https://pawfect.nl/</loc>
+    <loc>https://backendworkingihopepaw-production.up.railway.app/</loc>
     <lastmod>2025-01-01</lastmod>
     <changefreq>weekly</changefreq>
     <priority>1.0</priority>
-    <xhtml:link rel="alternate" hreflang="nl" href="https://pawfect.nl/"/>
+    <xhtml:link rel="alternate" hreflang="nl" href="https://backendworkingihopepaw-production.up.railway.app/"/>
   </url>
 
   <!-- Blog overzicht -->
   <url>
-    <loc>https://pawfect.nl/blog.html</loc>
+    <loc>https://backendworkingihopepaw-production.up.railway.app/blog.html</loc>
     <lastmod>2025-01-01</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
@@ -21,42 +21,42 @@
 
   <!-- Statische subpagina's -->
   <url>
-    <loc>https://pawfect.nl/#over-ons</loc>
+    <loc>https://backendworkingihopepaw-production.up.railway.app/#over-ons</loc>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://pawfect.nl/#bad-borstel</loc>
+    <loc>https://backendworkingihopepaw-production.up.railway.app/#bad-borstel</loc>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://pawfect.nl/#knipbeurt-styling</loc>
+    <loc>https://backendworkingihopepaw-production.up.railway.app/#knipbeurt-styling</loc>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://pawfect.nl/#nagels-poten</loc>
+    <loc>https://backendworkingihopepaw-production.up.railway.app/#nagels-poten</loc>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://pawfect.nl/#spa-deluxe</loc>
+    <loc>https://backendworkingihopepaw-production.up.railway.app/#spa-deluxe</loc>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://pawfect.nl/#prijslijst</loc>
+    <loc>https://backendworkingihopepaw-production.up.railway.app/#prijslijst</loc>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://pawfect.nl/#contact</loc>
+    <loc>https://backendworkingihopepaw-production.up.railway.app/#contact</loc>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
-    <loc>https://pawfect.nl/#faq-page</loc>
+    <loc>https://backendworkingihopepaw-production.up.railway.app/#faq-page</loc>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
