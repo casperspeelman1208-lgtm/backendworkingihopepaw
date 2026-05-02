@@ -52,12 +52,6 @@ app.get('/sitemap.xml', async (req, res) => {
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url><loc>${baseUrl}/</loc><changefreq>weekly</changefreq><priority>1.0</priority></url>
   <url><loc>${baseUrl}/blog.html</loc><changefreq>weekly</changefreq><priority>0.8</priority></url>
-  <url><loc>${baseUrl}/#bad-borstel</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>
-  <url><loc>${baseUrl}/#knipbeurt-styling</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>
-  <url><loc>${baseUrl}/#spa-deluxe</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>
-  <url><loc>${baseUrl}/#prijslijst</loc><changefreq>monthly</changefreq><priority>0.7</priority></url>
-  <url><loc>${baseUrl}/#contact</loc><changefreq>monthly</changefreq><priority>0.6</priority></url>
-  <url><loc>${baseUrl}/#faq-page</loc><changefreq>monthly</changefreq><priority>0.6</priority></url>
 ${blogUrls}
 </urlset>`;
 
