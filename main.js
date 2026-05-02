@@ -1,8 +1,12 @@
-/* CURSOR */
+/* CURSOR — alleen op niet-touch apparaten */
 const cur=document.getElementById('cursor');
-document.addEventListener('mousemove',e=>{cur.style.left=e.clientX+'px';cur.style.top=e.clientY+'px'});
-document.addEventListener('mousedown',()=>cur.style.transform='translate(-50%,-50%) scale(.7)');
-document.addEventListener('mouseup',()=>cur.style.transform='translate(-50%,-50%) scale(1)');
+if(window.matchMedia('(hover:hover) and (pointer:fine)').matches){
+  document.addEventListener('mousemove',e=>{cur.style.left=e.clientX+'px';cur.style.top=e.clientY+'px'});
+  document.addEventListener('mousedown',()=>cur.style.transform='translate(-50%,-50%) scale(.7)');
+  document.addEventListener('mouseup',()=>cur.style.transform='translate(-50%,-50%) scale(1)');
+} else {
+  cur.style.display='none';
+}
 
 /* SCROLL PROGRESS + NAV */
 const prog=document.getElementById('progress'),navEl=document.getElementById('nav');
