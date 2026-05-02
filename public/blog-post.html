@@ -4,6 +4,14 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Blog — Pawfect Grooming</title>
+<meta name="description" content="Lees meer over dierenverzorging op de Pawfect Grooming blog.">
+<meta name="robots" content="index, follow">
+<meta name="language" content="nl">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="Pawfect Grooming">
+<meta property="og:locale" content="nl_NL">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Fredoka+One&family=Nunito:wght@400;600;700;800;900&display=swap" rel="stylesheet">
 <style>
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
@@ -77,7 +85,26 @@ footer a{color:var(--yellow);text-decoration:none}
     var post = await res.json();
     if (!post || !post.title) throw new Error("Ongeldige data");
 
-    document.title = post.title + " — Pawfect Grooming";
+    document.title = post.title + " — Pawfect Grooming Blog";
+    // Update meta description dynamically
+    var metaDesc = document.querySelector('meta[name="description"]');
+    if (metaDesc && post.excerpt) metaDesc.setAttribute("content", post.excerpt);
+    // Update Open Graph
+    var ogTitle = document.querySelector('meta[property="og:title"]');
+    if (!ogTitle) { ogTitle = document.createElement("meta"); ogTitle.setAttribute("property","og:title"); document.head.appendChild(ogTitle); }
+    ogTitle.setAttribute("content", post.title + " — Pawfect Grooming");
+    var ogDesc = document.querySelector('meta[property="og:description"]');
+    if (!ogDesc) { ogDesc = document.createElement("meta"); ogDesc.setAttribute("property","og:description"); document.head.appendChild(ogDesc); }
+    if (ogDesc && post.excerpt) ogDesc.setAttribute("content", post.excerpt);
+    if (post.cover_image) {
+      var ogImg = document.querySelector('meta[property="og:image"]');
+      if (!ogImg) { ogImg = document.createElement("meta"); ogImg.setAttribute("property","og:image"); document.head.appendChild(ogImg); }
+      ogImg.setAttribute("content", post.cover_image);
+    }
+    // Canonical URL
+    var canon = document.querySelector('link[rel="canonical"]');
+    if (!canon) { canon = document.createElement("link"); canon.setAttribute("rel","canonical"); document.head.appendChild(canon); }
+    canon.setAttribute("href", window.location.href);
 
     var date = post.published_at ? new Date(post.published_at).toLocaleDateString("nl-NL",{day:"numeric",month:"long",year:"numeric"}) : "";
     var html = "";

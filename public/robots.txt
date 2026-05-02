@@ -1,0 +1,11 @@
+User-agent: *
+Allow: /
+Allow: /blog.html
+Allow: /blog-post.html
+
+# Admin-paneel niet indexeren
+Disallow: /admin/
+Disallow: /api/
+
+# Sitemap locatie
+Sitemap: https://pawfect.nl/sitemap.xml
