@@ -11,6 +11,7 @@
 html{scroll-behavior:smooth}
 body{font-family:'Nunito',sans-serif;background:var(--cream);color:var(--brown);overflow-x:hidden;cursor:none}
 #cursor{position:fixed;pointer-events:none;z-index:9999;width:32px;height:32px;transform:translate(-50%,-50%);top:0;left:0;transition:transform .1s ease}
+@media(hover:none),(pointer:coarse){#cursor{display:none!important}body{cursor:auto!important}}
 #cursor svg{width:100%;height:100%;transform:rotate(-20deg)}
 #progress{position:fixed;top:0;left:0;height:4px;background:var(--coral);z-index:200;width:0%;border-radius:0 4px 4px 0}
 nav{position:fixed;top:0;width:100%;z-index:150;height:var(--nav-h);display:flex;align-items:center;justify-content:space-between;padding:0 3rem;background:rgba(255,251,240,.94);backdrop-filter:blur(14px);border-bottom:2.5px solid var(--yellow);transition:box-shadow .3s}
@@ -26,9 +27,9 @@ nav.scrolled{box-shadow:0 4px 24px rgba(61,35,20,.1)}
 .nav-cta:active{transform:translateY(2px);box-shadow:none}
 .burger{display:none;flex-direction:column;gap:5px;cursor:none;padding:4px}
 .burger span{width:24px;height:2.5px;background:var(--brown);border-radius:2px;transition:all .3s}
-.mob-menu{display:none;position:fixed;top:var(--nav-h);left:0;width:100%;background:var(--cream);padding:2rem;border-bottom:2.5px solid var(--yellow);z-index:140}
+.mob-menu{display:none;position:fixed;top:var(--nav-h);left:0;width:100%;background:var(--cream);padding:1.5rem 1.2rem;border-bottom:2.5px solid var(--yellow);z-index:140;max-height:calc(100vh - var(--nav-h));overflow-y:auto}
 .mob-menu.open{display:block}
-.mob-menu a{display:block;padding:.8rem 0;font-weight:800;font-size:1.1rem;color:var(--brown);text-decoration:none;border-bottom:1px solid var(--yellow-light)}
+.mob-menu a{display:block;padding:.6rem .8rem;font-weight:800;font-size:1rem;color:var(--brown);text-decoration:none;border-radius:10px;transition:background .15s}.mob-menu a:hover{background:var(--yellow-light)}
 section{position:relative;overflow:hidden}
 .wave{display:block;width:100%;line-height:0}
 /* HERO */
@@ -266,7 +267,7 @@ footer{background:#2a1609;padding:4rem 2rem 2rem;color:#c4906e}
   .hero-text p{margin:0 auto 2rem}
   .hero-btns{justify-content:center}
   .pet-pills{justify-content:center}
-  .hero-vis{margin-top:2rem}
+  .hero-vis{display:none}
   .ft1,.ft2,.ft3{display:none}
   .footer-grid{grid-template-columns:1fr 1fr}
   .form-row{grid-template-columns:1fr}
@@ -379,10 +380,10 @@ footer{background:#2a1609;padding:4rem 2rem 2rem;color:#c4906e}
 .dropdown li a:hover{background:var(--yellow-light);color:var(--coral)}
 .drop-divider{height:1px;background:var(--yellow-light);margin:.3rem .9rem}
 /* Mobile menu sections */
-.mob-section{border-bottom:1px solid var(--yellow-light);padding-bottom:.8rem;margin-bottom:.8rem}
-.mob-section strong{display:block;font-size:.75rem;text-transform:uppercase;letter-spacing:.07em;color:var(--brown-mid);margin-bottom:.4rem;padding:.4rem 0 0}
-.mob-section a{display:block;padding:.5rem 0;font-weight:700;font-size:.95rem;color:var(--brown);text-decoration:none;border-bottom:none}
-.mob-section a:hover{color:var(--coral)}
+.mob-section{margin-bottom:1.2rem}
+.mob-section strong{display:block;font-family:"Fredoka One",cursive;font-size:1rem;color:var(--coral);margin-bottom:.5rem;padding:.2rem 0}
+.mob-section a{display:flex;align-items:center;gap:.6rem;padding:.6rem .8rem;font-weight:700;font-size:.95rem;color:var(--brown);text-decoration:none;border-radius:10px;transition:background .15s}
+.mob-section a:hover,.mob-section a:active{background:var(--yellow-light);color:var(--coral)}
 
 .svc-meer{display:block;width:100%;background:transparent;border:2px solid var(--brown);border-radius:50px;padding:.55rem 1rem;font-family:'Nunito',sans-serif;font-weight:800;font-size:.85rem;color:var(--brown);cursor:none;transition:all .2s;text-align:center}
 .svc:hover .svc-meer{background:var(--brown);color:#fff;border-color:var(--brown)}
