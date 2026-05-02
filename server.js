@@ -40,14 +40,14 @@ app.get('/sitemap.xml', async (req, res) => {
 
     if (data) {
       blogUrls = data.map(p =>
-        `  <url>\n    <loc>https://pawfect.nl/blog-post.html?slug=${p.slug}</loc>\n    <lastmod>${(p.updated_at || '').split('T')[0]}</lastmod>\n    <changefreq>monthly</changefreq>\n    <priority>0.7</priority>\n  </url>`
+        `  <url>\n    <loc>https://backendworkingihopepaw-production.up.railway.app/blog-post.html?slug=${p.slug}</loc>\n    <lastmod>${(p.updated_at || '').split('T')[0]}</lastmod>\n    <changefreq>monthly</changefreq>\n    <priority>0.7</priority>\n  </url>`
       ).join('\n');
     }
   } catch (e) {
     console.error('Sitemap blog fout:', e.message);
   }
 
-  const baseUrl = process.env.SITE_URL || 'https://pawfect.nl';
+  const baseUrl = process.env.SITE_URL || 'https://backendworkingihopepaw-production.up.railway.app';
   const xml = `<?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url><loc>${baseUrl}/</loc><changefreq>weekly</changefreq><priority>1.0</priority></url>
